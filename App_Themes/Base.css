@@ -1,0 +1,7766 @@
+﻿@import url("Mixin.css");
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Roboto'), local('Roboto-Regular'), url('../Fonts/roboto-v20-latin-regular.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	src: local('Roboto Medium'), local('Roboto-Medium'), url('../Fonts/roboto-v20-latin-500.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Roboto Bold'), local('Roboto-Bold'), url('../Fonts/roboto-v20-latin-700.woff') format('woff');
+}
+
+/**/
+/*#region Variables*/
+/**/
+
+$shade0BackgroundColor: #FFF;
+$shade1BackgroundColor: #F5F5F5;
+$shade2BackgroundColor: #E6E6E6;
+$shade3BackgroundColor: #CCCCCC;
+$shade4BackgroundColor: #B0B0B0;
+$shade5BackgroundColor: #999;
+$shade6BackgroundColor: #7D7D7D;
+$shade7BackgroundColor: #383838;
+$shade8BackgroundColor: #2E2E2E;
+$shade9BackgroundColor: #212121;
+$shade10BackgroundColor: #0A0A0A;
+
+$lightBackgroundTextColor: #212121;
+$darkBackgroundTextColor: #FFF;
+$mainTextColor: #212121;
+$linkColor: $primaryColor;
+$linkHoverColor: $secondaryColor;
+$buttonBackgroundColor: $primaryColor;
+$buttonBackgroundColorHover: $secondaryColor;
+$borderColor: $shade2BackgroundColor;
+$inputBorderColor: $shade3BackgroundColor;
+
+$successColor: #549C05;
+$failureColor: #CA001A;
+$warningColor: #EB7B18;
+$linkDisabledColor: #B0B0B0;
+$inputDisabledTextColor: #B0B0B0;
+$inputDisabledBackgroundColor: #E6E6E6;
+$buttonDisabledTextColor: #CCC;
+$buttonDisabledBackgroundColor: #E6E6E6;
+
+$headerTextColor: $darkBackgroundTextColor;
+$headerBackgroundColor: $primaryColor;
+$navigationPanelBackgroundColor: #212121;
+$masterPanelBackgroundColor: $shade1BackgroundColor;
+$rowSeparatorColor: $shade2BackgroundColor;
+$sessionConnectedBarColor: #4C4;
+$sessionDisconnectedBarColor: #BBB;
+$notificationBackgroundColor: #F4EFB0;
+$tooltipBackgroundColor: #555;
+$timelineHostColor: $primaryColor;
+$timelineGuestColor: $shade3BackgroundColor;
+$timelineEventColor: $primaryColor;
+$timelineConnectionEventOverlayColor: $primaryColor;
+$timelineTimestampColor: #BBB;
+$timelineTimeDivisionLineColor: rgba(0, 0, 0, 0.1);
+
+$expressionEditorNumberColor: #098658;
+$expressionEditorStringColor: #A31515;
+$expressionEditorPropertyNameColor: #0071c1;
+$expressionEditorControlKeywordColor: #795d26;
+$expressionEditorVariableNameColor: #0071c1;
+$expressionEditorLogicOperatorColor: #000000;
+$expressionEditorCompareOperatorColor: #000000;
+$expressionEditorCaretColor: #000000;
+
+$logoIcon: url('../Images/LogoPanelIconLight.png');
+$logoImage: url('../Images/LogoPanelImageLight.png');
+$fontFamily: "Roboto", "Segoe UI", "Helvetica Neue", Helvetica, Tahoma, Arial;
+$fontSize: 13px;
+
+$navigationPanelWidth: 74px;
+$headerPanelHeight: 58px;
+$masterPanelWidth: 25%;
+$mainDetailPanelWidth: 37.5%;
+$subDetailPanelWidth: 37.5%;
+$toggleDetailPanelButtonHeight: 32px;
+$subDetailPanelSideSpacing: 4%;
+
+$narrowMasterPanelWidth: 35%;
+$narrowSubDetailPanelWidth: 65%;
+$narrowSubDetailPanelHeight: 55%;
+$narrowSubDetailPanelTop: 40%;
+$superNarrowMasterPanelWidth: 60%;
+
+$transitionTime: 0.15s;
+$doubleTransitionTime: 0.30s;
+$tripleTransitionTime: 0.45s;
+$quadrupleTransitionTime: 0.60s;
+
+$maxWidthForNarrowViewportLevel0: 1400px;
+$maxWidthForNarrowViewportLevel1: 930px;
+$maxWidthForNarrowViewportLevel2: 520px;
+$maxWidthForNarrowViewportLevel3: 350px;
+$maxHeightForShortViewportLevel0: 600px;
+$maxHeightForShortViewportLevel1: 500px;
+$maxHeightForShortViewportLevel2: 400px;
+
+$minWidthForWideViewportLevel1: 930px;
+
+/*#endregion*/
+
+/**/
+/*#region Elements*/
+/**/
+
+html, body {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+html, body, form > div {
+	margin: 0px;
+}
+
+body {
+	font-family: $fontFamily;
+	font-size: $fontSize;
+	overflow: hidden;
+	color: $mainTextColor;
+	background-color: $shade0BackgroundColor;
+	-ms-touch-action: manipulation !important; /* otherwise double-click doesn't work */
+}
+
+h1, h2, h3, h4 {
+	font-weight: normal;
+}
+
+h1 {
+	font-size: 36px;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+h3 {
+	font-size: 16px;
+}
+
+h4 {
+	font-size: 14px;
+}
+
+img {
+	border-width: 0px;
+
+	+ span {
+		margin: 0px 4px;
+	}
+}
+
+form {
+	width: 100%;
+	height: 100%;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+}
+
+textarea {
+	border-color: $inputBorderColor;
+	border-width: 1px;
+	border-radius: 4px;
+	background-color: $shade0BackgroundColor;
+	color: $mainTextColor;
+	padding: 6px 12px;
+	@include appearance-none;
+
+	&:hover {
+		outline: 1px solid $secondaryColor;
+		outline-offset: -1px;
+	}
+
+	&:focus {
+		outline: 2px solid $primaryColor;
+		outline-offset: -2px;
+	}
+
+	&:disabled {
+		border-style: dotted;
+		color: $inputDisabledTextColor;
+		background-color: $inputDisabledBackgroundColor;
+
+		&:hover {
+			outline: none;
+		}
+	}
+
+	&:read-only {
+		outline: none;
+	}
+}
+
+select,
+.MultiselectBox a,
+.LabelText + a {
+	border-color: $inputBorderColor;
+	background: $shade0BackgroundColor;
+	color: $mainTextColor;
+	outline: none;
+}
+
+select:not([multiple]):not([size]),
+.MultiselectBox a,
+.LabelText + a {
+	border-width: 1px;
+	border-radius: 4px;
+	padding: 6px 36px 6px 12px;
+	cursor: pointer;
+	appearance: none;
+	background-image: url(../Images/ExpandCollapseDown.svg);
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 16px;
+	@include text-ellipsis;
+	max-width: 100%;
+
+	&:link, &:visited {
+		color: $mainTextColor; /* To override default <a> style */
+	}
+
+	&:focus {
+		outline: 2px solid $primaryColor;
+		outline-offset: -2px;
+	}
+
+	&:hover {
+		border-color: $secondaryColor;
+		color: $mainTextColor; /* To override default <a> style */
+		text-decoration: none; /* To override default <a> style */
+	}
+}
+
+option {
+	background-color: $shade1BackgroundColor;
+}
+
+input {
+	&[type=submit],
+	&[type=button] {
+		cursor: pointer;
+		text-align: center;
+		border-radius: 4px;
+		padding: 8px 12px;
+		background-color: $buttonBackgroundColor;
+		color: $darkBackgroundTextColor;
+		font-weight: 500;
+		font-size: 14px;
+		min-width: 100px;
+		background-position: -100% center;
+		@include appearance-none;
+
+		&:hover {
+			background-color: $buttonBackgroundColorHover;
+		}
+
+		&.Loading {
+			@include activity-indicator-overlay;
+			background-size: 20px;
+			pointer-events: none;
+			color: $buttonDisabledTextColor !important;
+			background-color: $buttonDisabledBackgroundColor !important;
+			min-height: 0px;
+			background-position: 10px center;
+			text-align: left;
+			padding-left: 36px !important;
+			transition: padding $transitionTime, background-position $transitionTime;
+		}
+
+		&.Disabled,
+		&:disabled {
+			pointer-events: none;
+			color: $buttonDisabledTextColor !important;
+			background-color: $buttonDisabledBackgroundColor !important;
+		}
+	}
+
+	&[type=text],
+	&[type=number],
+	&[type=search],
+	&[type=email],
+	&[type=date],
+	&[type=time],
+	&[type=password] {
+		border-width: 1px;
+		border-color: $inputBorderColor;
+		@include appearance-none;
+		background-color: $shade0BackgroundColor;
+		color: $mainTextColor;
+		@include text-ellipsis;
+		border-radius: 4px;
+		padding: 6px 12px;
+
+		&:hover {
+			outline: 1px solid $secondaryColor;
+			outline-offset: -1px;
+		}
+
+		&:focus {
+			outline: 2px solid $primaryColor;
+			outline-offset: -2px;
+		}
+
+		&.Disabled,
+		&:disabled {
+			color: $inputDisabledTextColor !important;
+			pointer-events: none !important;
+			cursor: default;
+			background-color: $inputDisabledBackgroundColor;
+		}
+
+		&:read-only {
+			color: $mainTextColor;
+			cursor: default;
+
+			&:hover, &:focus {
+				outline: none;
+			}
+		}
+	}
+
+	&[type=radio] {
+		margin: 4px 4px 0px 4px;
+	}
+
+	&[type=radio],
+	&[type=file], /* FF, IE7+, chrome (except button) */
+	&[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+		cursor: pointer;
+	}
+}
+
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	border-width: 0px;
+	border-style: solid;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border-color: $borderColor;
+	animation-duration: $transitionTime;
+	animation-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+	transition-duration: $transitionTime;
+	transition-property: none;
+}
+
+svg {
+	overflow: hidden;
+}
+
+a {
+	text-decoration: none;
+
+	&:link,
+	&:visited {
+		color: $linkColor;
+
+		&.Disabled {
+			color: $linkDisabledColor !important;
+			background-color: inherit !important;
+			pointer-events: none;
+		}
+	}
+
+	&:hover {
+		color: $linkHoverColor;
+		text-decoration: underline;
+	}
+}
+
+p, h1, h2, h3, h4, ul, ol, dl, table, blockquote, hr, dt, dd, pre {
+	margin: 0px 0px 15px 0px;
+}
+
+dd {
+	padding-left: 10px;
+}
+
+hr {
+	border-top-width: 1px;
+}
+
+dfn {
+	display: inline-block;
+	font-style: normal;
+	font-size: 12px;
+	text-align: center;
+	padding: 3px;
+	font-family: monospace;
+	line-height: 8px;
+	border-radius: 10px;
+	border: 2px solid $shade3BackgroundColor;
+	color: $shade3BackgroundColor;
+
+	&:hover {
+		background-color: $shade3BackgroundColor;
+		color: $shade0BackgroundColor;
+	}
+}
+
+.Disabled {
+	cursor: default;
+}
+
+.HiddenFocus:focus {
+	outline: 0;
+}
+
+@-ms-viewport {
+	height: device-height;
+	width: device-width;
+}
+
+/*#endregion*/
+
+/**/
+/*#region General Classes*/
+/**/
+
+.HiddenPanel {
+	display: none;
+}
+
+.LoadingPanel {
+	position: relative;
+	pointer-events: none;
+
+	> * {
+		opacity: 0;
+	}
+
+	&:after {
+		@include absolute-fill;
+		content: "";
+		@include activity-indicator-overlay;
+		min-height: 0px;
+		background-position: center center;
+	}
+}
+
+.LoadingIndicatorRight {
+	position: relative;
+
+	&:after {
+		@include absolute-fill;
+		content: "";
+		@include activity-indicator-overlay;
+		min-height: 0px;
+		background-size: 14px;
+		background-position: right center;
+	}
+}
+
+.LoadingHeading {
+	padding-right: 60px;
+	@include activity-indicator-overlay;
+	background-position: right center;
+}
+
+.LoadingImage {
+	vertical-align: middle;
+
+	&.Small {
+		width: 20px;
+		height: 20px;
+	}
+
+	&.Medium {
+		width: 32px;
+		height: 32px;
+	}
+}
+
+
+.ExpressionEditor {
+	/* would rather be able to customize these to be consistent with our naming, but that doesn't seem easy, so this is fine for now */
+
+	.cm-editor { /* codemirror hardcoded - seemingly customizable by editorAttributes facet */
+		resize: vertical;
+		height: 125px;
+		overflow: auto !important;
+		border-width: 1px;
+		border-color: $inputBorderColor;
+		border-radius: 4px;
+
+		&:hover {
+			outline: 1px solid $secondaryColor;
+			outline-offset: -1px;
+		}
+
+		&:focus-within {
+			outline: 2px solid $primaryColor;
+			outline-offset: -2px !important;
+
+			.cm-panels {
+				border-bottom: 1px solid $primaryColor;
+				border-left: 1px solid $primaryColor;
+				border-right: 1px solid $primaryColor;
+			}
+		}
+
+		.cm-cursor { /* codemirror hardcoded */
+			border-left-color: $expressionEditorCaretColor;
+		}
+
+		.cm-filter {
+			background-color: rgba(0, 255, 0, 0.08);
+
+			&:hover {
+				background-color: rgba(0, 255, 0, 0.2);
+			}
+		}
+
+		.cm-widget {
+			opacity: 0.4;
+			font-size: 10px;
+			background-color: rgba(0, 0, 0, 0.15);
+			border-radius: 2px;
+			padding: 2px;
+			margin-left: 4px;
+		}
+
+		.cm-panels { /* codemirror hardcoded */
+			padding-right: 20px;
+			background-color: $shade1BackgroundColor;
+			border-color: $inputBorderColor;
+			text-align: right;
+		}
+
+		.cm-tooltip-autocomplete { /* codemirror hardcoded */
+			background-color: $shade1BackgroundColor;
+		}
+
+		.cm-tooltip-autocomplete [aria-selected] {
+			background-color: $primaryColor;
+		}
+
+		.cm-tooltip-autocomplete ul li:hover {
+			color: $shade1BackgroundColor;
+			background-color: $primaryColor;
+		}
+
+		.cm-number {
+			color: $expressionEditorNumberColor;
+		}
+
+		.cm-string {
+			color: $expressionEditorStringColor;
+		}
+
+		.cm-property-name {
+			color: $expressionEditorPropertyNameColor;
+		}
+
+		.cm-control-keyword {
+			color: $expressionEditorControlKeywordColor;
+		}
+
+		.cm-variable-name {
+			color: $expressionEditorVariableNameColor;
+		}
+
+		.cm-logic-operator {
+			color: $expressionEditorLogicOperatorColor;
+		}
+
+		.cm-compare-operator {
+			color: $expressionEditorCompareOperatorColor;
+		}
+	}
+}
+
+
+.FlexSpacer {
+	@include flex-shrink-one-grow-one;
+}
+
+*[data-tooltip] {
+	position: relative;
+	@include user-select-none;
+	cursor: default;
+	transition-property: opacity;
+
+	&:hover {
+		&:before,
+		&:after {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+
+	&:before,
+	&:after {
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		left: 50%;
+		z-index: 100;
+		font-family: $fontFamily;
+		font-size: $fontSize;
+		text-align: left;
+		white-space: normal;
+		line-height: normal;
+	}
+
+	&:before {
+		content: '';
+		top: 25px;
+		margin: 0px 0px 0px -10px;
+		border-style: solid;
+		border-width: 0px 10px 10px 10px;
+		border-color: transparent transparent $tooltipBackgroundColor transparent;
+	}
+
+	&:after {
+		content: attr(data-tooltip);
+		top: 35px;
+		width: 150px;
+		margin: 0px 0px 0px -85px;
+		border-radius: 5px;
+		background-color: $tooltipBackgroundColor;
+		color: $darkBackgroundTextColor;
+		padding: 10px;
+	}
+}
+
+.MultiselectBox {
+
+
+	a {
+		text-decoration: none;
+		color: $mainTextColor;
+		padding: 6px 36px 6px 12px;
+		display: inline-block;
+	}
+}
+
+.InfoIcon {
+	width: 20px;
+	height: 20px;
+	background: url(../Images/TabGeneral.svg) no-repeat;
+	margin-left: 8px;
+	opacity: 0.6;
+}
+
+.LabelText {
+	font-weight: 500;
+	opacity: 0.5;
+	margin-right: 4px;
+}
+
+.MoreOptionsButton, .Options {
+	min-height: 36px;
+	width: 36px;
+	background: url(../Images/MoreIcon.svg) no-repeat;
+	background-size: 24px 24px;
+	background-position: center;
+	float: right;
+	opacity: 0.75;
+	border-radius: 6px;
+
+	&:hover {
+		opacity: 1;
+		background-color: rgba(128, 128, 128, 0.1);
+	}
+
+	> * {
+		display: none; /* text-indent: 100% does not work in Safari */
+	}
+}
+
+.SyntaxHelperButton {
+	float: right;
+	width: 32px;
+	height: 32px;
+	text-decoration: none;
+	background: url(../Images/AddSyntaxIcon.svg) no-repeat center;
+	background-size: 24px;
+	border-radius: 50%;
+	--popout-from: right-down;
+
+	&:hover {
+		background-color: $shade2BackgroundColor;
+	}
+}
+
+.ButtonCell {
+	text-align: center;
+
+	a {
+		display: inline-block;
+		font-weight: bold;
+		font-size: 18px;
+		text-decoration: none;
+		margin-left: 5px;
+
+		+ a {
+			margin-left: 5px;
+		}
+	}
+}
+
+.ButtonPanel {
+	@include display-flex;
+	flex-direction: row-reverse;
+	gap: 8px;
+
+	input {
+		@include flex-shrink-zero-grow-zero;
+		align-self: start;
+	}
+
+	> p,
+	> span {
+		@include break-word;
+		margin: 0px;
+	}
+
+	> a {
+		margin-right: auto;
+		padding: 5px 0;
+	}
+}
+
+.OuterPanel {
+	.CommandList {
+		margin-bottom: 0;
+		text-align: end;
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			text-align: start;
+		}
+
+		a {
+			display: inline-block;
+			margin: 4px;
+			white-space: nowrap;
+			@include ghost-button-without-hover;
+
+			&:hover {
+				@include ghost-button-hover;
+			}
+		}
+	}
+}
+
+.HeaderPanel .CommandPanel {
+	img {
+		width: 24px;
+		height: 24px;
+	}
+
+	.HasImage span { /* To hide Extra text */
+		display: none;
+	}
+
+	opacity: 0.75;
+
+	&:hover {
+		opacity: 1;
+		background-color: transparent;
+	}
+}
+
+.ImageSelector {
+	> * {
+		display: inline-block;
+		vertical-align: top;
+		margin-bottom: 0px;
+	}
+
+	.ImageInput {
+		width: 200px;
+		padding-left: 10px;
+		border-left-width: 1px;
+		margin-left: 10px;
+
+		> * {
+			display: block;
+			margin-bottom: 5px;
+			text-align: center;
+			width: 100%;
+		}
+
+		.ImageDropDestination {
+			border-width: 2px;
+			border-style: dashed;
+			padding: 5px;
+			background-color: $shade1BackgroundColor;
+		}
+	}
+
+	&.ReadOnly .ImageInput {
+		display: none;
+	}
+
+	.ImageDropDestination,
+	.ImageDisplay span {
+		opacity: 0.6;
+		font-size: 15px;
+		font-weight: bold;
+		text-align: center;
+	}
+}
+
+.DefaultCustomSelector {
+	> div {
+		margin: 0px;
+
+		&:last-child {
+			margin-top: 5px;
+		}
+
+		> div {
+			margin: 5px 0px 0px 15px;
+		}
+	}
+}
+
+.ResizeHandleBar {
+	opacity: 0;
+
+	&:hover {
+		opacity: 1;
+		background: linear-gradient(to right, rgba(0,0,0,0) 30%, $primaryColor, rgba(0,0,0,0) 70%);
+		transition-property: opacity;
+		transition-delay: 0.25s;
+		transition-duration: 0.5s;
+	}
+}
+
+.CollapsiblePanel {
+	.Header {
+		padding: 4px 8px;
+		width: 100%;
+		@include display-flex;
+		@include align-items-center;
+		@include justify-content-space-between;
+		border-bottom-width: 1px;
+		cursor: pointer;
+		user-select: none;
+
+		> * {
+			margin: 0;
+		}
+
+		.ToggleButton {
+			width: 20px;
+			height: 20px;
+			background-size: cover;
+			background-image: url(../Images/ExpandCollapseUp.svg);
+		}
+	}
+
+	.Content {
+		overflow: hidden;
+		transition-property: max-height;
+	}
+
+	&:not(.Expanded) {
+		.Header .ToggleButton {
+			background-image: url(../Images/ExpandCollapseDown.svg);
+		}
+
+		.Content {
+			max-height: 0;
+		}
+	}
+}
+
+.Card {
+	border-radius: 6px;
+	border-width: 1px;
+	background-color: $shade0BackgroundColor;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+	border-left: solid 4px $successColor;
+	padding: 6px;
+
+	@media (max-width: $maxWidthForNarrowViewportLevel1) {
+		padding: 5%;
+	}
+
+	&:after {
+		@include clear-float;
+	}
+
+	p {
+		opacity: 0.6;
+
+		&:last-child {
+			margin-bottom: 10px;
+			max-height: 58px;
+			@include overflow-auto;
+		}
+
+		span {
+			display: inline-block;
+			margin-right: 40px;
+		}
+	}
+
+	h3,
+	p {
+		margin: 10px 10px 0px 0px;
+	}
+
+	img {
+		float: left;
+		width: 200px;
+		height: 125px;
+		margin: 10px;
+		border-radius: 6px;
+		background-color: $shade2BackgroundColor;
+
+		@media (max-width: $maxWidthForNarrowViewportLevel1) {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			margin-bottom: 5px;
+		}
+	}
+
+	.Warning {
+		display: none;
+		background-image: url(../Images/NotificationWarningIcon.svg);
+		background-position: 8px;
+		background-size: 20px;
+		background-repeat: no-repeat;
+		border: 1px solid $warningColor;
+		padding: 6px 6px 6px 36px;
+		margin: 8px 10px;
+
+		@media (max-width: $maxWidthForNarrowViewportLevel1) {
+			margin: 8px 0 0 0;
+		}
+
+		input[type=button] {
+			background-color: $warningColor;
+			color: $darkBackgroundTextColor;
+			padding: 6px 12px;
+		}
+	}
+
+	&.ShowWarningMessage .Warning {
+		@include display-flex;
+		@include justify-content-space-between;
+		@include align-items-center;
+	}
+
+	&.LoadError,
+	&.IncorrectVersion,
+	&.Invalid {
+		border-left-color: $failureColor;
+	}
+
+	&.LicenseRestricted {
+		border-left-color: $warningColor;
+	}
+
+	&.Disabled {
+		border-left-color: $linkDisabledColor;
+	}
+
+	.CommandPanel {
+		float: right;
+		margin: 0px;
+
+		@media (max-width: $maxWidthForNarrowViewportLevel1) {
+			@include justify-content-flex-end;
+			width: 100%;
+		}
+	}
+}
+
+.Tile {
+	@include display-flex;
+	@include align-items-center;
+	@include flex-direction-column;
+	border-radius: 8px;
+	border-width: 1px;
+	background-color: $shade0BackgroundColor;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+	margin: 0;
+
+	div, p, h2 {
+		margin-bottom: 0;
+	}
+
+	.TitlePanel {
+		width: 100%;
+		border-bottom: 1px solid $borderColor;
+		@include display-flex;
+		@include justify-content-space-between;
+		@include align-items-center;
+		padding: 27px 30px 26px;
+	}
+
+	&.FullSize .ContentPanel {
+		padding: 0;
+	}
+
+	.ContentPanel {
+		width: 100%;
+		padding: 24px 30px 30px;
+
+		iframe {
+			width: 100%;
+			height: 200px;
+		}
+
+		> * {
+			line-height: 30px;
+		}
+
+		dl {
+			dt {
+				@include dt-compact;
+				width: 35%;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					@include dt-vertical-layout;
+				}
+			}
+
+			dd {
+				@include dd-compact;
+				width: 65%;
+				@include break-word;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					@include dd-vertical-layout;
+					overflow-wrap: anywhere;
+				}
+			}
+		}
+
+		em {
+			font-size: 42px;
+			opacity: 0.6;
+			font-style: normal; /* overwrite font-style: italic from browsers */
+		}
+
+		.PercentageBar {
+			max-width: 250px;
+			height: 6px;
+			border-width: 0;
+			border-radius: 100px;
+
+			.PercentageBarFilled {
+				border-radius: 100px;
+				background: $successColor;
+			}
+		}
+	}
+}
+
+.TabContainer {
+	@include display-flex;
+
+	.TabLinks {
+		@include display-flex;
+		@include flex-direction-column;
+		@include flex-shrink-zero-grow-zero;
+		border-right-width: 1px;
+		padding: 10px 0 20px;
+
+		> * {
+			cursor: pointer;
+			padding: 8px 20px 8px 30px;
+		}
+
+		> div:hover {
+			background-color: $shade1BackgroundColor;
+		}
+
+		> .Selected {
+			background-color: $shade2BackgroundColor;
+		}
+
+		@media (max-width: $maxWidthForNarrowViewportLevel0) {
+			padding: 8px 0;
+			border-bottom-width: 1px;
+		}
+	}
+
+	.TabContents {
+		padding: 20px;
+		@include overflow-auto;
+
+		> *:not(.Selected) {
+			display: none;
+		}
+	}
+
+	@media (max-width: $maxWidthForNarrowViewportLevel0) {
+		@include flex-direction-column;
+	}
+
+	&.StatusTab {
+		.TabContents {
+			@media (min-width: $maxWidthForNarrowViewportLevel0) {
+				max-height: 352px; /*It equals to the height of the TabLinks so the height of TabContainer will be the same with different tab selected */
+			}
+		}
+
+		.Header {
+			background-size: 20px;
+			background-repeat: no-repeat;
+			background-position: left center;
+			padding-left: 28px;
+
+			&.Incomplete {
+				background-image: url(../Images/ActivityIndicator.gif);
+			}
+
+			&.Passed {
+				background-image: url(../Images/NotificationSuccessIcon.svg);
+			}
+
+			&.Warning {
+				background-image: url(../Images/NotificationWarningIcon.svg);
+			}
+
+			&.Failed,
+			&.Error {
+				background-image: url(../Images/NotificationErrorIcon.svg);
+			}
+		}
+
+		p {
+			opacity: 0.8;
+			line-height: 16px;
+			margin-bottom: 25px;
+		}
+	}
+}
+
+.HistoryPanel {
+	.ListPanel {
+		> div {
+			position: relative;
+			@include display-flex;
+			@include flex-direction-column;
+			gap: 8px;
+
+			&.Selected {
+				outline: 2px solid $primaryColor;
+				outline-offset: 6px;
+				border-radius: 1px;
+				scroll-margin-top: 10px; /* add some margin for scrollIntoView since we have outline-offset */
+			}
+
+			*:not(dt) {
+				margin-bottom: 0;
+			}
+
+			.Header {
+				@include display-flex;
+				@include align-items-center;
+				@include justify-content-space-between;
+				gap: 20px;
+
+				span {
+					display: none;
+				}
+
+				.Info {
+					@include display-flex;
+					@include align-items-center;
+					gap: 10px;
+					height: 16px;
+				}
+
+				.Command {
+					@include display-flex;
+					@include align-items-center;
+
+					a {
+						padding: 4px;
+						border-radius: 4px;
+						@include display-inline-flex;
+
+						img {
+							width: 16px;
+							height: 16px;
+						}
+
+						&:hover {
+							background-color: $shade3BackgroundColor;
+						}
+					}
+
+
+					a:not(:first-child) {
+						margin-left: 4px;
+					}
+				}
+
+				.Who,
+				.Time,
+				> a {
+					font-size: 12px;
+				}
+
+				.AcknowledgedEvent,
+				.ProcessedEvent,
+				.AnnotatedEvent,
+				.Waiting {
+					margin-top: 0;
+					height: 16px;
+					background-repeat: no-repeat;
+					background-size: 16px;
+					padding: 8px;
+				}
+
+				.AcknowledgedEvent {
+					background-image: url(../Images/View.svg);
+				}
+
+				.ProcessedEvent {
+					background-image: url(../Images/Processed.svg);
+				}
+
+				.AnnotatedEvent {
+					background-image: url(../Images/EmptyMessages.svg); /* TODO icon */
+				}
+
+				.Waiting {
+					background-image: url(../Images/WaitingIcon.svg);
+				}
+			}
+
+			.Body {
+				.Content, .Title {
+					margin-bottom: 0;
+
+					.Data {
+						margin-bottom: 0;
+						clear: both;
+						padding: 10px 15px;
+						@include overflow-auto;
+						white-space: pre-wrap;
+					}
+				}
+			}
+		}
+	}
+
+	.QueuedMessage,
+	.SentMessage {
+		max-width: 80%;
+
+		.Header {
+			margin-bottom: 0;
+
+			.Who {
+				font-weight: 500;
+				font-size: 13px;
+			}
+
+			.Time {
+				opacity: 0.6;
+			}
+		}
+
+		.Body {
+
+			& > *, .Info > * {
+				margin-bottom: 0;
+			}
+
+			.Content {
+				@include break-word;
+
+				a {
+					word-break: break-all;
+				}
+
+				.Data {
+					border-radius: 10px;
+				}
+			}
+		}
+
+		&.Host {
+			align-self: flex-end;
+
+			.Header .Info, .Header, .Header .Command {
+				flex-direction: row-reverse;
+			}
+
+			.Body .Content .Data {
+				background-color: $primaryColor;
+				border-top-right-radius: 0;
+				color: $darkBackgroundTextColor;
+
+				a {
+					color: $darkBackgroundTextColor;
+					opacity: 0.6;
+
+					&:hover {
+						opacity: 0.8;
+					}
+				}
+			}
+		}
+
+		&.Guest {
+			align-self: flex-start;
+
+			.Body .Content .Data {
+				background-color: $shade2BackgroundColor;
+				border-top-left-radius: 0;
+			}
+		}
+	}
+
+	.QueuedCommand,
+	.RanCommand {
+		font-size: 11px;
+		font-family: monospace;
+		white-space: pre;
+		border-bottom-width: 1px;
+		margin-bottom: 0;
+		padding: 8px 0;
+		background-color: $shade0BackgroundColor;
+
+		&.Host {
+			p.Data {
+				background-image: url(../Images/CommandIn.svg);
+			}
+		}
+
+		&.Guest {
+			p.Data {
+				background-image: url(../Images/CommandOut.svg);
+			}
+		}
+
+		p.Who {
+			font-weight: bold;
+		}
+
+		p.Time {
+			opacity: 0.7;
+		}
+
+		.Body .Info .Content .Data {
+			margin: 0;
+			padding: 0 10px 0 20px;
+			background-position: 8px 2px;
+			background-size: 10px;
+			background-repeat: no-repeat;
+		}
+
+		.Header, .Body {
+			margin: 0 15px;
+		}
+	}
+
+	.AddedNote {
+		background-color: $shade2BackgroundColor;
+		border-radius: 4px;
+		padding: 15px 10px;
+		border-width: 1px;
+		transition-property: box-shadow;
+		transition-duration: $doubleTransitionTime;
+
+		&:hover {
+			box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+		}
+
+		&:hover:before {
+			border-width: 0;
+		}
+
+		&:before {
+			content: "";
+			box-shadow: 0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
+			position: absolute;
+			top: -1px;
+			right: -1px;
+			border-width: 0 30px 20px 0;
+			border-style: solid;
+			border-color: $shade1BackgroundColor $shade1BackgroundColor $shade3BackgroundColor $shade3BackgroundColor;
+			transition: border-width $doubleTransitionTime ease-in-out;
+			border-radius: 0 0 0 6px;
+		}
+
+		.Header {
+			margin-right: 30px;
+
+			p {
+				&.Who {
+					font-size: 14px;
+					font-weight: 500;
+					margin-left: 16px;
+				}
+
+				&.Data {
+					padding: 8px;
+					@include break-word;
+
+					a {
+						word-break: break-all;
+					}
+				}
+
+				&.Command a:last-child {
+					margin-right: 24px;
+				}
+			}
+		}
+
+		.Body {
+			border-top-width: 1px;
+			border-color: $shade4BackgroundColor;
+		}
+	}
+
+	.RequestedElevation,
+	.EncounteredElevationPrompt,
+	.RequestedAdministrativeLogon,
+	.QueuedProceedElevation {
+		width: 100%;
+
+		.Header {
+			margin-bottom: 0;
+
+			.Who {
+				font-weight: 500;
+				font-size: 13px;
+			}
+
+			.Time {
+				opacity: 0.6;
+			}
+		}
+
+		.Body {
+			& > *, .Info > * {
+				margin-bottom: 0;
+			}
+
+			.Content {
+				@include break-word;
+
+				a {
+					word-break: break-all;
+				}
+
+				.Data {
+					border-radius: 10px;
+				}
+			}
+
+			container-type: inline-size;
+			clear: both;
+			@include display-flex;
+			flex-wrap: wrap;
+			gap: 15px;
+			@include justify-content-space-between;
+			@include align-items-center;
+			background-color: $shade2BackgroundColor;
+			border-radius: 4px;
+			border-left: 4px solid $shade4BackgroundColor;
+			padding: 15px 20px;
+
+			.Info {
+				@include display-flex;
+				@include flex-direction-column;
+				@include justify-content-space-between;
+				gap: 10px;
+
+				.Title {
+					grid-column-start: 1;
+					font-weight: 500;
+					font-size: 16px;
+				}
+
+				.Content {
+					@include display-flex;
+					@include flex-direction-column;
+					gap: 15px;
+
+					.DataFieldList {
+						@include display-grid;
+						grid-template-columns: minmax(0, max-content) auto;
+						grid-gap: 0 15px;
+						margin-bottom: 0;
+
+						dt {
+							@include dt-compact;
+						}
+
+						dd {
+							@include dd-compact;
+							max-height: 52px;
+							@include overflow-auto;
+						}
+					}
+				}
+			}
+
+			.Response {
+				.EventHistoryItemResponse {
+					@include display-flex;
+					@include flex-wrap-wrap;
+					justify-content: end;
+					gap: 8px;
+
+					.RespondToElevationRequest, .RespondToAdministrativeLogonRequest {
+						@include display-flex;
+						@include align-items-center;
+						@include user-select-none;
+						@include text-ellipsis;
+						text-decoration: none;
+						color: $darkBackgroundTextColor;
+						border-radius: 6px;
+						padding: 8px 16px;
+						font-size: 14px;
+						font-weight: 500;
+						background-color: $buttonBackgroundColor;
+						border: none;
+						gap: 4px;
+
+						img {
+							width: 24px;
+							height: 24px;
+						}
+
+						&.Disabled {
+							background-color: $shade3BackgroundColor !important; /* DO NOT use $buttonDisabledBackgroundColor since card background color is also $shade2BackgroundColor */
+							color: $shade4BackgroundColor; /* CAN NOT use $buttonDisabledTextColor since background color changed */
+
+							img {
+								opacity: 0.2;
+								@include filter-brightness-low;
+							}
+						}
+
+						&.Loading {
+							@include activity-indicator-overlay;
+							background-size: 20px;
+							pointer-events: none;
+							min-height: 0px;
+							background-position: 10px center;
+							background-color: $shade3BackgroundColor !important;
+							color: $shade4BackgroundColor;
+
+							img {
+								visibility: hidden;
+							}
+						}
+
+						&:hover {
+							opacity: 0.8;
+						}
+
+						&.Approve {
+							background-color: $successColor;
+						}
+
+						&.Deny {
+							background-color: $failureColor;
+						}
+					}
+				}
+
+				.RequestResolutionList {
+					margin-bottom: 0;
+
+					div {
+						height: 24px;
+						padding-left: 24px;
+						background-size: 24px;
+						background-repeat: no-repeat;
+						margin-bottom: 0;
+						@include display-flex;
+						align-items: center;
+
+						span {
+							padding-left: 4px;
+							opacity: 0.7;
+						}
+					}
+
+					.ApprovedRequest {
+						background-image: url(../Images/Approved.svg);
+					}
+
+					.DeniedRequest {
+						background-image: url(../Images/Denied.svg);
+					}
+
+					.CanceledRequest {
+						background-image: url(../Images/Canceled.svg);
+					}
+				}
+			}
+		}
+	}
+}
+
+.CommandPanel {
+	@include display-flex;
+
+	> a {
+		@include display-flex;
+		@include align-items-center;
+		padding: 6px 12px;
+		text-decoration: none;
+		font-size: 15px;
+		height: 100%;
+		border-radius: 4px;
+
+		&.TouchActive,
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.05);
+		}
+
+		&.AlwaysOverflow { /* for extension backward compatibility */
+			display: none;
+		}
+	}
+}
+
+a.GoLink {
+	text-decoration: none;
+	font-family: "Segoe UI Symbol";
+	width: 24px; /* Default to Extra Small */
+	height: 24px;
+	color: $darkBackgroundTextColor;
+	border-radius: 50%;
+	background: url(../Images/GoLink.svg) no-repeat center;
+	background-color: $primaryColor;
+	background-size: contain;
+	@include flex-shrink-zero-grow-zero;
+
+	&.Disabled {
+		background-color: $buttonDisabledBackgroundColor !important;
+		background-image: url(../Images/GoLinkDisabled.svg);
+	}
+
+	&.Small {
+		width: 32px;
+		height: 32px;
+	}
+
+	&.Medium {
+		width: 42px;
+		height: 42px;
+	}
+
+	&.Large {
+		width: 52px;
+		height: 52px;
+	}
+
+	&:hover {
+		background-color: $buttonBackgroundColorHover;
+	}
+}
+
+.Success {
+	color: $successColor;
+}
+
+.Failure {
+	color: $failureColor;
+}
+
+.Warning {
+	color: $warningColor;
+}
+
+.SecondaryButton {
+	background-color: $shade1BackgroundColor;
+	border-radius: 4px;
+	border: 1px solid $borderColor;
+	display: inline-block;
+	cursor: pointer;
+	color: $mainTextColor;
+	font-size: 14px;
+	padding: 4px 12px;
+	text-decoration: none;
+
+	&:disabled {
+		color: $buttonDisabledTextColor;
+		background-color: $buttonDisabledBackgroundColor;
+		cursor: default;
+	}
+
+	&:hover {
+		background-color: $shade2BackgroundColor;
+	}
+}
+
+.ResourcePanel .ImageResource div,
+.ImageSelector .ImageDisplay {
+	@include display-inline-flex;
+	@include justify-content-center;
+	@include align-items-center;
+	width: 72px;
+	height: 72px;
+	background-color: $shade2BackgroundColor;
+	padding: 4px;
+
+	img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+}
+
+.ShareMessage {
+	margin-top: 20px;
+}
+
+label {
+	cursor: pointer;
+
+	span {
+		padding-left: 4px;
+	}
+
+	input:disabled + span {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+}
+
+input[type=checkbox],
+.CheckBox {
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+
+	&:before, &:after {
+		top: 0px;
+		left: -1px;
+		content: '';
+		position: absolute;
+		transition: background-color $transitionTime;
+	}
+
+	&:after {
+		width: 14px;
+		height: 14px;
+		z-index: 0;
+		border-radius: 2px;
+	}
+
+	&:disabled {
+		pointer-events: none;
+	}
+}
+
+input[type=checkbox]:checked,
+.Checked > .CheckBox,
+.HalfChecked > .CheckBox {
+	&:before {
+		top: 3px;
+		left: 1px;
+		width: 3px;
+		height: 6px;
+		border-top: 1px solid transparent;
+		border-left: 1px solid transparent;
+		border-right: 2px solid #fff;
+		border-bottom: 2px solid #fff;
+		transform: rotateZ(37deg);
+		transform-origin: 100% 100%;
+		z-index: 1;
+	}
+
+	&:after {
+		border: 1px solid $primaryColor;
+		background-color: $primaryColor;
+	}
+
+	&:disabled {
+		&:after {
+			border: 1px solid $buttonDisabledBackgroundColor;
+			background-color: $buttonDisabledBackgroundColor;
+		}
+	}
+}
+
+input[type=checkbox]:indeterminate {
+	&:before {
+		top: 3px;
+		left: 2px;
+		width: 0px;
+		height: 0px;
+		border: 5px solid $primaryColor;
+		transform-origin: 100% 100%;
+		z-index: 1;
+	}
+}
+
+input[type=checkbox]:not(:checked),
+.CheckBox {
+	&:after {
+		border: 1px solid #7d7d7d;
+		background-color: $shade0BackgroundColor;
+	}
+
+	&:disabled {
+		&:after {
+			border: 1px solid $buttonDisabledBackgroundColor;
+			background-color: $shade1BackgroundColor;
+		}
+	}
+}
+
+.HalfChecked > .CheckBox {
+	opacity: 0.5;
+}
+
+.TogglePanel {
+	@include display-flex;
+	@include align-items-center;
+	margin-bottom: 0px;
+
+	.ToggleButton {
+		margin-left: 8px;
+	}
+}
+
+.ToggleButton {
+	position: relative;
+	display: inline-block;
+	width: 32px;
+	height: 16px;
+
+	input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.Slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #7d7d7d;
+		border-radius: 100px;
+		transition-property: background-color;
+		transition-duration: $transitionTime;
+
+		&:before {
+			position: absolute;
+			content: "";
+			height: 12px;
+			width: 12px;
+			left: 2px;
+			bottom: 2px;
+			background-color: white;
+			border-radius: 50%;
+			transition-property: transform;
+			transition-duration: $transitionTime;
+		}
+	}
+
+	input:checked + .Slider {
+		background-color: $primaryColor;
+
+		&:before {
+			-webkit-transform: translateX(16px);
+			-ms-transform: translateX(16px);
+			transform: translateX(16px);
+		}
+	}
+}
+
+.FinishImage {
+	margin: auto;
+	height: 110px;
+	width: 107px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-image: url(../Images/FinishImage.svg);
+}
+
+.PercentageBar {
+	@include display-flex;
+	height: 12px;
+	margin: 5px 0;
+	border: 1px solid #CCC;
+	background-color: #E6E6E6;
+
+	.PercentageBarFilled {
+		height: 100%;
+		background-color: #26A0DA;
+	}
+
+	.PercentageBarEmpty {
+		height: 100%;
+	}
+}
+
+.ScreenshotPanel {
+	margin: 15px 0 30px 0;
+
+	div {
+		position: relative;
+		margin-bottom: 5px;
+		text-align: center;
+		width: 100%;
+		@include overflow-auto;
+	}
+
+	img {
+		border-width: 1px;
+		margin: 0;
+		max-width: 100%;
+		max-height: 300px;
+		cursor: pointer;
+	}
+
+	&.Loading img {
+		opacity: .25;
+	}
+
+	.QueuedGuestInfoActivityIndicator {
+		position: absolute;
+		height: 35px;
+		width: 35px;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+		background-image: url(../Images/ActivityIndicator.gif);
+		background-size: 35px;
+	}
+
+	&:not(.Loading) .QueuedGuestInfoActivityIndicator {
+		display: none;
+	}
+
+	p {
+		text-align: center;
+		font-size: 12px;
+
+		a {
+			margin-left: 10px;
+		}
+	}
+}
+
+input[type=search].FilterBox {
+	font-size: 12px;
+	padding: 8px 8px 8px 30px;
+	max-width: 225px;
+	min-width: 100px;
+	background-position: 5px center;
+	background-size: 22px;
+	background-repeat: no-repeat;
+	background-image: url(../Images/Search.svg);
+	border-width: 1px;
+	border-radius: 100px;
+
+	&:focus {
+		margin-bottom: 0;
+	}
+}
+
+.Selectable {
+	&:hover {
+		background-color: $shade1BackgroundColor;
+	}
+
+	&.Selected {
+		background-color: $shade2BackgroundColor;
+	}
+}
+/*#endregion*/
+
+/**/
+/*#region Structure*/
+/**/
+
+.SetupWizardPage {
+	.MainPanel {
+		@include overflow-auto;
+	}
+
+	.Wizard {
+		width: 100%;
+
+		.WizardStep {
+			text-align: center;
+
+			.TopBar {
+				margin: 30px auto;
+				height: 34px;
+				width: 234px;
+				background-repeat: no-repeat;
+				background-size: 100%;
+
+				&.TopBar1of4 {
+					background-image: url(../Images/TopBar1of4.svg);
+				}
+
+				&.TopBar2of4 {
+					background-image: url(../Images/TopBar2of4.svg);
+				}
+
+				&.TopBar3of4 {
+					background-image: url(../Images/TopBar3of4.svg);
+				}
+
+				&.TopBar4of4 {
+					background-image: url(../Images/TopBar4of4.svg);
+				}
+			}
+
+			.WelcomeImage {
+				margin: auto;
+				height: 223px;
+				width: 427px;
+				background-repeat: no-repeat;
+				background-size: 100%;
+				background-image: url(../Images/WelcomeImage.svg);
+			}
+
+			h1 {
+				font-size: 70px;
+				margin-bottom: 0px;
+				opacity: 0.6;
+				font-weight: normal;
+				text-transform: uppercase;
+			}
+
+			h4 {
+				font-size: 26px;
+				margin-bottom: 35px;
+				text-transform: uppercase;
+			}
+
+			p {
+				font-size: 18px;
+				opacity: 0.6;
+				margin: 20px 0 35px 0;
+				text-align: left;
+			}
+
+			.LicenseTextBox {
+				font-size: 14px;
+				width: 400px;
+				height: 125px;
+				resize: vertical;
+			}
+		}
+
+		.WizardNavigation {
+			padding-top: 20px;
+			padding-right: 0;
+
+			input {
+				padding: 8px 32px;
+				font-size: 15px;
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+
+			td:nth-last-child(2) input {
+				color: $primaryColor;
+				background-color: transparent;
+			}
+		}
+
+		dl {
+			width: 100%;
+			text-align: left;
+			margin-bottom: 35px;
+
+			dt {
+				font-size: 18px;
+				opacity: 0.6;
+			}
+
+			dd {
+				padding-left: 0;
+				margin-bottom: 35px;
+
+				input {
+					width: 100%;
+					font-size: 20px;
+				}
+			}
+		}
+	}
+}
+
+.OuterPanel {
+	@include display-grid;
+	-ms-grid-columns: $navigationPanelWidth 1fr;
+	grid-template-columns: $navigationPanelWidth 1fr;
+	-ms-grid-rows: $headerPanelHeight 1fr;
+	grid-template-rows: $headerPanelHeight 1fr;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	grid-template-areas: "HeaderPanel HeaderPanel" "MainPanel MainPanel";
+
+	@media (max-width: $maxWidthForNarrowViewportLevel2) {
+		.GuestPage:not(.UserAuthenticated).ShowMenu &::before {
+			display: none;
+		}
+	}
+
+	.UserAuthenticated.GuestPage &,
+	.UserAuthenticated.ChangePasswordPage &,
+	.UserAuthenticated.LoginPage & {
+		grid-template-areas: "HeaderPanel HeaderPanel" "NavigationPanel MainPanel";
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			grid-template-areas: "HeaderPanel HeaderPanel" "MainPanel MainPanel";
+		}
+	}
+
+	.UserAuthenticated & {
+		grid-template-areas: "HeaderPanel MainPanel" "NavigationPanel MainPanel";
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			grid-template-areas: "HeaderPanel HeaderPanel" "MainPanel MainPanel";
+		}
+	}
+
+	.SetupWizardPage & {
+		grid-template-areas: "HeaderPanel HeaderPanel" "MainPanel MainPanel";
+	}
+
+	> * {
+		position: relative;
+		margin: 0px;
+	}
+
+	.HeaderPanel {
+		-ms-grid-row: 1;
+		-ms-grid-column: 1;
+		-ms-grid-column-span: 2;
+		grid-area: HeaderPanel;
+		@include display-flex;
+		width: 100%;
+		height: $headerPanelHeight;
+		background-color: $headerBackgroundColor;
+		color: $headerTextColor;
+
+		.LoginPage & {
+			background-color: $headerBackgroundColor;
+		}
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			.UserAuthenticated & {
+				background-color: $shade0BackgroundColor;
+			}
+		}
+
+		> * {
+			height: $headerPanelHeight;
+			margin-bottom: 0;
+		}
+
+		.LogoIconLink {
+			@include flex-shrink-zero-grow-zero;
+			background-color: $headerBackgroundColor;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				display: none;
+
+				.LoginPage:not(.UserAuthenticated) &,
+				.ChangePasswordPage:not(.UserAuthenticated) &,
+				.GuestPage:not(.UserAuthenticated) &,
+				.ShowMenu & {
+					display: block;
+				}
+			}
+		}
+
+		.LogoPanel {
+			@include flex-shrink-one-grow-one;
+			font-size: 26px;
+			line-height: 42px;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				background-image: none;
+			}
+		}
+
+		.CommandPanel {
+			@include flex-shrink-zero-grow-zero;
+			display: none;
+
+			.GuestPage &,
+			.LoginPage & {
+				@include display-flex;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					img {
+						@include filter-brightness-mid;
+					}
+				}
+			}
+
+			img {
+				@include filter-brightness-high;
+			}
+
+			a {
+				color: $darkBackgroundTextColor;
+			}
+		}
+
+		.LogoIconVisible & .LogoIconLink {
+			padding: 8px 0;
+			flex-basis: $navigationPanelWidth;
+			-webkit-flex-basis: $navigationPanelWidth;
+			-ms-flex-basis: $navigationPanelWidth;
+			background-origin: content-box;
+			background-image: $logoIcon;
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.HasMasterPanel & .LogoPanel {
+			display: none;
+		}
+
+		.LogoHeadingVisible & .LogoPanel:after {
+			cursor: default;
+			@include user-select-none;
+			content: 'ScreenConnect Remote Support Software';
+		}
+
+		.LogoImageVisible & .LogoPanel {
+			padding: 8px 0;
+			background-image: $logoImage;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-origin: content-box;
+			background-position-y: center;
+		}
+
+		.ShowMenuButton {
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				width: $navigationPanelWidth;
+				height: $headerPanelHeight;
+				background-origin: content-box;
+				background: url(../Images/Menu.svg) no-repeat;
+				background-size: 24px;
+				background-position: center;
+				@include flex-shrink-zero-grow-zero;
+
+				.LoginPage:not(.UserAuthenticated) &,
+				.ChangePasswordPage:not(.UserAuthenticated) &,
+				.GuestPage:not(.UserAuthenticated) & {
+					display: none;
+				}
+
+				.ShowMenu & {
+					width: 0px;
+
+					&::after {
+						position: fixed;
+						top: 0;
+						bottom: 0;
+						left: $navigationPanelWidth;
+						right: 0;
+						content: '';
+						background-color: rgba(0, 0, 0, 0.4);
+						z-index: 99;
+					}
+				}
+			}
+		}
+	}
+
+	.NavigationPanel {
+		grid-area: NavigationPanel;
+		background-color: $navigationPanelBackgroundColor;
+		@include flex-direction-column;
+		@include align-items-center;
+		text-align: center;
+		align-items: stretch;
+		color: $darkBackgroundTextColor;
+		@include overflow-auto;
+		display: none;
+		@include user-select-none;
+		padding: 0 0 15px 0;
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			width: 0px;
+			position: absolute;
+			top: $headerPanelHeight;
+			bottom: 0;
+
+			.ShowMenu & {
+				width: $navigationPanelWidth;
+				z-index: 100;
+			}
+		}
+
+		.UserAuthenticated & {
+			@include display-flex;
+		}
+
+		.SetupWizardPage & {
+			display: none;
+		}
+
+		> * {
+			padding: 8px 0px;
+			margin: 0px;
+			flex-shrink: 1;
+		}
+
+		.FlexStartSpacer {
+			display: none;
+		}
+
+		> div:not(.FlexSpacer) {
+			&:not(.TrayPanelContainer) {
+				cursor: pointer;
+				opacity: 0.75;
+				text-decoration: none;
+				color: inherit;
+				transition-property: opacity;
+
+				&:hover {
+					opacity: 1;
+					background-color: #383838;
+				}
+
+				&.Selected {
+					opacity: 1;
+					box-shadow: 4px 0 0 0 $primaryColor inset;
+					background-color: #383838;
+				}
+			}
+
+			&.TrayPanelContainer {
+				width: 48px;
+				background-color: rgba(128,128,128,0.15);
+				border-radius: 100px;
+				margin: auto;
+				padding: 6px 0;
+
+				span {
+					display: none;
+				}
+
+				> * {
+					--popout-from: right-up;
+					margin: 0;
+				}
+
+				.TrayIconPanel {
+					@include display-flex;
+					@include flex-direction-column;
+					margin: 0;
+
+					> * {
+						margin: 5px 0;
+						opacity: 0.75;
+
+						&:hover {
+							opacity: 1;
+						}
+					}
+
+					.NonEmpty {
+						position: relative;
+
+						&:after {
+							@include unacknowledged-glyph;
+							position: absolute;
+							top: 0;
+							right: 2px;
+						}
+					}
+				}
+
+				.UserMenuButton {
+					cursor: pointer;
+					padding: 0;
+					margin: 5px 0;
+
+					span:first-child {
+						@include user-select-none;
+						border-radius: 100px;
+						width: 32px;
+						height: 32px;
+						background-color: $primaryColor;
+						color: $darkBackgroundTextColor;
+						font-size: 18px;
+						line-height: 32px;
+						display: inline-block;
+					}
+				}
+			}
+		}
+
+		img {
+			width: 24px;
+			height: 24px;
+			margin: 2px;
+		}
+
+		span {
+			display: block;
+
+			&:last-child {
+				@media (max-height: $maxHeightForShortViewportLevel0) {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.MainPanel {
+		-ms-grid-column: 1;
+		-ms-grid-row: 2;
+		-ms-grid-column-span: 2;
+		grid-area: HeaderPanel / MainPanel / MainPanel / MainPanel;
+		@include display-grid;
+		-ms-grid-columns: $masterPanelWidth $mainDetailPanelWidth $subDetailPanelWidth;
+		grid-template-columns: $masterPanelWidth $mainDetailPanelWidth $subDetailPanelWidth;
+		-ms-grid-rows: $headerPanelHeight 1fr;
+		grid-template-rows: $headerPanelHeight 1fr;
+		grid-template-areas: "MasterPanel MainDetailHeaderPanel SubDetailHeaderPanel" "MasterPanel MainDetailPanel SubDetailPanel";
+		min-width: 280px;
+		--grid-resizable-column-edges: MainPanelNormalView / 0 150px end -5px 2px, 2 44px start -2px 5px;
+		pointer-events: none;
+		@include overflow-auto;
+
+		.HostPage &,
+		.AdministrationPage & {
+			overflow: hidden;
+		}
+
+		.AdministrationPage & {
+			grid-template-areas: "MasterPanel MainDetailHeaderPanel MainDetailHeaderPanel" "MasterPanel DetailPanel DetailPanel" "MasterPanel DetailPanel DetailPanel";
+		}
+
+		@media (max-width: $maxWidthForNarrowViewportLevel1) {
+			grid-template-columns: $narrowMasterPanelWidth 1fr;
+			grid-template-rows: $headerPanelHeight 1fr $toggleDetailPanelButtonHeight;
+			grid-template-areas: "MasterPanel MainDetailHeaderPanel" "MasterPanel MainDetailPanel" "MasterPanel SubDetailPanel";
+			--grid-resizable-column-edges: none;
+
+			&.ShowDetailPanel {
+				grid-template-rows: $headerPanelHeight 1fr $narrowSubDetailPanelHeight;
+
+				.SubDetailPanel .ToggleDetailPanelButton {
+					background-image: url(../Images/ExpandCollapseDown.svg);
+					background-size: 24px;
+				}
+			}
+		}
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			grid-template-columns: 1fr;
+			grid-template-areas: "MainDetailHeaderPanel" "MainDetailPanel" "SubDetailPanel";
+
+			.AdministrationPage & {
+				grid-template-areas: "MainDetailHeaderPanel" "DetailPanel" "DetailPanel";
+			}
+		}
+
+		> * {
+			position: relative;
+			margin: 0px;
+			pointer-events: auto;
+		}
+
+		> .ContentPanel {
+			-ms-grid-column-span: 3;
+			-ms-grid-row-span: 3;
+			grid-area: 2/1/-1/-1;
+			padding: 20px 40px;
+
+			.GuestPage &,
+			.LoginPage &,
+			.ChangePasswordPage & {
+				background-image: url(../Images/PageBackground.png);
+				background-position: center;
+				background-size: cover;
+				padding: 60px 0px;
+				@include overflow-auto;
+				@include display-flex;
+				@include align-items-center;
+				@include flex-direction-column;
+			}
+
+			.GuestPage & {
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					@include align-items-flex-start;
+				}
+			}
+
+			.LoginPage & {
+				@media (min-width: $minWidthForWideViewportLevel1) and (max-height: $maxHeightForShortViewportLevel2) {
+					padding: 20px 0px;
+				}
+			}
+
+			.GuestPage & > div,
+			> .AuthPanel {
+				margin: auto;
+				background-color: $shade0BackgroundColor;
+				border-radius: 8px;
+				box-shadow: 0 2px 10px 0 rgba(0,0,0,0.4);
+				border-top: solid 4px $primaryColor;
+			}
+
+			.GuestPage & > div {
+				max-width: 95%;
+				@include display-flex;
+				@include flex-shrink-zero-grow-zero;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					@include flex-direction-column;
+				}
+
+				> div {
+					padding: 30px 30px 15px 30px;
+					margin: 0px;
+					@include flex-shrink-zero-grow-zero;
+					width: 300px;
+
+					@media (max-width: $maxWidthForNarrowViewportLevel1) {
+						padding: 20px 20px 10px 20px;
+					}
+
+					&.WelcomePanel {
+						h2 {
+							font-size: 44px;
+							margin-bottom: 15px;
+							line-height: 1em;
+						}
+
+						p {
+							opacity: 0.6;
+							font-size: 15px;
+							max-height: 257px;
+							@include overflow-auto;
+						}
+
+						&[style*="display: none;"] + .ActionPanel {
+							padding-left: 30px;
+
+							@media (max-width: $maxWidthForNarrowViewportLevel1) {
+								padding-top: 20px;
+								padding-left: 20px;
+							}
+						}
+					}
+
+					&.ActionPanel {
+						padding-left: 0;
+						@include display-flex;
+						@include flex-direction-column;
+						@include justify-content-center;
+
+						@media (max-width: $maxWidthForNarrowViewportLevel1) {
+							padding-top: 0;
+							padding-left: 20px;
+						}
+
+						> div {
+							display: inline-block;
+							background-color: $shade1BackgroundColor;
+							padding: 20px;
+							box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+							width: 100%;
+							border-radius: 4px;
+
+							.Loading {
+								@include activity-indicator-overlay;
+							}
+
+							> * {
+								margin: 0px;
+							}
+
+							a {
+								float: right;
+							}
+
+							> h2 {
+								font-size: 20px;
+								color: $primaryColor;
+								line-height: 1.25em;
+
+								> em {
+									font-size: 32px;
+									font-weight: bold;
+									font-style: normal;
+								}
+							}
+
+							p {
+								margin-top: 8px;
+
+								&:empty {
+									display: none;
+								}
+
+								&.GuestActionBar {
+									@include display-flex;
+									@include justify-content-space-between;
+									@include align-items-center;
+									gap: 8px;
+
+									input[type="text"],
+									input[type="search"],
+									select {
+										@include flex-shrink-one-grow-one;
+									}
+
+									select {
+										font-size: 20px;
+									}
+
+									input [type="text"],
+									input[type="search"] {
+										font-size: 30px;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&.Authentication {
+				.AuthPanel {
+					padding: 24px;
+					width: 330px;
+
+					&.ChangePasswordPage {
+						width: 380px;
+					}
+
+					h1 {
+						font-size: 18px;
+						margin-bottom: 8px;
+					}
+
+					/* This class prevents labels from appearing on the screen but makes them visible to screen readers
+					for accessibility */
+					label:not(.AuthCheckBox) span {
+						position: absolute;
+						width: 1px;
+						height: 1px;
+						padding: 0px;
+						margin: -1px;
+						overflow: hidden;
+						clip: rect(0, 0, 0, 0);
+						white-space: nowrap;
+						border: 0;
+					}
+
+					.LogoContainer {
+						width: 160px;
+						height: 18px; 
+						margin-bottom: 24px;
+						background-size: cover;
+						background-repeat: no-repeat;
+						background-image: url(../Images/LoginPanelLogoLightTheme.svg);
+					}
+
+					.Instructions {
+						font-size: 12px;
+						margin-bottom: 16px;
+					}
+
+					.AuthenticationDividerContainer {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						text-align: center;
+						width: 100%;
+						margin-bottom: 24px;
+
+						hr {
+							flex: 1;
+							border-top: 1px solid #2D9191;
+							margin: 0 10px;
+						}
+					}
+
+					.ForgotPasswordLinkContainer {
+						justify-self: end;
+						margin-bottom: 32px;
+
+						a {
+							font-size: 12px;
+						}
+					}
+
+					.ErrorLabel {
+						margin-top: 16px;
+					}
+
+					@media (min-width: $minWidthForWideViewportLevel1) and (max-height: $maxHeightForShortViewportLevel2) {
+						padding: 15px 25px;
+
+						* {
+							margin: 0px;
+						}
+
+						h1 {
+							font-size: 24px;
+							grid-column: 1 / -1;
+						}
+
+						.Instructions {
+							grid-column: 1 / -1;
+						}
+
+
+						&.LoginPage {
+							width: 700px;
+
+							> form {
+								display: grid;
+								gap: 8px;
+								grid-template-columns: repeat(4, 1fr);
+								grid-template-rows: repeat(4, auto);
+								@include align-items-center;
+
+								.ErrorLabel {
+									grid-column: 2 / -1;
+								}
+
+								input {
+									margin-bottom: 0px;
+								}
+
+								.ForgotPasswordLinkContainer {
+									justify-self: center;
+									margin-bottom: 0px;
+								}
+							}
+
+							.ExternalAuthenticationPanel {
+								h3 {
+									font-size: 12px;
+									margin-bottom: 8px;
+								}
+
+								form {
+									margin-bottom: 24px;
+								}
+							}
+						}
+
+						&.ResetPasswordPage {
+							width: 500px;
+
+							> form {
+								display: grid;
+								gap: 8px;
+								grid-template-columns: repeat(2,1fr);
+								grid-template-rows: repeat(4,auto);
+								@include align-items-center;
+
+								.ErrorLabel {
+									grid-column: 1 / -1;
+								}
+							}
+						}
+					}
+				}
+
+				.AuthPanel,
+				.InfoPanel {
+					@media only screen and (max-width: 360px) {
+						left: 6%;
+						width: 88%;
+						margin-left: 6%;
+						margin-right: 6%;
+						padding-left: 6%;
+						padding-right: 6%;
+					}
+				}
+
+				form > * {
+					@media (max-height: $maxHeightForShortViewportLevel1) {
+						margin-bottom: 8px;
+					}
+				}
+
+				label.AuthCheckBox {
+					@include display-flex;
+					align-items: center;
+					margin-bottom: 16px;
+				}
+
+				.AuthTextBox {
+					margin-bottom: 16px;
+					display: block;
+					font-size: 14px;
+
+					&:last-of-type {
+						@media (min-width: $minWidthForWideViewportLevel1) and (max-height: $maxHeightForShortViewportLevel2) {
+							margin-bottom: 0;
+						}
+					}
+				}
+
+				.ErrorLabel {
+					color: $failureColor;
+				}
+
+				h4 {
+					font-size: 22px;
+					text-align: center;
+				}
+
+				input {
+					&[type=text],
+					&[type=password] {
+						font-size: 14px;
+						line-height: normal;
+						width: 100%;
+						padding: 8px 12px;
+						@include box-sizing-border-box;
+					}
+
+					&[type=submit],
+					&[type=button] {
+						display: block;
+						font-size: 16px;
+						width: 100%;
+						padding: 10px 0px;
+
+						@media (min-width: $minWidthForWideViewportLevel1) and (max-height: $maxHeightForShortViewportLevel2) {
+							padding: 8px;
+						}
+					}
+
+					&:disabled,
+					&:read-only:not([type=button]):not([type=submit]) { /* Firefox treats input[type=button] and input[type=submit] elements readonly*/
+						color: $inputDisabledTextColor;
+					}
+				}
+
+				.ExternalAuthenticationPanel {
+					font-size: 12px;
+					align-items: center;
+					margin: 16px 0 0 0;
+					@include display-flex;
+					@include flex-direction-column;
+
+					form {
+						margin-bottom: 24px;
+					}
+
+					h3 {
+						margin-bottom: 16px;
+					}
+				}
+
+				.PanelDivider {
+					align-items: center;
+					@include display-flex;
+					@include flex-direction-column;
+				}
+
+				.OneTimePasswordShouldTrustCheckBox > label {
+					margin-left: 4px;
+				}
+			}
+
+			&.SetupWizard {
+				width: 100%;
+				padding: 0 calc(50% - 230px);
+				@include overflow-auto;
+			}
+		}
+
+		.MasterPanel {
+			grid-area: MasterPanel;
+			background-color: $masterPanelBackgroundColor;
+			color: $mainTextColor;
+			border-right-width: 1px;
+
+			@include display-flex;
+			@include flex-direction-column;
+			z-index: 8;
+			overflow: hidden;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				z-index: 100;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: $superNarrowMasterPanelWidth;
+				transform: translateX(-100%);
+				transition: transform $tripleTransitionTime;
+
+				.ShowMenu & {
+					z-index: 100;
+					transform: translateX(0);
+					left: $navigationPanelWidth;
+					transition: transform $tripleTransitionTime ease;
+				}
+			}
+
+			> * {
+				min-width: 150px;
+			}
+
+			> h2 {
+				margin: 0px 8%;
+				line-height: $headerPanelHeight;
+				font-size: 24px;
+				@include flex-shrink-zero-grow-zero;
+				@include text-ellipsis;
+			}
+
+			> p {
+				margin: 4px 8% 15px 8%;
+				overflow: hidden;
+				@include flex-shrink-zero-grow-zero;
+			}
+
+			p {
+				&.Create {
+					@include display-flex;
+					@include justify-content-center;
+
+					a {
+						display: block;
+						text-decoration: inherit;
+						color: $darkBackgroundTextColor;
+						border-radius: 4px;
+						margin: 0px 15px;
+						padding: 8px 0px;
+						font-size: 14px;
+						font-weight: 500;
+						text-align: center;
+						background-color: $buttonBackgroundColor;
+						max-width: 300px;
+						width: 100%;
+						@include user-select-none;
+
+						&.TouchActive,
+						.TouchDisabled &:hover {
+							background-color: $buttonBackgroundColorHover;
+						}
+					}
+				}
+
+				&.Ambient {
+					font-size: 13px;
+					text-align: center;
+					@include text-ellipsis;
+					margin-bottom: 22px;
+					@include user-select-none;
+
+					a {
+						opacity: 0.75;
+						color: inherit;
+						text-decoration: none;
+						transition-property: opacity;
+
+						&.TouchActive,
+						.TouchDisabled &:hover {
+							opacity: 0.9;
+						}
+					}
+				}
+			}
+
+			.MasterListContainer {
+				@include flex-shrink-one-grow-one;
+				position: relative;
+				overflow-y: auto;
+				padding-right: 0px;
+				margin: 8px 8%;
+				-webkit-overflow-scrolling: touch;
+
+				> * {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+				}
+
+				&::-webkit-scrollbar-thumb {
+					background-color: $shade3BackgroundColor;
+				}
+
+				ul {
+					margin: 0px;
+					padding: 0px;
+					@include user-select-none;
+					list-style: none;
+					font-size: 14px;
+
+					span {
+						float: right;
+						margin: -1px 2px;
+					}
+
+					li {
+						> span {
+							cursor: pointer;
+							display: block;
+							color: inherit;
+							text-decoration: none;
+							padding: 8px 18px;
+							float: none;
+							margin: 0;
+							border-radius: 4px;
+						}
+
+						&.Collapsed > ul {
+							display: none;
+						}
+
+						&.HasChildren {
+							> div > p {
+								@include filter-brightness-low;
+								background-image: url(../Images/SessionGroupCollapsed.svg);
+							}
+
+							&.InPath:not(.Collapsed) > div > p {
+								@include filter-brightness-low;
+								background-image: url(../Images/SessionGroupExpanded.svg);
+							}
+						}
+
+						&.Unacknowledged > div {
+							position: relative;
+
+							> span:after {
+								@include unacknowledged-glyph;
+								position: absolute;
+								top: 0;
+							}
+						}
+
+						> *:first-child {
+							opacity: 0.75;
+						}
+
+						&.TouchActive > *:first-child,
+						.TouchDisabled & > *:first-child:hover {
+							opacity: 1;
+							background-color: $shade2BackgroundColor;
+						}
+
+						&.Selected > *:first-child {
+							opacity: 1 !important;
+							font-weight: 500;
+							background-color: $shade3BackgroundColor !important;
+						}
+					}
+
+					div {
+						@include display-flex;
+						cursor: pointer;
+						margin: 0;
+						@include align-items-center;
+						border-radius: 4px;
+
+						> p {
+							padding: 8px 0px;
+							margin: 0px;
+							background-repeat: no-repeat;
+							background-size: 6px 9px;
+							background-position: 8px center;
+							padding-left: 18px;
+							@include text-ellipsis;
+							@include flex-shrink-one-grow-one;
+						}
+
+						> a {
+							width: 24px;
+							height: 24px;
+							background: url(../Images/CommandMore.svg) no-repeat;
+							background-position: center;
+							background-size: 24px 24px;
+							@include filter-brightness-mid;
+
+
+							&:hover {
+								@include filter-brightness-low;
+							}
+						}
+
+						> span {
+							margin: 0 16px 0 5px;
+						}
+
+						&:not(:hover) > a {
+							visibility: hidden;
+						}
+					}
+
+					ul p {
+						margin-left: 15px;
+					}
+
+					ul ul p {
+						margin-left: 30px;
+					}
+
+					ul ul ul p {
+						margin-left: 45px;
+					}
+
+					ul ul ul ul p {
+						margin-left: 60px;
+					}
+
+					ul ul ul ul ul p {
+						margin-left: 75px;
+					}
+
+					ul ul ul ul ul ulp {
+						margin-left: 90px;
+					}
+
+					ul ul ul ul ul ul ulp {
+						margin-left: 105px;
+					}
+
+					ul ul ul ul ul ul ul ulp {
+						margin-left: 120px;
+					}
+				}
+
+				.SessionGroupListLoading & {
+					@include activity-indicator-overlay;
+				}
+
+				li {
+					opacity: 1;
+
+					.SessionGroupListLoading & {
+						opacity: 0;
+					}
+				}
+			}
+
+			.Instruction {
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					display: none;
+				}
+
+				@media (max-height: 400px) {
+					display: none;
+				}
+			}
+		}
+
+		.MainDetailHeaderPanel {
+			container-type: inline-size;
+			grid-area: MainDetailHeaderPanel;
+			color: $mainTextColor;
+			font-size: 20px;
+			line-height: $headerPanelHeight;
+			overflow: hidden;
+			pointer-events: none;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				#detailTitleHeading {
+					display: block;
+					margin-left: $navigationPanelWidth;
+				}
+			}
+
+			> * {
+				transition-property: opacity;
+				pointer-events: auto;
+
+				.SessionGroupListLoading & {
+					opacity: 0;
+				}
+			}
+
+			h2 {
+				@include text-ellipsis;
+				padding: 0px 15px;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					margin-left: $navigationPanelWidth;
+				}
+			}
+
+			@media (max-width: 1100px) {
+				.CommandPanel a span {
+					display: none;
+				}
+			}
+		}
+
+		.MainDetailHeaderPanel,
+		.SubDetailHeaderPanel {
+			.CommandPanel {
+				float: right;
+				margin-right: 5px;
+				@include user-select-none;
+				height: 100%;
+				max-width: 100%;
+				overflow: auto hidden;
+
+				a {
+					padding: 0px 6px;
+					color: inherit;
+					--popout-from: down-left;
+
+					&.Disabled * {
+						opacity: 0.5;
+					}
+
+					img {
+						height: 24px;
+						width: 24px;
+						@include filter-brightness-mid;
+					}
+
+					span {
+						font-size: 14px;
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+
+		.MainDetailPanel {
+			grid-area: MainDetailPanel;
+			@include display-flex;
+			@include flex-direction-column;
+			overflow: hidden;
+
+			> * {
+				min-width: 300px;
+			}
+
+			.DetailSelectionPanel {
+				margin-bottom: 0px;
+				@include flex-shrink-one-grow-one;
+				@include display-flex;
+				@include flex-direction-column;
+
+				*:not(.FilterBox) {
+					margin: 0px; /* FilterBox on focus state need to change margin */
+				}
+
+				.SessionGroupListLoading &, .SessionListLoading & {
+					@include activity-indicator-overlay;
+				}
+
+				.DetailTableHeaderPanel {
+					@include display-flex;
+					min-height: 30px;
+					align-items: center;
+					@include justify-content-space-between;
+					padding: 8px 15px 8px 4px;
+					border-bottom-width: 1px;
+
+					.CheckBox {
+						padding: 4px 4px 4px 28px;
+						width: 56px;
+						height: 32px;
+						border-radius: 6px;
+
+						img {
+							width: 24px;
+							height: 24px;
+						}
+
+						&:before {
+							top: 10px;
+							left: 11px;
+						}
+
+						&:after {
+							top: 7px;
+							left: 9px;
+						}
+
+						&:hover {
+							background-color: $shade1BackgroundColor;
+						}
+					}
+
+					input {
+						float: right;
+						width: 70%;
+					}
+				}
+
+				.DetailTablePanel {
+					@include flex-shrink-one-grow-one;
+					@include display-flex;
+					@include flex-direction-column;
+
+					.SessionGroupListLoading &, .SessionListLoading & {
+						opacity: 0;
+					}
+
+					.NotificationPanel {
+						background-color: $notificationBackgroundColor;
+						border-bottom-width: 1px;
+						padding: 10px;
+
+						&:not(.Notifying) {
+							display: none;
+						}
+					}
+
+					.DetailTableContainer {
+						position: relative;
+						@include flex-shrink-one-grow-one;
+						overflow-y: auto;
+						overflow-x: hidden;
+						-webkit-overflow-scrolling: touch;
+						transition-property: opacity;
+
+						> * {
+							position: absolute;
+						}
+
+						&:not(.Empty) .EmptyPanel {
+							display: none;
+						}
+
+						.EmptyPanel {
+							width: 100%;
+							padding: 30px;
+
+							> * {
+								margin-bottom: 15px;
+								text-align: center;
+							}
+
+							img {
+								width: 260px;
+								height: 195px;
+							}
+
+							h2 + p {
+								opacity: 0.6;
+							}
+						}
+
+						table {
+							width: 100.3%; /* Fixed the issue with one pixel gap on the right side of table */
+							border-collapse: collapse;
+							table-layout: fixed;
+							@include user-select-none;
+
+							> tbody > tr {
+								border-bottom-width: 1px;
+								border-color: $rowSeparatorColor;
+								cursor: pointer;
+
+								&.TouchActive,
+								.TouchDisabled &:hover {
+									background-color: $shade1BackgroundColor;
+								}
+
+								&.Selected,
+								&.Selected:hover {
+									background-color: $shade2BackgroundColor;
+								}
+
+								&.Unacknowledged .Guest:after {
+									@include unacknowledged-glyph;
+									position: absolute;
+									top: 0;
+									right: 0;
+									margin: 0;
+								}
+
+								> td {
+									padding: 6px 15px;
+
+									&.CheckBox {
+										width: 28px;
+
+										&:before {
+											top: 20px;
+											top: calc(50% - 5px);
+											left: 15px;
+										}
+
+										&:after {
+											top: 16px;
+											top: calc(50% - 8px);
+											left: 13px;
+										}
+									}
+
+									&.SessionInfo {
+										.SessionInfoPanel {
+
+											> .SessionTitle {
+												@include text-ellipsis;
+											}
+
+											> *:not(.SessionTitle) {
+												@media (max-width: $maxWidthForNarrowViewportLevel2) {
+													display: none;
+												}
+
+												@media (max-height: $maxHeightForShortViewportLevel0) {
+													display: none;
+												}
+											}
+
+											> p {
+												line-height: 1.5em;
+												font-size: 11px;
+												@include text-ellipsis;
+											}
+										}
+									}
+
+									&.StatusDiagram {
+										position: relative;
+
+										@media (max-width: $maxWidthForNarrowViewportLevel2) {
+											width: 40%;
+										}
+
+										@media (max-width: $maxWidthForNarrowViewportLevel3) {
+											width: 25%;
+										}
+
+										.StatusDiagramPanel {
+											position: relative;
+											width: 100%;
+											height: 40px;
+
+											> .Host, > .Guest {
+												position: absolute;
+												width: 50%;
+												height: 100%;
+												background-repeat: no-repeat;
+												background-size: 30px 30px;
+
+												> .ConnectionBar {
+													position: absolute;
+													top: 18px;
+													height: 4px;
+													border-radius: 100px;
+													background-color: $sessionDisconnectedBarColor;
+												}
+
+												&.Connected > .ConnectionBar {
+													background-color: $sessionConnectedBarColor;
+												}
+
+												> .Description, > .Latest {
+													position: absolute;
+													font-size: 11px;
+													text-align: center;
+													@include text-ellipsis;
+												}
+
+												> .Description {
+													bottom: 24px;
+												}
+
+												> .Latest {
+													bottom: 0px;
+												}
+											}
+
+											> .Host {
+												left: 0px;
+												background-position: left;
+												background-image: url(../Images/Host.svg);
+
+												&:not(.Connected) {
+													background-image: url(../Images/HostDisconnected.svg);
+												}
+
+												> .ConnectionBar, > .Description, > .Latest {
+													left: 36px;
+													right: 4px;
+												}
+											}
+
+											> .Guest {
+												right: 0px;
+												background-position: right;
+
+												> .ConnectionBar, > .Description, > .Latest {
+													left: 4px;
+													right: 36px;
+												}
+											}
+
+											&.Access > .Guest {
+												background-image: url(../Images/AccessGuest.svg);
+
+												&:not(.Connected) {
+													background-image: url(../Images/AccessGuestDisconnected.svg);
+												}
+											}
+
+											&.Support > .Guest {
+												background-image: url(../Images/SupportGuest.svg);
+
+												&:not(.Connected) {
+													background-image: url(../Images/SupportGuestDisconnected.svg);
+												}
+											}
+
+											&.Meeting > .Guest {
+												background-image: url(../Images/MeetingGuest.svg);
+
+												&:not(.Connected) {
+													background-image: url(../Images/MeetingGuestDisconnected.svg);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+
+						&.Empty table {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+
+		.SubDetailHeaderPanel {
+			grid-area: SubDetailHeaderPanel;
+			color: $mainTextColor;
+			background-color: $shade1BackgroundColor;
+			line-height: $headerPanelHeight;
+			border-left-width: 1px;
+			border-bottom-width: 1px;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel1) {
+				display: none;
+			}
+
+			h3 {
+				padding: 0px $subDetailPanelSideSpacing;
+				@include text-ellipsis;
+				transition-property: opacity;
+
+				.SessionGroupListLoading &, .SessionListLoading &, .SessionDetailsLoading & {
+					opacity: 0;
+				}
+			}
+		}
+
+		.SubDetailPanel {
+			grid-area: SubDetailPanel;
+			background-color: $shade1BackgroundColor;
+			border-left-width: 1px;
+			@include display-flex;
+			@include justify-content-center;
+			overflow: hidden;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel1) {
+				border-top-width: 1px;
+				border-left-width: 0px;
+				padding-top: $toggleDetailPanelButtonHeight;
+				overflow: initial; /* don't cut off ToggleDetailPanelButton */
+			}
+
+			.SessionDetailsLoading &, .SessionGroupListLoading &, .SessionListLoading & {
+				@include activity-indicator-overlay;
+				min-height: $toggleDetailPanelButtonHeight;
+			}
+
+			> * {
+				transition-property: opacity;
+
+				.SessionDetailsLoading &, .SessionGroupListLoading &, .SessionListLoading & {
+					opacity: 0;
+				}
+			}
+
+			.ToggleDetailPanelButton {
+				display: none;
+				position: absolute;
+				top: calc($toggleDetailPanelButtonHeight / -2);
+				width: 100px;
+				height: $toggleDetailPanelButtonHeight;
+				background-image: url(../Images/ExpandCollapseUp.svg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 24px;
+				border-width: 1px;
+				border-radius: 100px;
+				background-color: $shade0BackgroundColor;
+
+				&:hover {
+					background-color: $shade2BackgroundColor;
+				}
+
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					display: inherit;
+				}
+			}
+
+			> .SingleSelectionPanel {
+				margin-bottom: 0px;
+				@include flex-direction-row;
+
+				> * {
+					position: relative;
+					margin: 0px;
+				}
+			}
+
+			> .MultiSelectionPanel {
+				padding: 80px 20%;
+				@include align-items-center;
+				@include overflow-auto;
+				@include flex-direction-column;
+
+				img {
+					width: 96px;
+					height: 96px;
+					margin-bottom: 25px;
+				}
+
+				> div {
+					a {
+						@include display-flex;
+						@include flex-direction-column;
+						text-align: center;
+						background-color: $shade2BackgroundColor;
+						border-radius: 4px;
+						border: 1px solid $borderColor;
+						color: $mainTextColor;
+						font-size: 16px;
+						padding: 6px 12px;
+						text-decoration: none;
+						margin-bottom: 8px;
+						width: 200px;
+
+						&:hover {
+							background-color: $shade3BackgroundColor;
+						}
+
+						span {
+							margin: 0px;
+						}
+
+						&.Overflow,
+						&.Disabled,
+						img {
+							display: none;
+						}
+					}
+				}
+			}
+
+			> .SingleSelectionPanel,
+			> .MultiSelectionPanel {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				@include display-flex;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel1) {
+					top: $toggleDetailPanelButtonHeight;
+				}
+			}
+
+			&:not(.SingleSelection) .SingleSelectionPanel,
+			&:not(.MultiSelection) .MultiSelectionPanel {
+				display: none;
+			}
+
+
+			.DetailTabList {
+				@include flex-shrink-zero-grow-zero;
+				@include display-flex;
+				@include align-items-flex-start;
+				@include flex-direction-column;
+				@include user-select-none;
+				border-right-width: 1px;
+				overflow-y: auto;
+				overflow-x: hidden;
+				--tooltip-popout-from: right;
+
+				&:after {
+					@include absolute-fill;
+					content: '';
+					background-color: rgba(0, 0, 0, 0.03);
+					pointer-events: none;
+				}
+
+				> div {
+					position: relative;
+					padding: 8px;
+					width: 100%;
+					font-size: 13px;
+					cursor: pointer;
+					margin: 0;
+					border-left-width: 3px;
+					border-color: $shade1BackgroundColor;
+					@include display-flex;
+					@include align-items-center;
+
+					@media (max-width: $maxWidthForNarrowViewportLevel2) {
+						padding: 6px;
+					}
+
+					&.TouchActive,
+					.TouchDisabled &:hover {
+						border-color: $shade2BackgroundColor;
+						background-color: $shade2BackgroundColor;
+					}
+
+					&.Selected,
+					&.Selected:hover {
+						border-color: $primaryColor;
+						background-color: $shade2BackgroundColor;
+					}
+
+					img {
+						width: 24px;
+						height: 24px;
+					}
+
+					span {
+						display: none;
+					}
+
+					&.Unacknowledged:before {
+						@include unacknowledged-glyph;
+						position: absolute;
+						top: 0;
+						right: 0;
+					}
+				}
+			}
+
+			.DetailTabContent {
+				@include flex-shrink-one-grow-one;
+				@include overflow-auto;
+				min-width: 250px;
+
+				> * {
+					margin: 0px;
+				}
+
+
+				.Start {
+					padding: 0 $subDetailPanelSideSpacing;
+
+					> * {
+						margin: 15px 0px 30px 0px;
+					}
+
+					.EditSessionPanel {
+						margin-bottom: 25px;
+
+						input {
+							width: 100%;
+							font-size: 14px;
+							@include inline-edit-without-focus;
+
+
+							&:disabled {
+								background-color: $inputDisabledBackgroundColor;
+							}
+
+							&:focus {
+								@include inline-edit-focus;
+							}
+						}
+
+						&:after {
+							@include clear-float;
+						}
+
+						> * {
+							margin-bottom: 12px;
+						}
+
+						dt {
+							@include dt-vertical-layout;
+							opacity: 0.7; /* Add more contrast to background color not equal to $shade0BackgroundColor */
+						}
+
+						dd {
+							@include dd-vertical-layout;
+						}
+					}
+
+					.InvitationPanel {
+						overflow: hidden;
+
+						.InvitationTabList {
+							@include display-flex;
+							@include align-items-center;
+							@include justify-content-center;
+							font-size: 14px;
+							margin-bottom: 0px;
+							border-bottom-width: 1px;
+
+							> span {
+								@include text-ellipsis;
+								font-style: italic;
+							}
+
+							a {
+								text-decoration: none;
+								padding: 8px;
+								color: $mainTextColor;
+								margin-bottom: -1px;
+
+								&:hover {
+									color: $primaryColor;
+								}
+
+								&.Selected {
+									font-weight: 500;
+									padding: 8px 8px 5px 8px;
+									border-width: 0 0 3px 0;
+									border-color: $primaryColor;
+									color: $primaryColor;
+								}
+							}
+						}
+
+						.InvitationTabContent {
+							background-color: $shade0BackgroundColor;
+							border-width: 0px 1px 1px 1px;
+							padding: 25px 6%;
+							min-height: 170px;
+
+							.CodeTab {
+								> * {
+									margin-bottom: 8px;
+								}
+
+								p {
+									text-align: left;
+								}
+
+								h3 {
+									font-weight: bold;
+									text-align: center;
+									@include break-word;
+								}
+
+								input {
+									text-align: center;
+									font-size: 16px;
+									font-weight: bold;
+									width: 100%;
+								}
+
+								.EditInvitationCodeBox {
+									@include inline-edit-without-focus;
+
+									&:focus {
+										@include inline-edit-focus;
+									}
+								}
+
+								.PublicSessionNameBox {
+									display: none;
+									border: 0px;
+									pointer-events: none;
+								}
+
+								&.PublicSession {
+									.EditInvitationCodeBox {
+										display: none;
+									}
+
+									.PublicSessionNameBox {
+										display: block;
+
+										&:disabled {
+											background-image: none;
+										}
+									}
+								}
+							}
+
+							.EmailTab,
+							.LinkTab {
+								dd div {
+									@include display-inline-flex;
+									width: 100%;
+									margin-bottom: 4px;
+									gap: 8px;
+								}
+
+								input {
+									@include flex-shrink-one-grow-one;
+									@include text-ellipsis;
+								}
+							}
+
+							dl {
+								margin-bottom: 0px;
+
+								dd {
+									@include dd-vertical-layout;
+									margin-bottom: 0px;
+								}
+
+								dt {
+									@include dt-vertical-layout;
+								}
+							}
+
+							> div:not(.Selected) {
+								display: none;
+							}
+						}
+
+						button,
+						input[type=button] {
+							@include ghost-button-without-hover;
+							font-weight: 500;
+
+							&:hover {
+								@include ghost-button-hover;
+							}
+						}
+					}
+
+					.JoinButtonPanel {
+						text-align: center;
+
+						input {
+							border-radius: 4px;
+						}
+
+						.Disabled {
+							cursor: default;
+							background-color: $buttonDisabledBackgroundColor;
+							color: $buttonDisabledTextColor;
+						}
+					}
+
+					.JoinInfoPanel {
+						h3 {
+							padding: 2px 0px 8px 32px;
+							margin-bottom: 0px;
+						}
+
+						p {
+							opacity: 0.6;
+							font-style: italic;
+						}
+
+						> * {
+							background-size: 24px 24px;
+							background-repeat: no-repeat;
+							margin-bottom: 15px;
+						}
+
+						&.NoGuest .GuestJoinedPanel,
+						&:not(.NoGuest) .NoGuestJoinedPanel {
+							display: none;
+						}
+
+						.NoGuestJoinedPanel {
+							background-image: url(../Images/WaitingIcon.svg);
+						}
+
+						.GuestJoinedPanel {
+							background-image: url(../Images/OkIcon.svg);
+						}
+					}
+				}
+
+				.General {
+					padding: 15px $subDetailPanelSideSpacing;
+
+					.Header {
+						border-color: $shade3BackgroundColor;
+						margin-bottom: 8px;
+					}
+
+					.Content > * {
+						padding: 0 8px;
+						margin: 0;
+
+						&:after {
+							@include clear-float;
+						}
+
+						> * {
+							margin-bottom: 12px;
+						}
+
+						dt {
+							@include dt-compact;
+							width: 40%;
+							opacity: 0.7; /* Add more contrast to background color not equal to $shade0BackgroundColor */
+						}
+
+						dd {
+							@include dd-compact;
+							width: 60%;
+						}
+					}
+				}
+
+				.Timeline {
+					--top-padding: 40;
+					--bottom-padding: 20;
+					--left-padding: 10;
+					--right-padding: 10;
+					--timestamp-padding: 100;
+					--min-timeline-width: 200;
+					--min-timeline-height: 500;
+					--min-gap: 45;
+					--event-dot-side-length: 24;
+					--connection-line-thickness: 8;
+					--time-division-text-line-offset: -5;
+					--time-difference-divisor-pre-log: 150000;
+					--time-different-multiplier-post-log: 50;
+					--connection-text-top-padding: 3;
+					--connection-text-bottom-padding: 4;
+					--connection-text-left-padding: 12;
+					--connection-text-right-padding: 12;
+					--position-panel-step: 10;
+					--span-time: 2592000000;
+
+					.PositionedPanel {
+						text {
+							fill: $darkBackgroundTextColor;
+							pointer-events: none;
+						}
+
+						.Host {
+							fill: $timelineHostColor;
+							fill-opacity: 0.3;
+							stroke: $timelineHostColor;
+
+							&:hover {
+								fill-opacity: 0.5;
+							}
+						}
+
+						.Guest {
+							fill: $timelineGuestColor;
+							fill-opacity: 0.5;
+							stroke: $timelineGuestColor;
+
+							&:hover {
+								fill-opacity: 0.7;
+							}
+						}
+
+						.Event {
+							fill: $timelineEventColor;
+
+							&:hover {
+								fill: $secondaryColor;
+							}
+						}
+
+						.Host + .Overlay {
+							fill: $timelineConnectionEventOverlayColor;
+
+							&:hover {
+								fill: $secondaryColor;
+							}
+						}
+
+						.Guest + .Overlay {
+							fill: $shade6BackgroundColor;
+
+							&:hover {
+								fill: $shade7BackgroundColor;
+							}
+						}
+					}
+
+					.TimeDivision {
+						> g:hover {
+							text {
+								fill: $primaryColor;
+							}
+
+							line {
+								stroke: $primaryColor;
+							}
+						}
+
+						text {
+							fill: $timelineTimestampColor;
+						}
+
+						line {
+							stroke: $timelineTimeDivisionLineColor;
+						}
+					}
+				}
+
+				.Messages .EntryHistoryPanel {
+					.EntryPanel {
+						border-radius: 100px;
+						@include align-items-center;
+
+						textarea {
+							border-radius: 100px;
+							padding: 16px 0px 16px 24px;
+
+
+							&:hover {
+								outline: none;
+							}
+						}
+
+						input[type=button] {
+							margin: 10px;
+							border-radius: 100px;
+						}
+					}
+
+					.HistoryPanel {
+						bottom: 65px;
+
+						.ListPanel {
+							@include display-flex;
+							@include flex-direction-column;
+							margin: 0;
+
+							> div {
+								max-width: 80%;
+
+								.Header {
+									margin-bottom: 0;
+
+									.Who {
+										font-weight: 500;
+										font-size: 13px;
+									}
+
+									.Time {
+										opacity: 0.6;
+									}
+								}
+
+								.Body {
+
+									& > *, .Info > * {
+										margin-bottom: 0;
+									}
+
+									.Content {
+										@include break-word;
+
+										a {
+											word-break: break-all;
+										}
+
+										.Data {
+											border-radius: 10px;
+										}
+									}
+								}
+
+								&.RequestedElevation, &.EncounteredElevationPrompt, &.RequestedAdministrativeLogon {
+									width: 100%;
+								}
+
+								&.RequestedElevation, &.EncounteredElevationPrompt, &.RequestedAdministrativeLogon, &.QueuedProceedElevation {
+
+									.Body {
+										container-type: inline-size;
+										clear: both;
+
+										@include display-flex;
+										flex-wrap: nowrap;
+										gap: 15px;
+										@include justify-content-space-between;
+										@include align-items-center;
+										background-color: $shade2BackgroundColor;
+										border-radius: 6px;
+										border-left: 4px solid $shade4BackgroundColor;
+										padding: 15px 20px;
+
+										.Info {
+											@include display-flex;
+											@include flex-direction-column;
+											@include justify-content-space-between;
+											gap: 10px;
+
+											.Title {
+												grid-column-start: 1;
+												font-weight: 500;
+												font-size: 16px;
+											}
+
+											.Content {
+												@include display-flex;
+												@include flex-direction-column;
+												gap: 15px;
+
+												.DataFieldList {
+													@include display-grid;
+													grid-template-columns: minmax(0, max-content) auto;
+													grid-gap: 0 15px;
+													margin-bottom: 0;
+
+													dt {
+														@include dt-compact;
+														opacity: 0.7;
+													}
+
+													dd {
+														@include dd-compact;
+														max-height: 52px;
+														@include overflow-auto;
+													}
+												}
+											}
+										}
+
+										.Response {
+											.EventHistoryItemResponse {
+												@include display-flex;
+												@include flex-wrap-wrap;
+												justify-content: end;
+												gap: 8px;
+
+												.RespondToElevationRequest, .RespondToAdministrativeLogonRequest {
+													@include display-flex;
+													@include align-items-center;
+													@include user-select-none;
+													@include text-ellipsis;
+													text-decoration: none;
+													color: $darkBackgroundTextColor;
+													border-radius: 4px;
+													padding: 6px 12px;
+													font-size: 14px;
+													font-weight: 500;
+													background-color: $buttonBackgroundColor;
+													border: none;
+
+													img {
+														width: 24px;
+														height: 24px;
+														margin-right: 4px;
+													}
+
+													&.Disabled {
+														background-color: $shade3BackgroundColor !important; /* DO NOT use $buttonDisabledBackgroundColor since card background color is also $shade2BackgroundColor */
+														color: $shade4BackgroundColor; /* CAN NOT use $buttonDisabledTextColor since background color changed */
+
+														img {
+															opacity: 0.2;
+															@include filter-brightness-low;
+														}
+													}
+
+													&.Loading {
+														@include activity-indicator-overlay;
+														background-size: 20px;
+														pointer-events: none;
+														min-height: 0px;
+														background-position: 10px center;
+														background-color: $shade3BackgroundColor !important;
+														color: $shade4BackgroundColor;
+
+														img {
+															visibility: hidden;
+														}
+													}
+
+													&:hover {
+														opacity: 0.8;
+													}
+
+													&.Approve {
+														background-color: $successColor;
+													}
+
+													&.Deny {
+														background-color: $failureColor;
+													}
+												}
+											}
+
+											.RequestResolutionList {
+												margin-bottom: 0;
+
+												div {
+													height: 24px;
+													padding-left: 24px;
+													background-size: 24px;
+													background-repeat: no-repeat;
+													margin-bottom: 0;
+													@include display-flex;
+													align-items: center;
+
+													span {
+														padding-left: 4px;
+														opacity: 0.7;
+													}
+												}
+
+												.ApprovedRequest {
+													background-image: url(../Images/Approved.svg);
+												}
+
+												.DeniedRequest {
+													background-image: url(../Images/Denied.svg);
+												}
+
+												.CanceledRequest {
+													background-image: url(../Images/Canceled.svg);
+												}
+											}
+										}
+									}
+								}
+
+								&.Host {
+									align-self: flex-end;
+
+									.Header .Info, .Header, .Header .Command {
+										flex-direction: row-reverse;
+									}
+
+									.Body .Content .Data {
+										background-color: $primaryColor;
+										border-top-right-radius: 0;
+										color: $darkBackgroundTextColor;
+
+										a {
+											color: $darkBackgroundTextColor;
+											opacity: 0.6;
+
+											&:hover {
+												opacity: 0.8;
+											}
+										}
+									}
+								}
+
+								&.Guest {
+									align-self: flex-start;
+
+									.Body .Content .Data {
+										background-color: $shade2BackgroundColor;
+										border-top-left-radius: 0;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.Commands .EntryHistoryPanel {
+					.EntryPanel {
+						textarea {
+							background-image: url(../Images/CommandStart.svg);
+							background-repeat: no-repeat;
+							background-size: 10px;
+							background-position: 8px 8px;
+							padding-left: 20px;
+							font-family: monospace;
+						}
+
+						input[type=button] {
+							border-radius: 0;
+						}
+					}
+
+					&:not(.Empty) .HistoryPanel {
+						background-color: $shade0BackgroundColor;
+						border-width: 1px 1px 0 1px;
+						padding: 0;
+						margin: 15px $subDetailPanelSideSpacing;
+					}
+				}
+
+				.Notes .EntryHistoryPanel {
+					.EntryPanel {
+						padding: 8px;
+						height: 65px;
+						border-radius: 4px;
+						@include align-items-flex-end;
+
+						textarea {
+							padding: 6px 12px;
+						}
+					}
+
+					.HistoryPanel {
+						bottom: 80px;
+					}
+
+					.EntryPanel,
+					.HistoryPanel .ListPanel > div {
+						transition-property: box-shadow;
+						transition-duration: $doubleTransitionTime;
+
+						&:hover {
+							box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+						}
+
+						&:hover:before {
+							border-width: 0;
+						}
+
+						&:before {
+							content: "";
+							box-shadow: 0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
+							position: absolute;
+							top: -1px;
+							right: -1px;
+							border-width: 0 30px 20px 0;
+							border-style: solid;
+							border-color: $shade1BackgroundColor $shade1BackgroundColor $shade3BackgroundColor $shade3BackgroundColor;
+							transition: border-width $doubleTransitionTime ease-in-out;
+							border-radius: 0 0 0 6px;
+						}
+					}
+				}
+
+				.EntryHistoryPanel {
+					> * {
+						position: absolute;
+						margin: 0px;
+					}
+
+					.EntryPanel {
+						@include display-flex;
+						left: $subDetailPanelSideSpacing;
+						right: $subDetailPanelSideSpacing;
+						bottom: 15px;
+						height: 50px;
+						border-width: 1px;
+						background-color: $shade0BackgroundColor;
+
+						&:hover {
+							outline: 1px solid $secondaryColor;
+							outline-offset: -1px;
+						}
+
+						&:focus-within {
+							outline: 2px solid $primaryColor;
+							outline-offset: -2px;
+						}
+
+						> div {
+							@include flex-shrink-one-grow-one;
+							margin: 0;
+							height: 100%;
+						}
+
+						textarea {
+							width: 100%;
+							height: 100%;
+							border-width: 0px;
+							font-size: 13px;
+							padding: 5px;
+							resize: none;
+							background: $shade0BackgroundColor;
+							outline: none;
+
+							&:focus {
+								outline: none;
+							}
+						}
+
+						input[type=button] {
+							font-size: 12px;
+						}
+					}
+
+					&:not(.Empty) .HistoryPanel .EmptyPanel {
+						display: none;
+					}
+
+					&:not(.HasEntryBox) .HistoryPanel {
+						bottom: 0px;
+					}
+
+					.HistoryPanel {
+						top: 0;
+						bottom: 50px;
+						left: 0;
+						right: 0;
+						padding: 15px $subDetailPanelSideSpacing;
+						margin: 0px;
+						@include overflow-auto;
+
+						.EmptyPanel {
+							text-align: center;
+
+							> * {
+								margin: 6%;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									margin: 2%;
+								}
+							}
+
+							img {
+								width: 96px;
+								opacity: 0.7;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									width: 20%;
+								}
+							}
+
+							h4 {
+								font-size: 22px;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									font-size: 16px;
+								}
+							}
+
+							p {
+								opacity: 0.6;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.DetailPanel {
+			grid-area: DetailPanel;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				left: 0;
+			}
+
+			.AdministrationPanel {
+				width: 100%;
+				height: 100%;
+				@include display-flex;
+				@include flex-direction-column;
+
+				&.Loading:after {
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					content: "";
+					@include activity-indicator-overlay;
+					background-color: rgba(255, 255, 255, 0.5);
+				}
+
+				.AdministrationContentPanel {
+					@include display-flex;
+					@include flex-shrink-one-grow-one;
+					padding: 10px 20px 0 15px;
+					@include overflow-auto;
+					border-top-width: 1px;
+
+					> * {
+						width: 100%;
+					}
+
+					dl > dt {
+						@include display-flex;
+						@include justify-content-space-between;
+						@include align-items-center;
+						@include flex-wrap-wrap;
+						gap: 15px;
+
+						> * {
+							margin-bottom: 0;
+						}
+
+						h3 {
+							padding: 8px 0;
+							white-space: nowrap;
+						}
+					}
+
+					.OverviewPanel {
+						max-width: 100%;
+
+						.Dashboard {
+							@include display-grid;
+							grid-gap: 30px;
+							margin: 2% auto 45px;
+							grid-template-columns: minmax(200px,700px) minmax(150px,300px);
+							padding: 0 2%;
+
+							@media (max-width: $maxWidthForNarrowViewportLevel1) {
+								padding: 0;
+								@include display-flex;
+								@include flex-direction-column;
+							}
+
+							.MainColumn, .SecondaryColumn {
+								@include display-flex;
+								@include flex-direction-column;
+								margin-bottom: 45px;
+								gap: 30px;
+							}
+
+							.MainColumn:empty {
+								display: none;
+							}
+						}
+					}
+
+					.StatusTestPanel {
+						.Header {
+							position: relative;
+							height: 35px;
+							padding: 8px;
+							margin: 0px;
+							border-width: 1px;
+							border-left-width: 4px;
+							cursor: pointer;
+
+							span {
+								position: absolute;
+								right: 0px;
+								width: 120px;
+
+								&:first-child {
+									position: absolute;
+									left: 14px;
+									width: 200px;
+								}
+							}
+
+							a {
+								position: absolute;
+								right: 8px;
+								width: 20px;
+								height: 20px;
+								background-size: cover;
+								background-image: url(../Images/ExpandCollapseDown.svg);
+							}
+						}
+
+						&.Passed .Header {
+							border-left-color: $successColor;
+						}
+
+						&.Warning .Header {
+							border-left-color: $warningColor;
+						}
+
+						&.Failed,
+						&.Error {
+							.Header {
+								border-left-color: $failureColor;
+							}
+						}
+
+						&.Expanded .Header a {
+							background-image: url(../Images/ExpandCollapseUp.svg);
+						}
+
+						&.Incomplete .Header a {
+							background-image: url(../Images/ActivityIndicator.gif);
+						}
+
+						.Content {
+							padding: 20px 0px 0px 0px;
+							margin: -10px 0px 0px 0px;
+							border-width: 0px 1px 1px 1px;
+							max-height: 1000px;
+							visibility: visible;
+							transition: max-height $tripleTransitionTime;
+
+							> p {
+								padding: 0px 20px;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									padding: 5px;
+								}
+							}
+
+							dl {
+								border-top-width: 1px;
+								padding: 10px 20px;
+								margin: 0px;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									padding: 10px;
+								}
+
+								&:after {
+									@include clear-float;
+								}
+							}
+
+							dt {
+								@include dt-compact;
+								width: 30%;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									width: 100%;
+									margin: 0px;
+								}
+							}
+
+							dd {
+								@include dd-compact;
+								width: 70%;
+
+								@media (max-width: $maxWidthForNarrowStatusPage) {
+									width: 100%;
+								}
+							}
+						}
+
+						&:not(.Expanded) .Content {
+							max-height: 0;
+							overflow: hidden;
+							visibility: hidden;
+						}
+					}
+
+					.ExtensionsPanel {
+						dd:not(.Empty) .EmptyPanel,
+						dd.Empty > div:not(.EmptyPanel) {
+							display: none;
+						}
+
+						width: 800px;
+
+						.Card {
+							margin: 5px 15px 20px 15px;
+						}
+
+						.EmptyPanel {
+							@include display-flex;
+							@include align-items-center;
+							@include flex-direction-column;
+
+							img {
+								width: 96px;
+								height: 96px;
+							}
+
+							> div {
+								text-align: center;
+
+								h4 {
+									font-size: 22px;
+								}
+
+								ul {
+									text-align: left;
+								}
+
+								p, ul {
+									opacity: 0.6;
+								}
+							}
+						}
+					}
+
+					.SecurityPanel {
+						table {
+							width: 100%;
+						}
+
+						textarea {
+							width: 100%;
+							height: 200px;
+							resize: vertical;
+							max-height: 550px;
+						}
+
+						.UserSourcesPanel {
+							> div {
+								background-color: $shade0BackgroundColor;
+								border-width: 1px;
+								border-radius: 4px;
+								box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+								padding: 8px;
+
+								&.ReadOnly .UserTablePanel,
+								&:not(.ReadOnly) .UserLookupPanel,
+								&:not(.Expanded) .HideButton,
+								&.Expanded .ShowButton,
+								&.External .UserLookupPanel,
+								&.External .UserTablePanel,
+								&.External .UserTableButton,
+								&.External .UserLookupButton,
+								&.ReadOnly .UserTableButton,
+								&:not(.ReadOnly) .UserLookupButton {
+									display: none;
+								}
+
+								.UserSourceDetailPanel {
+									max-height: 600px;
+									opacity: 1;
+									transition-property: max-height, opacity;
+									transition-duration: $tripleTransitionTime;
+									margin: 0;
+								}
+
+								&:not(.Expanded) .UserSourceDetailPanel {
+									max-height: 0;
+									opacity: 0;
+									overflow: hidden;
+								}
+							}
+
+							.UserTablePanel {
+								max-height: 550px;
+								@include display-flex;
+								@include flex-direction-column;
+								margin: 0;
+
+								.CommandList a {
+									float: right;
+								}
+
+								.DataTableContainer {
+									@include overflow-auto;
+									margin: 0;
+
+									.DataTable th {
+										width: 150px;
+										white-space: unset;
+
+										&:first-child {
+											width: 0;
+										}
+									}
+								}
+							}
+
+							.CommandPanel, h4 {
+								float: right;
+							}
+
+							.UserSourceTopPanel {
+								margin: 0px;
+								padding: 15px 15px 0px 15px;
+
+								p {
+									opacity: 0.6;
+								}
+							}
+
+							.UserSourceBottomPanel {
+								padding: 15px 15px 0px 15px;
+
+								> p {
+									text-align: center;
+								}
+							}
+						}
+
+						.DataTable td:not(.ActionCell) {
+							max-width: 0px;
+							@include text-ellipsis;
+						}
+					}
+
+					.DatabaseMaintenanceList {
+						> dd {
+							> table {
+								width: 100%;
+							}
+
+							> span {
+								display: inline-block;
+								padding: 5px;
+								margin-right: 10px;
+							}
+						}
+					}
+
+					.MailPanel,
+					.AuditList {
+						dl {
+							dt {
+								@include dt-compact;
+								width: 20%;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									@include dt-vertical-layout;
+								}
+							}
+
+							dd {
+								@include dd-compact;
+								width: 80%;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									@include dd-vertical-layout;
+								}
+							}
+						}
+					}
+
+					.TriggersPanel {
+						@media (max-width: $maxWidthForNarrowViewportLevel0) {
+							.FlexSpacer {
+								display: none;
+							}
+
+							dt {
+								gap: 2px;
+							}
+						}
+
+						.TriggerPanel {
+							.EmptyPanel {
+								display: none;
+								@include flex-direction-column;
+								@include align-items-center;
+								@include justify-content-center;
+
+								img {
+									width: 100px;
+									height: 100px;
+									opacity: 0.6;
+								}
+
+								p {
+									opacity: 0.6;
+								}
+							}
+
+							&.Empty {
+								.EmptyPanel {
+									@include display-flex;
+								}
+
+								.DataTable {
+									display: none;
+								}
+							}
+
+							.TriggerCard {
+								@include display-flex;
+								@include justify-content-space-between;
+								@include align-items-center;
+								border: 1px solid $borderColor;
+								border-radius: 6px;
+								padding: 8px 12px;
+								margin-bottom: 8px;
+
+								* {
+									margin: 0;
+								}
+
+								.TriggerCardHeader {
+									@include display-flex;
+									@include align-items-center;
+									gap: 8px;
+
+									img {
+										width: 24px;
+										height: 24px;
+									}
+
+									> div {
+										@include display-flex;
+										@include flex-direction-column;
+										gap: 4px;
+
+										p {
+											font-size: 12px;
+											opacity: 0.6;
+										}
+									}
+								}
+
+								.TriggerCardFooter {
+									@include display-flex;
+									@include align-items-center;
+									gap: 8px;
+								}
+							}
+						}
+					}
+
+					.LicenseList {
+						.EmptyPanel {
+							padding: 30px 20%;
+							text-align: center;
+
+							img {
+								width: 96px;
+								height: 96px;
+							}
+
+							h2 + p {
+								opacity: 0.6;
+							}
+						}
+
+						.Card {
+							.ErrorText {
+								color: $failureColor;
+								font-weight: bold;
+							}
+						}
+					}
+
+					.AppearanceList {
+						margin: 0px;
+						@include display-flex;
+						@include flex-direction-column;
+
+						.ChangeThemeButton {
+							display: inline-flex;
+							background-color: $shade1BackgroundColor;
+							border-width: 1px;
+							border-radius: 6px;
+							padding: 8px 12px;
+							align-items: center;
+							cursor: pointer;
+							margin: 0;
+
+							&:hover {
+								background-color: $shade2BackgroundColor;
+							}
+
+							> img {
+								margin-right: 10px;
+							}
+						}
+
+						.ThemeSelectorContentPanel > span {
+							display: inline-block;
+							padding: 5px;
+							margin-right: 10px;
+						}
+
+						.ResourcePanel {
+							padding-left: 0;
+							margin-left: 10px;
+							@include overflow-auto;
+							@include flex-shrink-one-grow-one;
+							@include flex-basis-1px;
+
+							.EmptyPanel {
+								display: none;
+								@include flex-direction-column;
+								@include align-items-center;
+								@include justify-content-center;
+
+								img {
+									width: 100px;
+									height: 100px;
+									opacity: 0.6;
+								}
+
+								p {
+									opacity: 0.6;
+								}
+							}
+
+							&.Empty {
+								.EmptyPanel {
+									@include display-flex;
+								}
+
+								.DataTable {
+									display: none;
+								}
+							}
+
+							.DataTable {
+								width: 100%;
+
+								th {
+									border-top-width: 0px;
+									position: sticky;
+									top: 0;
+								}
+
+								tr > *:first-child {
+									border-left-width: 0px;
+								}
+
+								th,
+								td {
+									max-width: 300px;
+									@include break-word;
+								}
+
+								td {
+									div {
+										margin: 0px;
+									}
+
+									&.Overridden {
+										background-color: $shade2BackgroundColor;
+									}
+								}
+
+								.StringResource td div {
+									max-height: 100px;
+									@include overflow-auto;
+								}
+
+								.ImageResource td.Overridden div {
+									background-color: $shade1BackgroundColor;
+								}
+							}
+						}
+					}
+
+					.AuditList {
+						.SecondaryButton {
+							padding: 8px 40px;
+						}
+
+						dl {
+							dt {
+								@include dt-compact-with-input;
+							}
+
+							dd > input {
+								width: 240px;
+								margin-right: 8px;
+
+								@media (max-width: $maxWidthForNarrowViewportLevel1) {
+									margin-bottom: 8px;
+								}
+
+								&[type=checkbox] {
+									width: 0px;
+									-moz-appearance: initial;
+									margin-top: 8px;
+								}
+							}
+						}
+
+						.QueryAuditLogButton {
+							padding: 8px 40px;
+						}
+
+						#queryResultPanel {
+							margin-top: 35px;
+						}
+					}
+
+					dt h3 {
+						margin-bottom: 0px;
+						font-weight: 500;
+					}
+
+					> dl,
+					> div > dl,
+					> div > div > dl {
+						min-width: 800px;
+						width: auto;
+
+						> dd {
+							margin-bottom: 0;
+							padding-bottom: 25px;
+						}
+					}
+
+					.ExtraPanel {
+						bottom: 44px;
+						height: 250px;
+						border-top-width: 1px;
+						@include overflow-auto;
+
+						iframe {
+							height: 100%;
+						}
+
+						p {
+							margin: 20px;
+						}
+					}
+
+					.ButtonPanel {
+						bottom: 0px;
+						height: 44px;
+						padding: 5px;
+						border-top-width: 1px;
+						background-color: $shade1BackgroundColor;
+					}
+				}
+
+				> div {
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+
+.InfoPanel {
+	.HostPage & {
+		overflow: hidden;
+		margin-bottom: 0;
+
+		&:empty {
+			display: none;
+		}
+
+		@media (max-height: $maxHeightForShortViewportLevel0) {
+			display: none;
+		}
+	}
+
+	.MainDetailPanel & {
+		@include flex-shrink-zero-grow-zero;
+
+		&:first-child > * {
+			border-bottom-width: 1px;
+		}
+
+		&:last-child > * {
+			border-top-width: 1px;
+		}
+	}
+}
+
+.DialogContainer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	@include display-flex;
+	@include align-items-center;
+	@include justify-content-center;
+
+	&.Hidden {
+		visibility: hidden;
+	}
+
+	&::before {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		content: "";
+		background-color: rgb(0, 0, 0);
+		background-color: rgba(0, 0, 0, 0.75);
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+		z-index: -1;
+
+		@supports (animation: FadeIn $transitionTime ease-in forwards) { /* Animation sometimes stuck at the first frame in IE */
+			& {
+				animation: FadeIn $transitionTime ease-in forwards;
+			}
+		}
+	}
+
+	&.NoBackdrop {
+		pointer-events: none;
+
+		&::before {
+			display: none;
+		}
+	}
+
+	@supports (animation: ModalSlideOut $transitionTime ease-in forwards) {
+		&.Hidden > .ModalDialog {
+			visibility: visible;
+			animation: ModalSlideOut $transitionTime ease-in forwards;
+		}
+
+		&.Hidden::before {
+			visibility: visible;
+			animation: FadeOut $transitionTime ease-in forwards;
+		}
+	}
+
+	.ModalDialog {
+		max-height: calc(100% - 40px);
+		max-width: calc(100% - 40px);
+		display: flex;
+		flex-direction: column;
+		pointer-events: all;
+		margin: 0;
+		border-radius: 6px;
+		overflow: hidden;
+
+		@supports (animation: ModalSlideIn $transitionTime) { /* Animation sometimes stuck at the first frame in IE */
+			& {
+				animation: ModalSlideIn $transitionTime;
+			}
+		}
+
+		&.ViewRawData {
+			.ContentPanel {
+				font-family: monospace;
+				white-space: pre;
+			}
+		}
+
+		&.NoBackdrop {
+			padding: 0;
+			width: unset;
+			height: unset;
+			box-shadow: 0 8px 17px rgba(0,0,0,0.2);
+		}
+
+		&.ButtonPanelHidden {
+			.ButtonPanel {
+				display: none;
+			}
+
+			.ContentPanel {
+				padding: 0 40px 40px 40px;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					padding: 0 24px 24px 24px;
+				}
+			}
+		}
+
+		iframe {
+			display: block;
+			width: 100%;
+			background-color: #FFF;
+		}
+
+		textarea {
+			height: 125px;
+		}
+
+		input,
+		select,
+		& {
+			font-size: 14px;
+		}
+
+		> * {
+			margin: 0px;
+			max-width: 100%;
+			width: 800px;
+			background-color: $shade0BackgroundColor;
+		}
+
+		.TitlePanel {
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: space-between;
+			cursor: move;
+
+			h2 {
+				margin: 40px 4px 24px 40px;
+				font-weight: bold;
+				font-size: 20px;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					margin: 24px 4px 16px 24px;
+					font-size: 18px;
+				}
+			}
+
+			a {
+				margin: 32px 32px 24px 0;
+				padding: 8px;
+				text-decoration: none;
+				font-size: 30px;
+				line-height: 16px;
+				color: $mainTextColor;
+				border-radius: 100px;
+				opacity: 0.6;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					margin: 16px 16px 16px 0;
+				}
+
+				&:hover {
+					background-color: $shade2BackgroundColor;
+					opacity: 1;
+				}
+			}
+		}
+
+		.ButtonPanel {
+			padding: 24px 40px 40px 40px;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				padding: 16px 24px 24px 24px;
+			}
+
+			* {
+				font-size: 16px;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					font-size: 15px;
+				}
+			}
+
+
+			input[type="button"] {
+				color: $darkBackgroundTextColor;
+				background-color: $linkColor;
+				font-weight: 500;
+				padding: 8px 24px;
+				font-size: 14px;
+				text-transform: uppercase;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					padding: 8px 8px;
+				}
+
+				&:hover {
+					background-color: $buttonBackgroundColorHover;
+				}
+
+				&:disabled,
+				&.Disabled {
+					background-color: $buttonDisabledBackgroundColor !important;
+				}
+			}
+		}
+
+		.TitlePanel,
+		.ButtonPanel {
+			@include flex-shrink-zero-grow-zero;
+		}
+
+		.ContentPanel {
+			padding: 0px 40px;
+			@include overflow-auto;
+			background: linear-gradient($shade0BackgroundColor 30%, hsla(0, 0%, 100%, 0)), /*split in separate lines*/
+			linear-gradient(hsla(0, 0%, 100%, 0) 10px, $shade0BackgroundColor 70%) bottom, /**/
+			radial-gradient(at top, rgba(0, 0, 0, 0.3), transparent 70%), /**/
+			radial-gradient(at bottom, rgba(0, 0, 0, 0.3), transparent 70%) center calc(100% - 1px); /* reduce the y position by 1 pixel to work around Chrome not perfectly aligning 'scroll' and 'local' attachment of backgrounds */
+			/**/
+			background-repeat: no-repeat;
+			background-size: 100% 30px, 100% 30px, 100% 10px, 100% 10px;
+			background-attachment: local, local, scroll, scroll;
+			background-color: $shade0BackgroundColor;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				padding: 0 24px;
+			}
+
+			> :last-child {
+				margin-bottom: 0;
+			}
+
+			input[type=button] {
+				font-size: 14px;
+			}
+
+			textarea {
+				width: 100%;
+				resize: vertical;
+			}
+
+			.CommandPanel {
+				@include justify-content-center;
+				text-transform: uppercase;
+			}
+
+			.ResultPanel {
+				text-align: left;
+				border-width: 2px;
+				padding: 10px 10px 10px 30px;
+				border-radius: 2px;
+				background-repeat: no-repeat;
+				background-size: 18px 18px;
+				background-position: 8px 8px;
+
+				&:empty {
+					visibility: hidden;
+
+					&:after {
+						content: '\00a0';
+					}
+				}
+
+				&.Success {
+					border-color: $successColor;
+					background-image: url(../Images/NotificationSuccessIcon.svg);
+				}
+
+				&.Failure {
+					border-color: $failureColor;
+					background-image: url(../Images/NotificationErrorIcon.svg);
+				}
+
+				&.Warning {
+					border-color: $warningColor;
+					background-image: url(../Images/NotificationWarningIcon.svg);
+				}
+			}
+
+			dl {
+				margin-bottom: 5px;
+
+				&:after {
+					@include clear-float;
+				}
+			}
+
+			dt {
+				@include dt-compact-with-input;
+				width: 25%;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					@include dt-vertical-layout;
+				}
+			}
+
+			dd {
+				@include dd-compact;
+				width: 75%;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					@include dd-vertical-layout;
+				}
+
+				p {
+					margin-bottom: 5px;
+				}
+
+				div.EditField {
+					@include display-flex;
+					@include flex-direction-row;
+					margin-bottom: 0px;
+					margin-left: -5px;
+					gap: 4px;
+
+					input[type=text],
+					select {
+						@include flex-shrink-one-grow-one;
+						@include flex-basis-1px;
+						@include text-ellipsis;
+						width: 100%;
+					}
+
+					> * {
+						margin-left: 5px;
+						white-space: pre;
+					}
+				}
+			}
+		}
+
+		*:has(> .MasterPanel):has(> .DetailPanel) {
+			display: grid;
+			grid-template-columns: $masterPanelWidth calc(100% - $masterPanelWidth);
+			overflow-y: hidden;
+			height: 100vh;
+		}
+
+		.MasterPanel,
+		.DetailPanel {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 0px;
+			border-top-width: 1px;
+			overflow: auto;
+
+			> * {
+				width: 100%;
+				margin-bottom: 0px;
+			}
+		}
+
+		.MasterPanel {
+			border-right-width: 1px;
+			border-radius: 0 0 0 6px;
+			background-color: $shade1BackgroundColor;
+			/* region backwards compatible for extension browser */
+			.MasterSelectionPanel a.SelectionLink {
+				display: block;
+				padding: 7px 4% 7px 10%;
+				text-decoration: none;
+				color: inherit;
+
+				&.TouchActive,
+				.TouchDisabled&:hover {
+					background-color: #DDD;
+				}
+
+				&.Selected {
+					background-color: $shade3BackgroundColor !important;
+				}
+			}
+			/* endregion */
+		}
+
+		&.Delete,
+		&.DeleteAction,
+		&.DeleteRole,
+		&.DeleteSessionGroup,
+		&.DeleteTrigger,
+		&.DeleteUninstallSession,
+		&.DeleteUser,
+		&.RemoveLicense,
+		&.RemoveUserSource,
+		&.RevokeAccess,
+		&.UninstallExtension {
+			.ButtonPanel > input {
+				background-color: $failureColor;
+
+				&:hover {
+					background-color: #EB5757;
+				}
+			}
+		}
+
+		&.SelectTheme {
+			> * {
+				width: 1200px;
+			}
+		}
+
+		&.EditRole {
+			> * {
+				width: 850px;
+			}
+		}
+
+		&.EditExtensionSettings {
+			> * {
+				width: 1000px;
+			}
+		}
+
+		&.EditResource,
+		&.EditSessionGroup,
+		&.UserSourceConfiguration,
+		&.EditMailConfiguration {
+			> * {
+				width: 700px;
+			}
+		}
+
+		&.EditUser,
+		&.RevokeAccess,
+		&.EditAction,
+		&.EditSchedule {
+			> * {
+				width: 600px;
+			}
+		}
+
+		&.ToolboxDialog {
+			> * {
+				width: 580px;
+			}
+		}
+
+		&.CreateSession,
+		&.EditSessions,
+		&.BuildInstaller,
+		&.InstallAccess,
+		&.JoinSession,
+		&.DeleteUninstallSession {
+			> * {
+				width: 550px;
+			}
+		}
+
+		&.HostPass,
+		&.MessageBox,
+		&.Prompt,
+		&.ChangeAuditLevel {
+			> * {
+				width: 500px;
+			}
+		}
+
+		&.RemoveUserSource,
+		&.DeleteRole,
+		&.DeleteUser,
+		&.DeleteAction,
+		&.DeleteTrigger,
+		&.CloneRole,
+		&.DeleteSessionGroup,
+		&.MoveSessionGroup,
+		&.EnableDisableUserSource,
+		&.JoinSessionWithOptions,
+		&.GiveFeedback {
+			> * {
+				width: 450px;
+			}
+		}
+
+		&.ActivityBox {
+			> * {
+				width: 350px;
+			}
+		}
+
+		&.JoinSessionWithOptions {
+			dt {
+				width: 40%;
+			}
+
+			dd {
+				width: 60%;
+			}
+
+			.ContentPanel > p {
+				text-align: center;
+			}
+
+			.DefaultLogonSession {
+				font-style: italic;
+			}
+		}
+
+		&.GiveFeedback {
+			.RatingSelectionPanel {
+				padding: 0 32px;
+				@include display-flex;
+				@include justify-content-space-between;
+
+				span {
+					margin-top: 67px;
+					text-align: center;
+
+					label {
+						width: 70px;
+						position: relative;
+						display: inline-block;
+						text-align: start;
+
+						.RadioImage {
+							position: absolute;
+							width: inherit;
+							top: -70px;
+						}
+
+						&.Good {
+							> .RadioImage::before {
+								content: url("../Images/RatingGood.svg");
+							}
+
+							> input[type="radio"]:checked + .RadioImage::before {
+								content: url("../Images/RatingGoodSelected.svg");
+							}
+						}
+
+						&.Neutral {
+							> .RadioImage::before {
+								content: url("../Images/RatingNeutral.svg");
+							}
+
+							> input[type="radio"]:checked + .RadioImage::before {
+								content: url("../Images/RatingNeutralSelected.svg");
+							}
+						}
+
+						&.Bad {
+							> .RadioImage::before {
+								content: url("../Images/RatingBad.svg");
+							}
+
+							> input[type="radio"]:checked + .RadioImage::before {
+								content: url("../Images/RatingBadSelected.svg");
+							}
+						}
+					}
+				}
+			}
+
+			input[type=email] {
+				margin-top: 5px;
+				width: 100%;
+			}
+
+			textarea {
+				margin-top: 5px;
+				min-height: 100px;
+			}
+		}
+
+		&.JoinSession {
+			.ContentPanel {
+				.Help {
+					font-size: 10px;
+				}
+
+				.Box {
+					border-radius: 6px;
+					padding: 10px;
+					border-width: 1px;
+					background-color: $shade2BackgroundColor;
+
+					&:after {
+						@include clear-float;
+					}
+
+					h3 {
+						padding: 3px 0px;
+					}
+
+					h4 {
+						float: left;
+						border-radius: 50%;
+						width: 26px;
+						height: 26px;
+						line-height: 26px;
+						font-size: 18px;
+						text-align: center;
+						margin: 5px 10px 5px 5px;
+						background-color: $primaryColor;
+						color: $darkBackgroundTextColor;
+					}
+
+					img {
+						float: right;
+						width: 60%;
+						height: auto;
+						margin-left: 15px;
+					}
+
+					input[type=button] {
+						float: right;
+						margin-left: 20px;
+						margin-bottom: 10px;
+						min-width: 150px;
+						padding: 8px 0px;
+					}
+				}
+			}
+		}
+
+		&.ShowImage {
+			width: 100%;
+
+			> * {
+				width: 100%;
+			}
+
+			.ContentPanel img {
+				width: 100%;
+			}
+		}
+
+		&.EditSessionGroup {
+			dt {
+				width: 25%;
+			}
+
+			dd {
+				width: 75%;
+
+				> *:first-child {
+					float: left;
+					width: calc(100% - 40px);
+				}
+			}
+
+			label {
+				margin: 4px 8px;
+			}
+		}
+
+		&.BuildInstaller {
+			p:not(:first-child) {
+				margin-top: 20px;
+			}
+
+			dd {
+				select {
+					width: 100%;
+				}
+
+				input {
+					@include text-ellipsis;
+					width: 80%;
+				}
+			}
+		}
+
+		&.Page {
+			width: 100%;
+			height: 100%;
+
+			> * {
+				width: 100%;
+			}
+
+			.TitlePanel {
+				border-bottom-width: 1px;
+			}
+
+			.ContentPanel {
+				padding: 0;
+				width: 100%;
+				height: 100%;
+
+				iframe {
+					height: 100%;
+				}
+			}
+		}
+
+		&.MessageBox,
+		&.Prompt {
+			.CommandImage {
+				background-origin: content-box;
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				margin-bottom: 0;
+			}
+
+			.WakeImage {
+				height: 300px;
+				background-image: url(../Images/WakeOnLan.svg);
+			}
+		}
+
+		&.EditExtensionSettings {
+			.DataTable {
+				table-layout: fixed;
+
+				label {
+					display: inline-block;
+					width: 60px;
+				}
+
+				input[type=text] {
+					width: 180px;
+				}
+
+				thead th:nth-child(2) {
+					width: 50%;
+				}
+
+				td {
+					white-space: pre-line;
+
+					> div {
+						margin: 0px;
+
+						.SettingValueUserInterfaceModeDescriptionText {
+							font-style: italic;
+						}
+					}
+
+					&:nth-child(1) {
+						overflow-wrap: anywhere;
+					}
+				}
+
+				textarea {
+					resize: both;
+					height: 32px;
+				}
+			}
+		}
+
+		&.EditResource {
+			.DataTable td > div {
+				margin: 0px;
+			}
+		}
+
+		&.UserSourceConfiguration {
+			.UserLookupBox {
+				width: 250px;
+				margin-right: 5px;
+			}
+
+			&:not(.ReadOnly) .UserLookupPanel,
+			&.External .UserLookupPanel {
+				display: none;
+			}
+
+			textarea {
+				height: 200px;
+			}
+		}
+
+		&.SelectTheme {
+			.ContentPanel {
+				@include display-inline-flex;
+				height: 100%;
+				overflow: hidden;
+
+				.ThemeSelectionBox {
+					background-color: $shade1BackgroundColor;
+					min-width: 220px;
+					width: 25%;
+					@include overflow-auto;
+					margin: 0;
+					@include display-flex;
+					@include flex-direction-column;
+					@include align-items-flex-start;
+
+					@media (max-width: $maxWidthForNarrowViewportLevel2) {
+						width: 100%;
+					}
+
+					> div {
+						user-select: none;
+						cursor: pointer;
+						width: 100%;
+						height: 100px;
+						padding: 40px 0;
+						margin: 0;
+						@include display-flex;
+						@include align-items-center;
+
+						img {
+							padding: 15px 5px 15px 20px;
+						}
+
+						&:hover {
+							background-color: $shade2BackgroundColor;
+						}
+
+						&.Selected {
+							background-color: $shade3BackgroundColor;
+						}
+					}
+				}
+
+				.PreviewPanel {
+					width: 75%;
+					position: relative;
+					margin: 0;
+
+					@media (max-width: $maxWidthForNarrowViewportLevel2) {
+						display: none;
+					}
+
+					iframe {
+						height: 100%;
+						width: 100%;
+						border: 5px solid $shade3BackgroundColor;
+						user-select: none;
+					}
+
+					&:after {
+						content: '';
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						left: 0;
+						right: 0;
+					}
+				}
+			}
+		}
+
+		&.ToolboxDialog {
+			&:not(.RunToolAvailable) {
+				.ToolboxPanel {
+					margin-bottom: 40px;
+				}
+
+				.ButtonPanel {
+					display: none;
+				}
+			}
+
+			&.RunToolboxMode {
+				.ToolboxActionPanel,
+				.ContentPanel .ToolboxPanel .ToolboxButton:hover a {
+					visibility: hidden;
+				}
+
+				.ContentPanel .ToolboxPanel.Empty > .ListPanel {
+					display: none;
+				}
+			}
+
+			&:not(.RunToolboxMode) {
+				.DragEnter {
+					outline: 2px dashed #55A4E1 !important;
+					background-color: #E9F0F9 !important;
+					box-sizing: border-box;
+					outline-offset: -2px;
+					color: $lightBackgroundTextColor;
+				}
+
+				.ContentPanel .ToolboxPanel.Empty {
+					> .ListPanel {
+						outline: 2px dashed $shade2BackgroundColor;
+						background-color: $shade1BackgroundColor;
+						box-sizing: border-box;
+						outline-offset: -2px;
+					}
+
+					> .EmptyPanel {
+						display: none;
+					}
+				}
+
+				.ButtonPanel > *:not(.Failure) {
+					visibility: hidden;
+				}
+			}
+
+			.ContentPanel {
+				.ToolboxHeader {
+					@include display-flex;
+					margin-bottom: 8px;
+
+					.ToolboxActionPanel {
+						margin-bottom: 0px;
+						@include display-flex;
+						@include flex-shrink-one-grow-one;
+						@include text-ellipsis;
+
+						a {
+							margin-right: 10px;
+							@include text-ellipsis;
+						}
+					}
+
+					.TogglePanel {
+						@include flex-shrink-zero-grow-zero;
+					}
+				}
+
+				.ToolboxPanel {
+					position: relative;
+					height: 350px;
+					@include display-flex;
+					@include flex-direction-column;
+
+					.EmptyPanel {
+						display: none;
+						margin-bottom: 0px;
+						@include flex-shrink-one-grow-one;
+
+						p {
+							width: 100%;
+						}
+					}
+
+					.ToolboxButton {
+						@include display-flex;
+						@include align-items-center;
+						@include user-select-none;
+						margin-bottom: 0;
+						padding: 4px;
+						color: inherit;
+						text-decoration: none;
+						cursor: pointer;
+
+						&:hover {
+							background-color: $shade1BackgroundColor;
+
+							a {
+								visibility: visible;
+							}
+						}
+
+						&.Selected {
+							background-color: $shade2BackgroundColor;
+						}
+
+						&.MarkedForDeletion {
+							pointer-events: none;
+							cursor: default;
+							font-style: italic;
+							color: gray;
+						}
+
+						.FileIcon {
+							margin: 4px 0;
+						}
+
+						a {
+							visibility: hidden;
+							width: 24px;
+							height: 24px;
+							background: url(../Images/CommandMore.svg) no-repeat;
+							background-position: center;
+							background-size: 24px 24px;
+							@include flex-shrink-zero-grow-zero;
+						}
+
+						span {
+							@include flex-shrink-one-grow-one;
+							@include text-ellipsis;
+						}
+
+						.RenameToolboxItemInput {
+							margin-left: 4px;
+							width: 75%;
+							padding-bottom: 1px;
+						}
+					}
+
+					&.Empty > .ListPanel,
+					&.Empty > .EmptyPanel {
+						text-align: center;
+						@include display-flex;
+						@include align-items-center;
+						padding: 24px;
+					}
+
+					&.Empty > .EmptyPanel {
+						border-width: 1px;
+					}
+
+					.DirectoryPanel {
+						@include display-flex;
+						@include flex-wrap-wrap;
+						border-bottom-width: 1px;
+						margin-bottom: 0px;
+						padding-right: 12px; /* Save space for the right arrow icon*/
+						border-width: 1px;
+						@include flex-shrink-zero-grow-zero;
+
+						> span {
+							max-width: 100%;
+							@include flex-shrink-zero-grow-zero;
+
+							.ToolboxButton {
+								@include display-inline-flex;
+								max-width: 100%;
+
+								a {
+									display: none;
+								}
+							}
+
+							&:not(:last-child):after {
+								content: '\00BB';
+								vertical-align: super;
+							}
+						}
+					}
+
+					&.Root .DirectoryPanel {
+						display: none;
+					}
+
+					.ListPanel {
+						@include overflow-auto;
+						margin-bottom: 0px;
+						@include flex-shrink-one-grow-one;
+						border-width: 1px;
+					}
+
+					.FileLoadingOverlay {
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						background-color: $shade1BackgroundColor;
+						margin-bottom: 0;
+						@include activity-indicator-overlay;
+
+						&:not(.Loading) {
+							display: none;
+						}
+					}
+				}
+			}
+
+			.ButtonPanel {
+				div {
+					float: left;
+					margin-bottom: 0px;
+
+					select, option {
+						margin-top: 1.5px;
+						font-size: 14px;
+					}
+				}
+			}
+		}
+
+		&.EditRole {
+			input[type=text] {
+				width: 100%;
+			}
+
+			.EditRoleReadOnlyMessage {
+				margin-top: 5px;
+				opacity: 50%;
+			}
+
+			.ScopedPermissionContainer {
+				@include display-flex;
+				border-width: 1px;
+
+				@media (max-width: $maxWidthForNarrowViewportLevel2) {
+					@include flex-direction-column;
+				}
+
+				> * {
+					@include flex-shrink-one-grow-one;
+				}
+
+				.ScopeBox {
+					position: relative;
+					z-index: 0;
+					@include overflow-auto;
+					height: 460px;
+				}
+
+				ul {
+					flex-basis: 40%;
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					@include user-select-none;
+
+					& li {
+						padding: 0;
+						margin: 2px 0;
+						white-space: nowrap;
+
+						& ul {
+							padding-left: 10px;
+						}
+
+						& span {
+							display: inline-block;
+							height: 10px;
+							width: 10px;
+						}
+
+						& p {
+							width: 100%;
+							padding: 1px;
+							margin: 0;
+							display: inline-block;
+							cursor: pointer;
+							line-height: 1.4em;
+						}
+
+						&.HasChildren > span {
+							cursor: pointer;
+							@include filter-brightness-low;
+							background-image: url(../Images/SessionGroupCollapsed.svg);
+							background-repeat: no-repeat;
+							background-size: 6px 9px;
+							background-position: 0px center;
+						}
+
+						&.HasChildren.Expanded > span {
+							background-image: url(../Images/SessionGroupExpanded.svg);
+						}
+
+						&.HasChildren:not(.Expanded) > ul {
+							display: none;
+						}
+
+						&.Selected::before {
+							background-color: #026ccf;
+							content: '';
+							position: absolute;
+							width: 100%;
+							left: 0;
+							right: 0;
+							height: 22px;
+							z-index: -1;
+						}
+
+						&.Loading::before {
+							content: '';
+							position: absolute;
+							width: 100%;
+							height: 22px;
+							z-index: -1;
+							left: 0;
+							right: 0;
+							background-image: url(../Images/ActivityIndicator.gif);
+							background-size: 12px 12px;
+							background-repeat: no-repeat;
+							background-position: 4px center;
+						}
+					}
+				}
+
+				.Selected {
+					& > p:first-of-type {
+						color: #FFFFFF;
+					}
+
+					& > span:first-of-type {
+						filter: brightness(1.0);
+					}
+				}
+
+				.DefinedOption {
+					& > p:first-of-type {
+						font-weight: bold;
+					}
+				}
+
+				> div {
+					flex-basis: 60%;
+
+					> div {
+						margin-left: 10px;
+					}
+
+					&.ScopedPermissionPanel {
+						height: 460px;
+						@include overflow-auto;
+						margin-bottom: 0px;
+						padding: 10px;
+						border-left-width: 1px;
+
+						ul {
+							padding-left: 38px;
+
+							li {
+								list-style-type: decimal;
+							}
+						}
+
+						@media (max-width: $maxWidthForNarrowViewportLevel2) {
+							min-height: 300px;
+							border-top-width: 1px;
+							border-left-width: 0;
+						}
+
+						.ConfigurablePermissionContainer {
+							ul {
+								padding-left: 15px;
+
+								li {
+									list-style-type: none;
+								}
+							}
+
+							.SecondaryButton {
+								margin: 4px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.EditMailConfiguration {
+			dd {
+				> * {
+					width: 100%;
+				}
+
+				label {
+					display: inline-block;
+					margin-bottom: 10px;
+				}
+
+				> div {
+					@include display-flex;
+
+					.DefaultMailToAddressBox {
+						@include flex-shrink-one-grow-one;
+					}
+
+					.SecondaryButton {
+						margin-left: 8px;
+					}
+				}
+
+				.SmtpPickupDirectoryLocationBox {
+					width: 95%;
+					margin-left: 20px;
+					margin-bottom: 10px;
+				}
+
+				.SmtpRelaySettingsList {
+					* {
+						font-size: 12px;
+					}
+
+					dt {
+						float: none;
+						margin-top: 7px;
+						margin-left: 20px;
+						width: 100%;
+					}
+
+					dd {
+						> :not(:first-child) {
+							margin-left: 50px;
+						}
+
+						label {
+							display: inline-block;
+							margin-left: 20px;
+							width: 100%;
+						}
+
+						input {
+							&.SmtpRelayServerBox
+							{
+								width: 375px;
+							}
+
+							margin-left: 5px;
+						}
+
+						.SmtpAuthSPNBox {
+							width: 200px;
+							margin-top: 5px;
+						}
+
+						float: none;
+						display: inline;
+					}
+				}
+
+				overflow-x: hidden;
+				background: $shade0BackgroundColor;
+			}
+		}
+
+		&.EditTrigger {
+			> * {
+				width: 850px;
+			}
+
+			dd > :not(a) {
+				width: calc(100% - 40px);
+			}
+
+			.ContentPanel {
+				dl {
+					dt {
+						width: 30%;
+					}
+
+					dd {
+						width: 70%;
+
+						> *:first-child {
+							float: left;
+						}
+					}
+				}
+
+				h2 {
+					border-left-width: 4px;
+					border-color: $primaryColor;
+					padding-left: 16px;
+					text-transform: uppercase;
+				}
+
+				.TriggerAction {
+					border-width: 1px;
+					padding: 16px;
+
+					.TriggerActionHeader {
+						margin-bottom: 0;
+						background-size: 32px;
+						background-repeat: no-repeat;
+						height: 32px;
+						@include flex-shrink-one-grow-one;
+
+						&.MailAction {
+							background-image: url('../Images/MailAction.svg');
+						}
+
+						&.HttpAction {
+							background-image: url('../Images/HttpAction.svg');
+						}
+
+						&.SessionEventAction {
+							background-image: url('../Images/SessionEventAction.svg');
+						}
+
+						h4 {
+							margin: 6px 0 0 38px;
+						}
+					}
+
+					> div {
+						@include display-flex;
+						@include align-items-flex-start;
+					}
+
+					a {
+						text-decoration: none;
+					}
+				}
+
+				.AddTriggerAction {
+					@include display-flex;
+					@include align-items-stretch;
+
+					> div {
+						text-align: center;
+						padding: 40px 6px 12px 6px;
+						border-width: 1px;
+						border-radius: 4px;
+						width: 100%;
+						margin-right: 12px;
+						user-select: none;
+						cursor: pointer;
+						background-size: 32px;
+						background-repeat: no-repeat;
+						background-position: top 10px center;
+
+						&.MailAction {
+							background-image: url('../Images/MailAction.svg');
+						}
+
+						&.HttpAction {
+							background-image: url('../Images/HttpAction.svg');
+						}
+
+						&.SessionEventAction {
+							background-image: url('../Images/SessionEventAction.svg');
+						}
+
+						&:hover {
+							background-color: $shade1BackgroundColor;
+						}
+
+						&:last-of-type {
+							margin-right: 0px;
+						}
+					}
+				}
+				/* TODO needs to go away by using our command infrastructure */
+				.DeleteTriggerActionButton {
+					width: 16px;
+					height: 16px;
+					background: url('../Images/CommandDelete.svg') no-repeat;
+					text-indent: 100%;
+					white-space: nowrap;
+					overflow: hidden;
+				}
+			}
+		}
+
+		&.ChangeAuditLevel {
+			label {
+				input {
+					display: inline-block;
+				}
+
+				h3 {
+					font-weight: bold;
+					padding: 4px;
+					margin: 0;
+					display: inline-block;
+				}
+
+				p {
+					padding-left: 25px;
+				}
+			}
+		}
+
+		&:not(.Expanded) .ReferenceContentPanel {
+			display: none;
+		}
+
+		.ReferenceContentPanel {
+			max-height: 450px;
+			padding: 0 40px 40px 40px;
+
+			h3 {
+				font-weight: bold;
+				margin-top: 25px;
+			}
+
+			h4 {
+				font-weight: 500;
+			}
+
+			table {
+				tr:first-child {
+					border-top-width: 1px;
+				}
+
+				tr:nth-child(odd) {
+					background: rgba(128, 128, 128, 0.1); /*use rgba instead of $shade1BackgroundColor to avoid covering the linear gradient from ContentPanel*/
+				}
+
+				td:first-child {
+					font-weight: 500;
+				}
+			}
+
+			li {
+				padding-bottom: 8px;
+			}
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				padding: 0 24px;
+			}
+		}
+
+		.CheckBoxContainer {
+			margin-bottom: 5px;
+
+			&:after {
+				@include clear-float;
+			}
+
+			> * {
+				float: left;
+				width: 250px;
+			}
+		}
+
+		&.EditUser {
+			input {
+				&[type=text],
+				&[type=password] {
+					width: 100%;
+				}
+			}
+		}
+
+		&.EditAction {
+			dt {
+				width: 30%;
+			}
+
+			dd {
+				width: 70%;
+
+				&.ConnectionTypes {
+					@include display-flex;
+					@include flex-direction-column;
+				}
+			}
+
+			input[type=number] {
+				width: 72px;
+			}
+
+			input + label {
+				@include user-select-none;
+			}
+		}
+
+		&.EditSchedule {
+			p {
+				margin-top: 5px;
+				opacity: 50%;
+			}
+
+			dt {
+				width: 35%;
+			}
+
+			dd {
+				width: 65%;
+
+				input {
+					width: 64px;
+					padding-left: 5px;
+					text-align: right;
+				}
+			}
+
+			span {
+				padding-left: 5px;
+			}
+		}
+
+		&.DeleteUninstallSession {
+			label {
+				display: block;
+
+				h4 {
+					margin-bottom: 5px;
+				}
+
+				p {
+					font-size: 12px;
+					padding-left: 25px;
+				}
+			}
+		}
+	}
+}
+
+
+.TooltipPanel {
+	color: $darkBackgroundTextColor;
+	border-radius: 6px;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+	position: absolute;
+	z-index: 1000;
+	background-color: $tooltipBackgroundColor;
+	padding: 6px 12px;
+	margin: 0;
+	pointer-events: none;
+	max-width: 250px;
+
+	&.PopoutFromTop {
+		transform-origin: 50% calc(100% - 8px);
+		transform: translate(-50%, -8px);
+	}
+
+	&.PopoutFromBottom {
+		transform-origin: 50% 8px;
+		transform: translate(-50%, 8px);
+	}
+
+	&.PopoutFromLeft {
+		transform-origin: calc(100% + 8px) 50%;
+		transform: translate(-8px, -50%);
+	}
+
+	&.PopoutFromRight {
+		transform: translate(8px, -50%);
+		transform-origin: 8px 50%;
+	}
+}
+
+.PopoutPanel {
+	border-radius: 6px;
+	border-width: 0;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+	position: fixed;
+	z-index: 1000;
+	max-width: 400px;
+	max-height: 500px;
+	@include overflow-auto;
+	padding: 8px 0;
+	background-color: $shade0BackgroundColor;
+
+	&.PopoutFromRightDown {
+		transform-origin: 0 0;
+	}
+
+	&.PopoutFromRightUp {
+		transform-origin: 0 100%;
+	}
+
+	&.PopoutFromDownLeft {
+		transform-origin: 100% 0;
+	}
+
+	&.PopoutFromUpRight {
+		transform-origin: 0 100%;
+	}
+
+	&.PopoutFromDownRight {
+		transform-origin: 0 0;
+	}
+
+	&.PopoutFromUpLeft {
+		transform-origin: 100% 100%;
+	}
+
+	> * {
+		margin: 0;
+	}
+
+	.ActionCenterPanel {
+		max-width: 400px;
+
+		> h2 {
+			font-weight: bold;
+			padding: 8px 20px 12px 20px;
+			border-bottom-width: 1px;
+		}
+
+		* {
+			margin: 0;
+		}
+
+		.EmptyPanel {
+			text-align: center;
+			padding: 32px;
+
+			h4 {
+				font-weight: bold;
+				font-size: 18px;
+			}
+
+			img {
+				width: 100px;
+				height: 100px;
+			}
+
+			p {
+				opacity: 0.6;
+				margin: 8px 0;
+			}
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			@include overflow-auto;
+			max-height: 400px;
+			margin-bottom: 8px;
+
+
+			li {
+				@include display-grid;
+				grid-template-columns: 54px 1fr 1fr;
+				gap: 2px;
+				padding: 8px 16px;
+				cursor: pointer;
+				border-bottom-width: 1px;
+
+				&:hover {
+					background-color: $shade1BackgroundColor;
+				}
+
+				img {
+					grid-column: 1;
+					grid-row: 1 / 4;
+					width: 40px;
+					height: 40px;
+				}
+
+				h3 {
+					grid-column: 2;
+					grid-row: 1;
+					font-size: 14px;
+					font-weight: bold;
+				}
+
+				.Name {
+					grid-column: 2 / 4;
+					grid-row: 2;
+					font-style: italic;
+					opacity: 0.7;
+					@include text-ellipsis;
+				}
+
+				.DataContent {
+					grid-column: 2 / 4;
+					grid-row: 3;
+					@include line-clamp-two;
+				}
+
+				.Time {
+					opacity: 0.7;
+					grid-column: 3;
+					grid-row: 1;
+					justify-self: end;
+				}
+			}
+		}
+	}
+
+	> .CommandList:not(.AllCommandChildrenInvisible):not(:empty) ~ .CommandList:not(.AllCommandChildrenInvisible):not(:empty) {
+		border-top-width: 1px;
+	}
+
+	.CommandList {
+		padding: 2px 0px;
+
+		&.AllCommandChildrenInvisible,
+		&:empty {
+			display: none;
+		}
+
+		> h4 { /* Section header */
+			color: $linkColor;
+			padding: 6px 44px 6px 12px;
+			margin: 0;
+		}
+
+		a {
+			display: block;
+			color: $mainTextColor;
+			text-decoration: none;
+			font-size: 14px;
+			line-height: 1.5em;
+			text-decoration: none;
+			margin: 0px;
+			padding: 6px 44px 6px 12px;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel2) {
+				padding-right: 32px;
+			}
+
+			img {
+				display: none;
+			}
+
+			span {
+				margin-left: 0px;
+			}
+
+			&.TouchActive, .TouchDisabled &:not(.Disabled):hover {
+				background-color: $primaryColor;
+				color: $shade1BackgroundColor;
+			}
+
+			&.Selected {
+				background: url(../Images/NotificationSuccessIcon.svg) no-repeat;
+				background-size: 20px;
+				background-position: right 16px center;
+			}
+		}
+	}
+
+	a.Overflow,
+	&.Overflow a.NeverOverflow,
+	&.Overflow a.SometimesOverflow { /* for extension backward compatibility */
+		display: none;
+	}
+
+	.SharePanel p {
+		padding: 8px 16px;
+		margin-bottom: 0;
+
+		> input {
+			margin-right: 8px;
+		}
+	}
+
+	.HasImage.HasText.HasDescription {
+		@include display-grid;
+		column-gap: 8px;
+		grid-template-areas: "Icon Title" ". Description";
+
+		&:hover {
+			img {
+				@include filter-brightness-high;
+			}
+
+			p {
+				color: $darkBackgroundTextColor;
+			}
+		}
+
+		img {
+			grid-area: Icon;
+			display: block;
+		}
+
+		span {
+			grid-area: Title;
+		}
+
+		p {
+			grid-area: Description;
+			font-size: 12px;
+			opacity: 0.6;
+			color: $mainTextColor;
+			margin-bottom: 0;
+		}
+	}
+
+	&.EventTypesPopout, &.SessionEventTypesPopout, &.SecurityEventTypesPopout, &.RunFrequencyPopout {
+		@include user-select-none;
+		@include display-flex;
+		@include flex-wrap-wrap;
+		max-width: calc(100% - 16px);
+		max-height: 1000px;
+		width: 560px;
+		padding: 16px;
+		color: $mainTextColor;
+
+		> label {
+			margin: 2px 0;
+			padding: 4px 0;
+
+			&.SelectAll {
+				-webkit-box-flex: 1;
+				-ms-flex: 1 1 100%;
+				flex: 1 1 100%;
+				text-align: center;
+				border: 1px solid $borderColor;
+			}
+
+			&.EventTypesLabel, &.SessionEventTypesLabel, &.SecurityEventTypesLabel, &.RunFrequencyLabel {
+				@include flex-two-equal-columns;
+			}
+		}
+	}
+
+	&.ExtrasPopout {
+		.CommandList:not(.AllCommandChildrenInvisible):not(:empty) ~ .CommandList.Navigation {
+			padding-top: 10px;
+		}
+
+		.NavigateExtensionBrowser {
+			margin: 0 8px;
+			@include ghost-button-without-hover;
+
+			&:hover {
+				@include ghost-button-hover;
+			}
+		}
+	}
+
+	&.ApplicationsPopout {
+		max-width: 240px;
+		padding: 10px;
+		@include display-flex;
+		@include flex-wrap-wrap;
+
+		a {
+			padding: 15px;
+			margin: 5px;
+			border-radius: 4px;
+			width: 100px;
+			height: 100px;
+			@include display-flex;
+			@include flex-direction-column;
+			@include align-items-center;
+
+			&:not(.Disabled):hover {
+				background-color: $shade2BackgroundColor;
+				color: $mainTextColor;
+			}
+
+			img {
+				margin-bottom: 5px;
+				display: block;
+				width: 40px;
+				height: 40px;
+			}
+
+			span {
+				margin: 0;
+			}
+		}
+	}
+
+	&.FilterPopout {
+		width: 230px;
+		color: $mainTextColor;
+
+		.FilterHeader {
+			@include display-flex;
+			@include justify-content-space-between;
+			@include align-items-center;
+
+			h3 {
+				font-size: 16px;
+				font-weight: 500;
+				padding: 8px 16px 12px 16px;
+				margin: 0;
+			}
+
+			a {
+				padding-right: 12px;
+				color: $linkColor;
+
+				&:not(.Disabled):hover {
+					background-color: transparent;
+					color: $linkHoverColor;
+				}
+			}
+		}
+
+		.FilterSectionHeader {
+			@include display-flex;
+			margin-bottom: 0px;
+			padding: 8px 16px;
+			@include align-items-center;
+
+			h4 {
+				color: $mainTextColor;
+				font-size: 14px;
+				font-weight: 500;
+				margin-bottom: 0px;
+				padding: 0;
+			}
+		}
+
+		label {
+			@include display-flex;
+			@include justify-content-space-between;
+			padding: 4px 12px;
+			font-size: 14px;
+			line-height: 1.5em;
+
+			&:hover {
+				background: $shade1BackgroundColor;
+			}
+		}
+	}
+
+	&.ConfirmationDialog {
+		p {
+			padding: 0;
+			margin: 24px 24px 8px 24px;
+			color: $mainTextColor;
+		}
+
+		.ButtonPanel {
+			margin: 8px 24px 24px 24px;
+			@include display-flex;
+			@include justify-content-flex-end;
+			gap: 8px;
+			@include flex-shrink-zero-grow-zero;
+
+			input {
+				@include ghost-button-without-hover;
+				font-size: 14px;
+
+				&:hover {
+					@include ghost-button-hover;
+				}
+			}
+		}
+	}
+}
+
+table {
+	&.DataTable {
+		width: 100%;
+		border-collapse: collapse;
+
+		th,
+		td {
+			border-bottom-width: 1px;
+			padding: 8px;
+		}
+
+		th {
+			padding-top: 0px;
+			white-space: nowrap;
+			text-align: left;
+			color: $shade6BackgroundColor;
+			background: $shade0BackgroundColor;
+		}
+
+		textarea {
+			width: 100%;
+		}
+
+		select,
+		input,
+		textarea {
+			font-size: 11px;
+		}
+
+		input {
+			&[type=text],
+			&[type=password] {
+				width: 100%;
+			}
+		}
+
+		td.ActionCell {
+			width: 1px;
+			white-space: nowrap;
+
+			@media (max-width: $maxWidthForNarrowViewportLevel3) {
+				white-space: normal;
+			}
+
+			a {
+				display: inline-block;
+				margin: 4px;
+			}
+		}
+	}
+
+	&.ChangePasswordTable {
+		td {
+			padding: 5px;
+		}
+
+		.Failure {
+			text-align: left;
+			max-width: 300px;
+		}
+	}
+
+	&.AuditTable {
+		max-width: 800px;
+
+		td {
+			min-width: 100px;
+		}
+
+		td:nth-child(2) {
+			max-width: 120px;
+			word-break: break-all;
+		}
+		/*using child selector instead of descendant selector to increase performance*/
+		> tbody > tr > td > p {
+			max-height: 200px;
+			@include overflow-auto;
+			margin-bottom: 0;
+
+			> .AuditTableEntryLabel {
+				font-weight: bold;
+				margin-right: 4px;
+			}
+
+			> .AuditTableEntryValue {
+				word-break: break-all;
+			}
+		}
+	}
+}
+
+/*#endregion*/
+
+/**/
+/*#region Animation*/
+/**/
+
+html:not(.AnimationReduced) {
+
+	*[animation="NewSessionSlideInHighlight"] {
+		animation: NewSessionHighlight 1s ease-in-out, SlideInLeftFar 0.5s ease-in-out;
+	}
+
+	*[animation="PopoutScaleUp"] {
+		-webkit-animation-name: PopoutScaleUp;
+		-webkit-animation-duration: $shortTransitionTime;
+		animation-name: PopoutScaleUp;
+		animation-duration: $shortTransitionTime;
+		animation-timing-function: ease;
+	}
+
+	*[animation="TooltipScaleUpFromRight"] {
+		-webkit-animation-name: TooltipScaleUpFromRight;
+		-webkit-animation-duration: $shortTransitionTime;
+		animation-name: TooltipScaleUpFromRight;
+		animation-duration: $shortTransitionTime;
+		animation-timing-function: ease;
+	}
+
+	*[animation="TooltipScaleUpFromLeft"] {
+		-webkit-animation-name: TooltipScaleUpFromLeft;
+		-webkit-animation-duration: $shortTransitionTime;
+		animation-name: TooltipScaleUpFromLeft;
+		animation-duration: $shortTransitionTime;
+		animation-timing-function: ease;
+	}
+
+	*[animation="TooltipScaleUpFromTop"] {
+		-webkit-animation-name: TooltipScaleUpFromTop;
+		-webkit-animation-duration: $shortTransitionTime;
+		animation-name: TooltipScaleUpFromTop;
+		animation-duration: $shortTransitionTime;
+		animation-timing-function: ease;
+	}
+
+	*[animation="TooltipScaleUpFromBottom"] {
+		-webkit-animation-name: TooltipScaleUpFromBottom;
+		-webkit-animation-duration: $shortTransitionTime;
+		animation-name: TooltipScaleUpFromBottom;
+		animation-duration: $shortTransitionTime;
+		animation-timing-function: ease;
+	}
+
+	body[SessionGroupListBeginLoading] {
+		.MasterPanel > :not(ul) {
+			animation: SlideInLeft $doubleTransitionTime ease-in-out, FadeIn $doubleTransitionTime ease-in-out;
+		}
+	}
+
+	body[SessionGroupListEndLoading] {
+		.MasterListContainer > ul {
+			animation: SlideInLeft $doubleTransitionTime ease-in-out, FadeIn $doubleTransitionTime ease-in-out;
+		}
+
+		.MainDetailPanel {
+			.DetailTableContainer > * {
+				animation: SlideInLeft $doubleTransitionTime ease-in-out;
+			}
+
+			.EmptyPanel img {
+				animation: Shake $tripleTransitionTime ease-in-out;
+			}
+		}
+
+		.SubDetailPanel > div {
+			animation: SlideInLeftFar $tripleTransitionTime ease-in-out;
+		}
+	}
+
+	body[SessionListBeginLoading] {
+	}
+
+	body[SessionListEndLoading] {
+		.MainDetailPanel {
+			.DetailTableContainer > * {
+				animation: SlideInLeft $doubleTransitionTime ease-in-out;
+			}
+
+			.EmptyPanel img {
+				animation: Shake $doubleTransitionTime ease-in-out;
+			}
+		}
+
+		.SubDetailPanel > div {
+			animation: SlideInLeftFar $tripleTransitionTime ease-in-out;
+		}
+	}
+
+	body[SessionDetailsBeginLoading] {
+	}
+
+	body[SessionGroupListEndLoading], body[SessionListEndLoading], body[SessionDetailsEndLoading] {
+		.SubDetailPanel {
+			dd, .EditInvitationCodeBox, text, .ListPanel, .JoinInfoPanel, .ScreenshotPanel, .EntryPanel, .EmptyPanel, .PositionedPanel {
+				animation: FadeIn $transitionTime ease-in-out;
+			}
+		}
+	}
+}
+
+/**/
+/*Animation Keyframes*/
+/**/
+
+@keyframes NewSessionHighlight {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	85% {
+		opacity: 0.7;
+	}
+}
+
+@keyframes ModalSlideIn {
+	from {
+		/* this causes issues with code mirror autocomplete tooltip being cut off (see SCP-38664). should try to work around this somehow? */
+		transform: translateY(-50px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0px);
+		opacity: 1;
+	}
+}
+
+@keyframes ModalSlideOut {
+	from {
+		transform: translateY(0px);
+		opacity: 1;
+	}
+
+	to {
+		transform: translateY(-50px);
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes PopoutScaleUp {
+	from {
+		transform: scale(0);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes TooltipScaleUpFromRight {
+	from {
+		transform: translate(8px, -50%) scale(0);
+	}
+
+	to {
+		transform: translate(8px, -50%) scale(1);
+	}
+}
+
+@keyframes TooltipScaleUpFromBottom {
+	from {
+		transform: translate(-50%, 8px) scale(0);
+	}
+
+	to {
+		transform: translate(-50%, 8px) scale(1);
+	}
+}
+
+@keyframes TooltipScaleUpFromLeft {
+	from {
+		transform: translate(-8px, -50%) scale(0);
+	}
+
+	to {
+		transform: translate(-8px, -50%) scale(1);
+	}
+}
+
+@keyframes TooltipScaleUpFromTop {
+	from {
+		transform: translate(-50%, -8px) scale(0);
+	}
+
+	to {
+		transform: translate(-50%, -8px) scale(1);
+	}
+}
+
+@keyframes SlideInLeft {
+	0% {
+		transform: translateX(-30px);
+	}
+
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes SlideInLeftFar {
+	0% {
+		transform: translateX(-45px);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+@keyframes FadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes FadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes Shake {
+	0% {
+		transform: rotate(-5deg);
+	}
+
+	80% {
+		transform: rotate(4deg);
+	}
+
+	95% {
+		transform: rotate(-2deg);
+	}
+
+	100% {
+		transform: rotate(0);
+	}
+}
+
+/*#endregion*/
+
+/**/
+/*#region Hacks*/
+/**/
+
+/* Safari CSS hack */
+/* SubDetailPanel needs hardware acceleration otherwise the share panel tab selection doesn't work correctly */
+_::-webkit-full-page-media, _:future, :root div.Host, :root div.Guest, :root div.SubDetailPanel {
+	/*force hardware acceleration*/
+	-webkit-transform: rotateZ(360deg);
+	-webkit-perspective: 1000;
+	-webkit-backface-visibility: hidden;
+}
+
+/* Edge CSS hack */
+@supports (-ms-ime-align: auto) {
+	/* force hardware acceleration */
+	.DetailTableContainer {
+		height: 0;
+		-ms-transform: translateZ(0);
+	}
+	/* change checkbox position */
+	.OuterPanel .MainPanel .MainDetailPanel .DetailSelectionPanel .DetailTableContainer table > tbody > tr > td.CheckBox::before {
+		top: 20px;
+	}
+
+	.OuterPanel .MainPanel .MainDetailPanel .DetailSelectionPanel .DetailTableContainer table > tbody > tr > td.CheckBox::after {
+		top: 16px;
+	}
+	/* override the default min-width: auto so flex shrink can work */
+	.GuestPage .OuterPanel .MainPanel .ContentPanel > div > div.ActionPanel > div p.GuestActionBar input [type='text'],
+	.GuestPage .OuterPanel .MainPanel .ContentPanel > div > div.ActionPanel > div p.GuestActionBar input[type='search'] {
+		min-width: 0;
+	}
+}
+
+/* Firefox CSS hack */
+_::-moz-progress-bar, body:last-child .DetailTableContainer {
+	height: 0;
+}
+
+@-moz-document url-prefix() {
+	input[type=checkbox] {
+		&:before, &:after {
+			top: -6px;
+		}
+
+		&:checked {
+			&:before {
+				top: -2px;
+			}
+		}
+	}
+}
+
+/* IE CSS hack */
+_:-ms-input-placeholder, :root .DetailTableContainer {
+	height: 0;
+}
+
+.GuestPage .OuterPanel .MainPanel .ContentPanel > div > div.ActionPanel > div p.GuestActionBar input [type='text'],
+.GuestPage .OuterPanel .MainPanel .ContentPanel > div > div.ActionPanel > div p.GuestActionBar input[type='search'],
+.GuestPage .OuterPanel .MainPanel .ContentPanel > div > div.ActionPanel > div p.GuestActionBar select {
+	width: 0;
+}
+
+/* Appcues CSS hack */
+body > * {
+	margin: 0;
+}
+
+::-webkit-scrollbar {
+	@include appearance-none;
+	width: 12px;
+	height: 12px;
+	margin-right: 12px;
+
+	&-thumb {
+		border-radius: 5px;
+		background-color: #CCC;
+		border: 3px solid rgba(0, 0, 0, 0);
+		background-clip: padding-box;
+
+		.OuterPanel .NavigationPanel& {
+			background-color: rgba(255, 255, 255, 0.3);
+		}
+
+		.OuterPanel .MasterListContainer& {
+			background-color: rgba(255, 255, 255, 0.3);
+		}
+
+		.OuterPanel .ContentPanel& {
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+	}
+}
+
+/* Touch device CSS hack */
+.TouchEnabled .OuterPanel .MainPanel .MasterPanel .MasterListContainer ul li div > a {
+	display: none;
+}
+
+.TouchEnabled .OuterPanel .MainPanel .MasterPanel .MasterListContainer ul li.Selected div > a {
+	display: block;
+	visibility: visible;
+}
+
+/*#endregion*/
+
+/**/
+/*#region Normalization*/
+/**/
+
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+}
+
+/*#endregion*/
+
+/**/
+/*#region Container Queries */
+/**/
+
+@container (max-width: 250px) {
+	.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .EntryHistoryPanel .HistoryPanel .ListPanel {
+		> div.RequestedElevation, > div.RequestedAdministrativeLogon {
+			.Body .Response .EventHistoryItemResponse {
+				.Approve, .Deny {
+					span {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .EntryHistoryPanel .HistoryPanel .ListPanel {
+		> div.RequestedElevation, > div.EncounteredElevationPrompt, > div.RequestedAdministrativeLogon, > div.QueuedProceedElevation {
+			.Body .Info .Content .DataFieldList {
+				display: flex;
+				flex-direction: column;
+				word-break: break-word;
+
+				dt {
+					@include dt-vertical-layout;
+				}
+
+				dd {
+					@include dd-vertical-layout;
+				}
+
+				dd:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+@container (max-width: 500px) {
+	.OuterPanel .MainPanel .MainDetailHeaderPanel .CommandPanel a span, .OuterPanel .MainPanel .SubDetailHeaderPanel .CommandPanel a span {
+		display: none;
+	}
+}
+
+/*#endregion*/

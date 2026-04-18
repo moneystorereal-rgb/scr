@@ -1,0 +1,519 @@
+﻿<%@ Master Language="C#" ClassName="ScreenConnect.MasterPage" %>
+
+<script runat="server">
+#nullable enable
+
+	protected override void OnInit(EventArgs e)
+	{
+		base.OnInit(e);
+
+		// required for IE to accept cookies in an iframe
+		this.Response.AddHeader("P3P", "CP=\"NON CUR OUR STP STA PRE\"");
+
+		this.Page.ViewStateMode = ViewStateMode.Disabled;
+
+		this.Page.AddFormlessScriptReference(CacheCookie.EncodeUrl("~/Script.ashx"), "defaultScript");
+		this.Page.AddFormlessScriptReference(ClientScriptHandler.GetUrl("~/Scripts/SC.polyfill.ts", ScriptImportType.NoModule), scriptImportType: ScriptImportType.NoModule);
+		this.Page.AddFormlessScriptReference(ClientScriptHandler.GetUrl("~/Scripts/SC.main.ts", ScriptImportType.NoModule), scriptImportType: ScriptImportType.NoModule);
+		this.Page.AddFormlessScriptReference(ClientScriptHandler.GetUrl("~/Scripts/SC.main.ts", ScriptImportType.Classic));
+	}
+
+	protected override void OnPreRender(EventArgs e)
+	{
+		base.OnPreRender(e);
+
+		foreach (var link in this.Page.Header.GetAllControls().OfType<HtmlLink>())
+			if (link.Href.EndsWith(ServerConstants.FileExtensionCss))
+				link.Href = CacheCookie.EncodeUrl(link.Href, typeof(StyleSheetHandler));
+
+		this.Page.AddLink(
+			"shortcut icon",
+			CacheCookie.EncodeUrl(WebConfigurationManager.GetHandlerPath(typeof(FavIconHandler)), typeof(FavIconHandler))
+		);
+
+		this.Page.RegisterAsyncTask(async () =>
+		{
+			var webPrincipal = this.Context.User.Identity as IWebPrincipal;
+
+			if (this.Page is not ILoginRenewController page || page.ShouldTryRenewLoginContext())
+				if (webPrincipal?.CanRenewLoginContext != false)
+					await WebAuthentication.TryRenewLoginContextAsync(this.Context);
+
+			var permissions = await Permissions.GetForUserAsync(this.Context.User);
+			var licenseCapabilities = await LicensingInfo.GetCapabilitiesAsync();
+			var globalViewableSessionGroupPathFilter = Permissions.ComputeSessionGroupPathFilterForPermissions(permissions, PermissionInfo.ViewSessionGroupPermission);
+
+			this.Page.Title = WebUtility.HtmlEncode(WebConstants.PageTitle);
+
+			// user- or page-specific context
+			this.Page.AddFormlessScriptContent("SC.util.mergeIntoContext({0:json});", new
+			{
+				focusedControlID = ServerToolkit.Instance.TryGetPageFocusedControlID(this.Page),
+				userName = this.Context.User.Identity.Name,
+				userDisplayName = this.Context.User.GetUserDisplayNameWithFallback(),
+				isUserAuthenticated = this.Context.User.Identity.IsAuthenticated,
+				antiForgeryToken = ServerCryptoManager.Instance.GenerateAntiForgeryToken(this.Context.User.Identity),
+				isUserAdministrator = Permissions.HasPermission(PermissionInfo.AdministerPermission, permissions),
+				canManageSharedToolbox = Permissions.HasPermission(PermissionInfo.ManageSharedToolboxPermission, permissions)
+					&& await LicensingInfo.HasCapabilitiesAsync(BasicLicenseCapabilities.RunToolboxItem),
+				pageBaseFileName = Path.GetFileNameWithoutExtension(this.Request.GetUrlWithTruePath().AbsolutePath),
+				notifyActivityFrequencyMilliseconds = WebAuthenticationExtensions.GetTicketReissueInterval().TotalMilliseconds,
+				loginAfterInactivityMilliseconds = WebAuthenticationExtensions.GetMaxLongestTicketReissueInterval().TotalMilliseconds,
+				canChangePassword = webPrincipal?.CanChangePassword == true,
+				controlPanelUrl = webPrincipal?.ControlPanelUrl,
+				pageType = this.Page.GetType().Name,
+				processType = this.Page.GetType().Name == "GuestPage" ? ProcessType.Guest : ProcessType.Host,
+				userAgentOverride = this.Request.GetParameter(false, "User", "Agent", "Override"),
+				sessionTypeInfos = ServerExtensions.GetAllSessionTypes()
+					.Where(sessionType => licenseCapabilities.AreFlagsSet(ServerExtensions.GetRequiredLicenseCapabilities(sessionType)))
+					.Where(sessionType => globalViewableSessionGroupPathFilter.WouldIncludePathsForSessionType(sessionType))
+					.OrderBy(sessionType => ConfigurationCache.SessionTypeDisplayOrder[sessionType])
+					.Select(sessionType => new { sessionType, isButtonVisible = Permissions.HasPermission(PermissionInfo.GetPermissionForCreatingSessionType(sessionType), permissions) })
+					.ToList(),
+				imports = new[]
+				{
+					// NOTE: keep in sync with the type-mappings in types.d.ts for good IDE support
+					"~/Scripts/SC.editor.ts",
+				}.ToDictionary(
+					it => Path.GetFileNameWithoutExtension(it),
+					it => this.Page.ResolveClientUrl(ClientScriptHandler.GetUrl(it, ScriptImportType.EsModule))
+				),
+			});
+
+			foreach (var url in await ExtensionRuntime.GetAllActiveRuntimeObjectsAsync<ClientScriptReference, string>())
+				this.Page.AddFormlessScriptReference(url);
+			foreach (var url in await ExtensionRuntime.GetAllActiveRuntimeObjectsAsync<StyleSheetReference, string>())
+				this.Page.AddStyleSheetReference(url);
+			foreach (var url in (await LicensingInfo.GetWebScriptUrlsAsync()).SafeEnumerate())
+				this.Page.AddFormlessScriptReference(url, async: true, defer: true);
+
+			foreach (var extensionRuntime in await ExtensionRuntime.GetActiveExtensionRuntimesAsync())
+				foreach (var initializerScriptSource in extensionRuntime.GetActiveRuntimeObjects<ClientScriptInitializer, string>())
+					this.Page.AddFormlessScriptContent(
+						"SC.extension.addInitializeProc({0:js}, {1});",
+						extensionRuntime.ExtensionID,
+						new JavaScriptFunctionDeclaration(string.Empty, new[] { "extensionContext" }, initializerScriptSource)
+					);
+		});
+	}
+
+	// ReSharper disable once UnusedNullableDirective - otherwise the compiler throws on generated asp.net stuff at runtime
+#nullable disable
+</script>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<asp:ContentPlaceHolder ID="DeclareScript" runat="server" />
+</head>
+<body>
+	<div class="HiddenPanel"></div>
+	<script>
+		SC.ui.setVisible(document.body, false);
+	</script>
+	<div class="OuterPanel">
+		<div class="HeaderPanel"></div>
+		<div class="NavigationPanel ArrowNavigation" tabindex="10"></div>
+		<div class="MainPanel">
+			<asp:ContentPlaceHolder ID="Main" runat="server" />
+		</div>
+	</div>
+	<script>
+		SC.context.scriptBaseUrl = SC.util.getBaseUrl($('defaultScript').src);
+	</script>
+	<asp:ContentPlaceHolder ID="RunScript" runat="server" />
+	<script>
+
+		SC.event.addGlobalHandler(SC.event.QueryCommandButtons, function (eventArgs) {
+			switch (eventArgs.area) {
+				case 'TrayIconPanel':
+					eventArgs.buttonDefinitions.push({ commandName: 'ActionCenter', imageUrl: 'Images/ActionCenter.svg' });
+
+					if (SC.context.isUserAdministrator)
+						eventArgs.buttonDefinitions.push({ commandName: 'Navigate', commandArgument: 'Administration', imageUrl: 'Images/NavigationAdministration.svg' });
+
+					eventArgs.buttonDefinitions.push(
+						{ commandName: 'Extras', imageUrl: 'Images/Extras.svg' },
+						{ commandName: 'Applications', imageUrl: 'Images/Applications.svg' }
+					);
+					break;
+				case 'ExtrasNavigationPopoutPanel':
+					eventArgs.buttonDefinitions.push(
+						{ commandName: 'NavigateExtensionBrowser' }
+					);
+					break;
+				case 'ToolsPanel':
+					eventArgs.buttonDefinitions.push(
+						{ commandName: 'Extras', imageUrl: 'Images/Extras.svg' },
+						{ commandName: 'Login' }
+					);
+					break;
+				case 'UserPopoutPanel':
+					eventArgs.buttonDefinitions.push(
+						{ commandName: 'NavigateControlPanel' },
+						{ commandName: 'ChangePassword' },
+						{ commandName: 'Logout' }
+					);
+					break;
+				case 'UserHelpPopoutPanel':
+					if (SC.context.pageType !== 'GuestPage' && SC.context.pageType != 'LoginPage') {
+						eventArgs.buttonDefinitions.push({ commandName: 'GiveFeedback' });
+
+						for (var i = 1; ; i++) {
+							var resourceValue = SC.res['HelpPanel.Link' + i + '.Text'];
+
+							if (resourceValue === undefined || resourceValue === '')
+								break;
+
+							var url = SC.util.sanitizeUrl(SC.res['HelpPanel.Link' + i + '.Url']);
+							eventArgs.buttonDefinitions.push({ commandName: 'NavigateHelpLink', commandArgument: url, text: resourceValue, title: url });
+						}
+					}
+					break;
+			}
+		});
+
+		SC.event.addGlobalHandler(SC.event.QueryCommandButtonState, function (eventArgs) {
+			switch (eventArgs.commandName) {
+				case 'User':
+				case 'ActionCenter':
+					eventArgs.isVisible = SC.context.isUserAuthenticated;
+					break;
+				case 'Login':
+					eventArgs.isVisible = SC.context.pageType != 'SetupWizardPage' && !SC.context.isUserAuthenticated && !SC.util.isCapable(SC.util.Caps.InternetExplorer, null, { major: 12 }); // Login page doesn't support IE
+					break;
+				case 'NavigateControlPanel':
+					eventArgs.isVisible = !!SC.context.controlPanelUrl;
+					break;
+				case 'ChangePassword':
+					eventArgs.isVisible = SC.context.canChangePassword;
+					break;
+				case 'Extras':
+					eventArgs.isVisible = SC.popout.computePopoutCommandsVisible(eventArgs, ['', 'Navigation']);
+					break;
+				case 'Applications':
+				case 'Help':
+					eventArgs.isVisible = SC.popout.computePopoutCommandsVisible(eventArgs);
+					break;
+				case 'NavigateExtensionBrowser':
+					eventArgs.isVisible = SC.context.isUserAdministrator;
+					break;
+			}
+		});
+
+		SC.event.addGlobalHandler(SC.event.ExecuteCommand, function (eventArgs) {
+			switch (eventArgs.commandName) {
+				case 'Extras':
+					SC.popout.showPanelFromCommand(eventArgs, null, { subAreas: ['', 'Navigation'] });
+					break;
+				case 'Applications':
+					SC.popout.showPanelFromCommand(eventArgs);
+					break;
+				case 'ActionCenter':
+					SC.popout.showPanelFromCommand(eventArgs, null, {
+						buildProc: function (popoutPanel) {
+							var actionCenterInfo = SC.livedata.getResponseInfo(SC.livedata.ActionCenterInfo);
+
+							SC.ui.setContents(popoutPanel, $div({ className: 'ActionCenterPanel' }, [
+								$h2({ _textResource: 'ActionCenterPanel.Text' }),
+								$ul({ className: 'List', _visible: SC.util.any(actionCenterInfo.ActionItems) },
+									(actionCenterInfo.ActionItems || [])
+										.map(function (it) {
+											var parsedEventData = SC.util.parseEventData(it.Data);
+
+											return $li({
+												_eventHandlerMap: {
+													click: function () {
+														window.location.href = SC.nav.getHostUrl({
+															sessionType: it.SessionType,
+															sessionID: it.SessionID,
+															tabName: SC.nav.getHostTabName(it.EventType),
+															tabContext: it.EventID
+														});
+													},
+												}
+											}, [
+												$img({ src: 'Images/Notification' + SC.util.getEnumValueName(SC.types.SessionEventType, it.EventType) + '.svg' }),
+												$h3({ className: 'Type' }, SC.res['SessionEvent.' + SC.util.getEnumValueName(SC.types.SessionEventType, it.EventType) + '.Title']),
+												$p({ className: 'Name', title: it.Name }, it.Name),
+												$p({ className: 'DataContent', title: parsedEventData.content }, parsedEventData.content),
+												$p({ className: 'Time' }, SC.util.formatDateTime(it.Time, { includeRelativeDate: true })),
+											])
+										})
+								),
+								$div({ className: 'EmptyPanel', _visible: !SC.util.any(actionCenterInfo.ActionItems) }, [
+									$p($img({ src: 'images/EmptyActionCenter.svg' })),
+									$h4({ _textResource: 'ActionCenterPanel.EmptyHeader' }),
+									$p({ _textResource: 'ActionCenterPanel.EmptyText' }),
+								]),
+							]));
+						},
+					});
+					break;
+				case 'Login':
+					SC.util.sendToLogin(SC.types.LoginReason.None, false);
+					break;
+				case 'Logout':
+					SC.util.sendToLogin(SC.types.LoginReason.Logout, false);
+					break;
+				case 'User':
+					SC.popout.showPanelFromCommand(eventArgs, null, { subAreas: ['Help', ''] });
+					break;
+				case 'NavigateControlPanel':
+					window.open(SC.util.sanitizeUrl(SC.context.controlPanelUrl));
+					break;
+				case 'ChangePassword':
+					var params = {};
+					params[SC.context.loginUserNameParameterName] = eventArgs.commandArgument;
+					window.location.href = SC.context.changePasswordPageUrl + SC.util.getQueryString(params);
+					break;
+				case 'NavigateHelpLink':
+					window.open(eventArgs.commandArgument);
+					break;
+				case 'ToggleMenu':
+					SC.css.toggleClass(document.documentElement, 'ShowMenu');
+					break;
+				case 'GiveFeedback':
+					SC.dialog.showModalButtonDialog(
+						'GiveFeedback',
+						SC.res['Command.GiveFeedback.Text'],
+						SC.res['Command.GiveFeedback.ButtonText'],
+						'Default',
+						function (container) {
+							SC.ui.setContents(container, [
+								$div({ _textResource: 'GiveFeedbackPanel.ReviewLabelText' }),
+								$div({ className: 'RatingSelectionPanel' },
+									['Good', 'Neutral', 'Bad'].map(function (rating) {
+										return $span(
+											$label({ className: rating }, [
+												$input({ type: 'radio', name: 'rating', value: rating.toLowerCase() }),
+												$div({ className: 'RadioImage' }),
+												$span({ _textResource: 'GiveFeedbackPanel.' + rating + 'RatingLabelText' }),
+											])
+										);
+									})
+								),
+								$div([
+									$label({ _textResource: 'GiveFeedbackPanel.EmailLabelText' }, [
+										$input({ type: 'email', id: 'email' }),
+									]),
+								]),
+								$div([
+									$label({ _textResource: 'GiveFeedbackPanel.CommentsLabelText' }, [
+										SC.ui.createTextBox({ id: 'commentsBox' }, true),
+									]),
+								]),
+							]);
+						},
+						function (eventArgs) {
+							SC.service.SendFeedback(
+								Array.prototype.map.call(document.querySelectorAll('input[name=rating]:checked'), function (e) { return e.value; })[0],
+								$('commentsBox').value,
+								$('email').value,
+								function () {
+									SC.dialog.showModalMessageBox(
+										SC.res['GiveFeedbackPanel.SuccessHeading'],
+										SC.res['GiveFeedbackPanel.SuccessMessage']
+									);
+								}
+							);
+						}
+					);
+					break;
+				case 'ManageToolbox':
+					SC.toolbox.showToolboxDialog(eventArgs.commandName, eventArgs.commandArgument);
+					break;
+				case 'Navigate':
+					window.location.href = eventArgs.commandArgument;
+					break;
+				case 'NavigateExtensionBrowser':
+					window.location.href = SC.context.administrationPageUrl + '?Tab=Extensions#ShowExtensionBrowser';
+					break;
+			}
+		});
+
+		SC.event.addGlobalHandler(SC.event.QueryNavigationLinks, function (eventArgs) {
+			Array.prototype.push.apply(eventArgs.navigationLinks, SC.context.sessionTypeInfos.map(function (_) {
+				return {
+					href: SC.context.scriptBaseUrl + SC.context.hostPageUrl + '#' + SC.util.getEnumValueName(SC.types.SessionType, _.sessionType),
+					text: SC.util.getSessionTypeResource('NavigationPanel.{0}LinkText', _.sessionType),
+					imageUrl: SC.util.formatString('Images/Navigation{0}.svg', SC.util.getEnumValueName(SC.types.SessionType, _.sessionType)),
+					sessionType: _.sessionType,
+				}
+			}));
+		});
+
+		SC.event.addGlobalHandler(SC.event.QueryLiveData, function (eventArgs) {
+			if (SC.context.isUserAuthenticated)
+				SC.livedata.setRequestInfo(eventArgs, SC.livedata.ActionCenterInfo);
+		});
+
+		SC.event.addGlobalHandler(SC.event.LiveDataRefreshed, function () {
+			SC.css.ensureClass($('.NavigationPanel .TrayIconPanel .ActionCenter'), 'NonEmpty', SC.util.any(SC.livedata.getResponseInfo(SC.livedata.ActionCenterInfo).ActionItems));
+		});
+
+		SC.event.addGlobalHandler('keydown', function (eventArgs) {
+			if (SC.event.doesKeyEventIndicateTextEntryOrArrowKeyNavigation(eventArgs) && (!document.activeElement || SC.ui.isDefinitelyNotTextEntryElement(document.activeElement))) {
+				var arrowKeyInfo = SC.event.getArrowKeyInfo(eventArgs);
+
+				if (arrowKeyInfo && document.activeElement && SC.css.containsClass(document.activeElement, 'ArrowNavigation')) {
+					eventArgs.preventDefault();
+					SC.ui.setHiddenFocusAndClearOthers();
+
+					var targetPreviousOrNext = arrowKeyInfo.isLeft || arrowKeyInfo.isUp;
+
+					SC.event.dispatchEvent(document.activeElement, SC.event.KeyNavigation, {
+						currentActiveElement: document.activeElement,
+						currentSelectedElement: SC.ui.findDescendantBreadthFirst(document.activeElement, function (_) { return SC.ui.isSelected(_); }, !targetPreviousOrNext),
+						targetPreviousOrNext: targetPreviousOrNext,
+						arrowKeyInfo: arrowKeyInfo,
+						hasShift: eventArgs.shiftKey,
+					});
+				} else {
+					var queryTextEntryElementArgs = SC.event.dispatchGlobalEvent(SC.event.QueryTextEntryElement, {
+						textEntryElement: null,
+					});
+
+					if (queryTextEntryElementArgs.textEntryElement) {
+						if (!SC.event.doesKeyEventIndicateTextEntryNavigation(eventArgs))
+							queryTextEntryElementArgs.textEntryElement.value = '';
+
+						queryTextEntryElementArgs.textEntryElement.focus();
+					}
+				}
+			}
+		});
+
+		SC.event.addGlobalHandler(SC.event.KeyNavigation, function (eventArgs) {
+			// default handling for key navigation
+			var elementToNavigateTo;
+
+			if (eventArgs.currentSelectedElement) {
+				elementToNavigateTo = SC.ui.getPreviousOrNextElementSibling(eventArgs.currentSelectedElement, eventArgs.targetPreviousOrNext) || eventArgs.currentSelectedElement;
+
+				while (SC.util.isNullOrEmpty(elementToNavigateTo._commandName) && SC.ui.getPreviousOrNextElementSibling(elementToNavigateTo, eventArgs.targetPreviousOrNext)) {
+					elementToNavigateTo = SC.ui.getPreviousOrNextElementSibling(elementToNavigateTo, eventArgs.targetPreviousOrNext);
+				}
+			} else {
+				elementToNavigateTo = SC.ui.findDescendantBreadthFirst(eventArgs.currentActiveElement, function (_) { return !SC.util.isNullOrEmpty(_._commandName); }); // this can still be empty
+			}
+
+			SC.util.tryNavigateToElementUsingCommand(elementToNavigateTo, eventArgs.targetPreviousOrNext, eventArgs.hasShift);
+		});
+
+		SC.event.addGlobalHandler(SC.event.PreRender, function () {
+			var resetInactivityProc = function () {
+				window._lastNotifyActivityTime = new Date().getTime();
+
+				if (SC.context.isUserAuthenticated && SC.context.loginAfterInactivityMilliseconds != 0) {
+					if (window._loginAfterInactivityTimer)
+						window.clearTimeout(window._loginAfterInactivityTimer);
+
+					window._loginAfterInactivityTimer = window.setTimeout(function () { SC.util.sendToLogin(SC.types.LoginReason.IdleTooLong, true); }, Math.min(SC.context.loginAfterInactivityMilliseconds, 2147483647)); //interval stored as 32-bit signed int
+				}
+			};
+
+			SC.context.prehandleServiceFailureProc = function (error) {
+				if (error.statusCode != 403)
+					return false;
+
+				SC.util.sendToLogin(SC.types.LoginReason.PermissionsInsufficient, true);
+			}
+
+			SC.context.unhandledServiceFailureProc = function (error) {
+				SC.dialog.showModalErrorBox(error.detail || error.message);
+			}
+
+			resetInactivityProc();
+
+			SC.ui.initializeWindowActivityTracking(function () {
+				if (new Date().getTime() - window._lastNotifyActivityTime > SC.context.notifyActivityFrequencyMilliseconds) {
+					resetInactivityProc();
+					SC.service.NotifyActivity();
+				}
+			});
+
+			var parameterlessUrl = SC.util.getParameterlessUrl(window.location.href);
+			var createNavigationLinkFunc = function (_) {
+				return $div({ _commandName: 'Navigate', _commandArgument: _.href, _selected: _.href == parameterlessUrl }, [
+					$img({ src: _.imageUrl }),
+					$span(_.text),
+				]);
+			};
+
+			SC.ui.setContents($('.HeaderPanel'), [
+				$a({ href: SC.context.guestPageUrl, className: 'LogoIconLink' }),
+				$a({ _commandName: 'ToggleMenu', className: 'ShowMenuButton' }, ''),
+				$h1({ className: 'LogoPanel' }),
+				$div({ className: 'CommandPanel' }),
+			]);
+
+			SC.command.queryAndAddCommandButtons($('.HeaderPanel .CommandPanel'), 'ToolsPanel');
+			SC.command.updateCommandButtonsState($('.HeaderPanel .CommandPanel'));
+
+			var queryNavigationLinksEventArgs = SC.event.dispatchGlobalEvent(SC.event.QueryNavigationLinks, { navigationLinks: [] })
+
+			SC.ui.setContents($('.NavigationPanel'), [
+				queryNavigationLinksEventArgs.navigationLinks.map(createNavigationLinkFunc),
+				$div({ className: 'FlexSpacer' }),
+				$div({ className: 'TrayPanelContainer' }, [
+					$div({ className: 'TrayIconPanel' }),
+					$div({ className: 'UserMenuButton', _commandName: 'User' },
+						$span(SC.context.userDisplayName == null ? '' : SC.context.userDisplayName.toUpperCase()[0]),
+						$span(SC.context.userDisplayName)
+					),
+				]),
+			]);
+
+			SC.command.queryAndAddCommandButtons($('.NavigationPanel .TrayIconPanel'), 'TrayIconPanel', null, { descriptionRenderStyle: SC.command.DescriptionRenderStyle.Tooltip });
+			SC.command.updateCommandButtonsState($('.NavigationPanel .TrayIconPanel'));
+
+			var setSelectedFunc = function () {
+				$$('.NavigationPanel > div')
+					.filter(function (_) { return !SC.util.isNullOrEmpty(_._commandArgument); })
+					.forEach(function (_) { SC.ui.setSelected(_, window.location.href.startsWith(_._commandArgument)); });
+			};
+
+			SC.event.addHandler(window, 'hashchange', setSelectedFunc);
+
+			setSelectedFunc();
+
+			SC.livedata.startLoop();
+		});
+
+		var isTouchEnabled = (typeof document.documentElement.ontouchstart !== 'undefined');
+		SC.css.ensureClass(document.documentElement, 'TouchEnabled', isTouchEnabled);
+		SC.css.ensureClass(document.documentElement, 'TouchDisabled', !isTouchEnabled);
+		SC.css.ensureClass(document.documentElement, 'UserAuthenticated', SC.context.isUserAuthenticated);
+		SC.css.ensureClass(document.documentElement, 'NativeClient', SC.util.isCapable(SC.util.Caps.NativeClient));
+		SC.css.ensureClass(document.documentElement, 'HasMasterPanel', $('.MasterPanel'));
+		SC.css.ensureClass(document.documentElement, 'LogoImageVisible', SC.util.getBooleanResource('LogoPanel.ImageVisible'));
+		SC.css.ensureClass(document.documentElement, 'LogoIconVisible', SC.util.getBooleanResource('LogoPanel.IconVisible'));
+		SC.css.ensureClass(document.documentElement, 'LogoHeadingVisible', SC.util.getBooleanResource('LogoPanel.HeadingVisible'));
+		SC.css.ensureClass(document.documentElement, 'AnimationReduced', SC.util.getBooleanResource('Page.AnimationReduced'));
+		SC.css.ensureClass(document.documentElement, SC.context.pageType, true);
+
+		SC.extension.initializeExtensions();
+		SC.event.dispatchGlobalEvent(SC.event.PreRender);
+		SC.util.recordLifeCycleEvent(SC.event.PreRender);
+		SC.ui.setVisible(document.body, true);
+		SC.event.dispatchGlobalEvent(SC.event.PostRender);
+		SC.util.recordLifeCycleEvent(SC.event.PostRender);
+
+		$$('*[tabIndex]').forEach(function (_) {
+			SC.event.addHandler(_, 'mousedown', function () {
+				SC.ui.setHiddenFocusAndClearOthers(_);
+			});
+		});
+
+		if (SC.context.focusedControlID)
+			$(SC.context.focusedControlID).focus();
+		else if (document.activeElement == document.body) {
+			$('.NavigationPanel').focus();
+			SC.ui.setHiddenFocusAndClearOthers($('.NavigationPanel'));
+		}
+
+	</script>
+</body>
+</html>

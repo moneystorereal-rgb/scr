@@ -1,0 +1,38 @@
+﻿@import url("../Base.css");
+@import url("../AccentRed.css");
+
+.OuterPanel {
+	&,
+	.UserAuthenticated &,
+	.UserAuthenticated.GuestPage &,
+	.UserAuthenticated.LoginPage & {
+		grid-template-areas: "MainPanel MainPanel" "MainPanel MainPanel";
+	}
+
+	.MainPanel {
+		grid-area: MainPanel;
+
+		.MainDetailHeaderPanel {
+			h2, #detailTitleHeading {
+				margin-left: 0;
+			}
+		}
+
+		.GuestPage & > .ContentPanel,
+		.LoginPage & > .ContentPanel,
+		.ChangePasswordPage & > .ContentPanel {
+			grid-row-start: 1;
+		}
+
+		@media (max-width: $maxWidthForNarrowViewportLevel2) {
+			.MasterPanel {
+				display: none;
+			}
+		}
+	}
+
+	.HeaderPanel, .NavigationPanel {
+		/* important! is necessary to ensure these panels never appear regardless of how we use them in other themes */
+		display: none !important;
+	}
+}

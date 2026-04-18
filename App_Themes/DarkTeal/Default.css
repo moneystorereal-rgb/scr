@@ -1,0 +1,155 @@
+﻿@import url("../Base.css");
+@import url("../Dark.css");
+
+$scBoldTeal: #1CB8B8;
+$scDarkTeal: #00202E;
+$steelBlue:  #1A6687;
+$accentBlue: #1478A3;
+$darkAccentBlue: #082D3D;
+$darkAccentBlue30: rgba(8, 45, 61, 0.30);
+$darkAccentBlue60: rgba(8, 45, 61, 0.60);
+$darkestAccentBlue: #020e12;
+$black: #000;
+$hoverTeal: #2D9191;
+
+$primaryColor: $hoverTeal;
+$secondaryColor: $scBoldTeal;
+$masterPanelBackgroundColor: $black;
+$navigationPanelBackgroundColor: $black;
+$mainDetailPanelBackgroundColor: #111;
+
+
+.OuterPanel {
+	.HeaderPanel {
+		&, .LoginPage &, .LogoIconVisible & .LogoIconLink {
+			background-color: $scDarkTeal;
+		}
+	}
+
+	.NavigationPanel {
+		.Selected span {
+			color: $scBoldTeal;
+		}
+
+		> div:not(.FlexSpacer) {
+			&.TrayPanelContainer {
+				background-color: $scDarkTeal;
+			}
+
+			&:not(.TrayPanelContainer) {
+				&.Selected, &:hover {
+					background-color: $darkAccentBlue30;
+				}
+
+				/* Recolor the selected NavigationPanel icon to $scBoldTeal */
+				&.Selected img {
+					filter: invert(55%) sepia(73%) saturate(419%) hue-rotate(131deg) brightness(93%) contrast(104%);
+				}
+			}
+		}
+	}
+
+	.MainPanel {
+		.MasterPanel {
+			/* MasterPanel gradient from $scDarkTeal to $darkestAccentBlue */
+			background: linear-gradient(90deg, $scDarkTeal 0%, $darkestAccentBlue 93.33%), $black;
+
+			p.Ambient {
+				display: flex;
+				justify-content: center;
+
+				a.CreateSessionGroup {
+					margin: 0px 15px;
+					border: 1px solid $primaryColor;
+					background: $black;
+					display: block;
+					max-width: 300px;
+					width: 100%;
+					border-radius: 4px;
+					padding: 8px 0px;
+					font-size: 14px;
+					font-weight: 500;
+				}
+			}
+
+			.MasterListContainer ul li {
+				.TouchDisabled & > *:first-child:hover {
+					background-color: $darkAccentBlue60;
+				}
+
+				&.Selected > *:first-child {
+					/* Using a transluscent variation of $scBoldTeal */
+					/* important because needed to override background color for selected session group item */
+					background-color: rgb(28 184 184 / 26%) !important;
+				}
+
+				&.TouchActive > *:first-child {
+					background-color: $darkAccentBlue60;
+				}
+			}
+		}
+
+		.MainDetailHeaderPanel {
+			background-color: $darkestAccentBlue;
+		}
+
+		.MainDetailPanel {
+			background-color: $mainDetailPanelBackgroundColor;
+
+			.DetailSelectionPanel {
+				.DetailTableHeaderPanel, .DetailTablePanel .DetailTableContainer table > tbody > tr {
+					border-color: $black;
+				}
+			}
+		}
+
+		/* important because needed to override on top of base dark css */
+		.SubDetailHeaderPanel, .SubDetailPanel {
+			background-color: $scDarkTeal;
+		}
+
+		/* Recolor the selected NavigationPanel icon to $scBoldTeal */
+		.SubDetailPanel {
+			.DetailTabContent .EntryHistoryPanel .EntryPanel {
+				outline: 1px solid $scBoldTeal;
+				outline-offset: -1px;
+			}
+
+			.DetailTabList {
+				background-color: $black;
+
+				> div {
+					opacity: 0.75;
+
+					.TouchDisabled &:hover {
+						background-color: $darkAccentBlue30;
+						opacity: 1;
+					}
+				}
+
+				.Selected img {
+					filter: invert(55%) sepia(73%) saturate(419%) hue-rotate(131deg) brightness(93%) contrast(104%);
+				}
+
+				> div.Selected, > div.TouchActive {
+					background-color: $darkAccentBlue30;
+					opacity: 1;
+				}
+			}
+		}
+
+		.DetailPanel .AdministrationPanel .AdministrationContentPanel {
+			border-top-width: 0px;
+		}
+	}
+}
+
+.TooltipPanel {
+	outline: 1px solid $scBoldTeal;
+	outline-offset: -1px;
+}
+
+.PopoutPanel .CommandList > h4 {
+	opacity: 1;
+	font-weight: bold;
+}

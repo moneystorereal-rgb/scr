@@ -1,0 +1,1342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationDirectoryName" xml:space="preserve">
+    <value>ScreenConnect</value>
+  </data>
+  <data name="AuthenticatedOperationFailureTextReasonTerminationWithException" xml:space="preserve">
+    <value>Failed to perform operation: {0}</value>
+  </data>
+  <data name="AuthenticatedOperationFailureTextReasonTerminationWithNonZeroExitCode" xml:space="preserve">
+    <value>Failed to perform operation: Exit code - {0}</value>
+  </data>
+  <data name="AuthenticatedOperationFailureTextReasonTimeout" xml:space="preserve">
+    <value>Failed to perform operation: Timed out after {0} seconds</value>
+  </data>
+  <data name="AuthenticatedOperationSuccessText" xml:space="preserve">
+    <value>The operation was successful</value>
+  </data>
+  <data name="BackstageLogonSessionName" xml:space="preserve">
+    <value>[Backstage]</value>
+  </data>
+  <data name="ChangeFolderDialogDescription" xml:space="preserve">
+    <value>Please select the new folder:</value>
+  </data>
+  <data name="ChatTitleFormat" xml:space="preserve">
+    <value>Chat - {0}</value>
+  </data>
+  <data name="CloseCancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CloseDeleteButtonText" xml:space="preserve">
+    <value>Delete the Session</value>
+  </data>
+  <data name="CloseLeaveOpenButtonText" xml:space="preserve">
+    <value>Leave the Session Open</value>
+  </data>
+  <data name="ClosePrompt" xml:space="preserve">
+    <value>What would you like to do with this session?
+
+Deleting the session disconnects everyone from the session.
+Leaving the session open keeps your guest connected.</value>
+  </data>
+  <data name="CloseTitleFormat" xml:space="preserve">
+    <value>{0} - Exit Application</value>
+  </data>
+  <data name="CommandAcquireWakeLockFalse" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="CommandAcquireWakeLockTrue" xml:space="preserve">
+    <value>Acquire</value>
+  </data>
+  <data name="CommandActivateDarkTheme" xml:space="preserve">
+    <value>Enable Dark Theme</value>
+  </data>
+  <data name="CommandActivateLightTheme" xml:space="preserve">
+    <value>Enable Light Theme</value>
+  </data>
+  <data name="CommandBlankGuestMonitorFalse" xml:space="preserve">
+    <value>Unblank</value>
+  </data>
+  <data name="CommandBlankGuestMonitorTrue" xml:space="preserve">
+    <value>Blank</value>
+  </data>
+  <data name="CommandBlockGuestInputFalse" xml:space="preserve">
+    <value>Unblock</value>
+  </data>
+  <data name="CommandBlockGuestInputTrue" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="CommandChangeFolder" xml:space="preserve">
+    <value>Change Folder</value>
+  </data>
+  <data name="CommandClearAnnotations" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="CommandDisconnectParticipant" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="CommandDismiss" xml:space="preserve">
+    <value>Dismiss</value>
+  </data>
+  <data name="CommandEnableClipboardHelpFalse" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="CommandEnableClipboardHelpTrue" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="CommandExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="CommandHide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="CommandManageCredentialsPromptForStorage" xml:space="preserve">
+    <value>Prompt For Storage</value>
+  </data>
+  <data name="CommandManageCredentialsSendToScreen" xml:space="preserve">
+    <value>Send To Screen</value>
+  </data>
+  <data name="CommandManageSharedToolbox" xml:space="preserve">
+    <value>Manage Shared Toolbox</value>
+  </data>
+  <data name="CommandMuteMicrophoneFalse" xml:space="preserve">
+    <value>Unmute Microphone</value>
+  </data>
+  <data name="CommandMuteMicrophoneTrue" xml:space="preserve">
+    <value>Mute Microphone</value>
+  </data>
+  <data name="CommandMuteSpeakersFalse" xml:space="preserve">
+    <value>Unmute Speakers</value>
+  </data>
+  <data name="CommandMuteSpeakersTrue" xml:space="preserve">
+    <value>Mute Speakers</value>
+  </data>
+  <data name="CommandNone" xml:space="preserve">
+    <value>(empty)</value>
+  </data>
+  <data name="CommandOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="CommandOpenFolder" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="CommandOpenMonitor" xml:space="preserve">
+    <value>Open Monitor(s) in New Window</value>
+  </data>
+  <data name="CommandPauseSharingMyDesktopFalse" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="CommandPauseSharingMyDesktopTrue" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="CommandRebootToNormalMode" xml:space="preserve">
+    <value>To Normal Mode</value>
+  </data>
+  <data name="CommandRebootToSafeMode" xml:space="preserve">
+    <value>To Safe Mode</value>
+  </data>
+  <data name="CommandReceiveFiles" xml:space="preserve">
+    <value>Receive Files</value>
+  </data>
+  <data name="CommandReceiveFolder" xml:space="preserve">
+    <value>Receive Folder</value>
+  </data>
+  <data name="CommandReceiveSoundFalse" xml:space="preserve">
+    <value>Stop Receiving</value>
+  </data>
+  <data name="CommandReceiveSoundTrue" xml:space="preserve">
+    <value>Start Receiving</value>
+  </data>
+  <data name="CommandRegenerateParticipantColor" xml:space="preserve">
+    <value>Regenerate Color</value>
+  </data>
+  <data name="CommandRequestParticipantShare" xml:space="preserve">
+    <value>Request Share Desktop</value>
+  </data>
+  <data name="CommandReshareMyDesktop" xml:space="preserve">
+    <value>Reshare</value>
+  </data>
+  <data name="CommandRespondToRequestApprove" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="CommandRespondToRequestDeny" xml:space="preserve">
+    <value>Deny</value>
+  </data>
+  <data name="CommandRunTool" xml:space="preserve">
+    <value>Run Tool in Current User Session</value>
+  </data>
+  <data name="CommandRunToolElevated" xml:space="preserve">
+    <value>Run Tool with Elevation Prompt in Current User Session</value>
+  </data>
+  <data name="CommandRunToolSilentElevated" xml:space="preserve">
+    <value>Run Tool in Non-Interactive System Session</value>
+  </data>
+  <data name="CommandSelectAnnotationModeAllDraw" xml:space="preserve">
+    <value>All Draw</value>
+  </data>
+  <data name="CommandSelectAnnotationModeHostDraw" xml:space="preserve">
+    <value>Host Draw</value>
+  </data>
+  <data name="CommandSelectAnnotationModeInvisible" xml:space="preserve">
+    <value>Invisible</value>
+  </data>
+  <data name="CommandSelectAnnotationModeViewOnly" xml:space="preserve">
+    <value>View Only</value>
+  </data>
+  <data name="CommandSelectAnnotationStrokeThicknessMedium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="CommandSelectAnnotationStrokeThicknessThick" xml:space="preserve">
+    <value>Thick</value>
+  </data>
+  <data name="CommandSelectAnnotationStrokeThicknessThin" xml:space="preserve">
+    <value>Thin</value>
+  </data>
+  <data name="CommandSelectAnnotationToolEllipse" xml:space="preserve">
+    <value>Ellipse</value>
+  </data>
+  <data name="CommandSelectAnnotationToolLine" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="CommandSelectAnnotationToolPen" xml:space="preserve">
+    <value>Pen</value>
+  </data>
+  <data name="CommandSelectAnnotationToolRectangle" xml:space="preserve">
+    <value>Rectangle</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolCross" xml:space="preserve">
+    <value>Cross</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolInstallMessage" xml:space="preserve">
+    <value>The required feature "Windows TIFF IFilter" is not currently enabled in your operating system. What would you like to do?</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolInstallNo" xml:space="preserve">
+    <value>Don't Enable the Feature</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolInstallTitle" xml:space="preserve">
+    <value>Windows Feature Required</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolInstallYes" xml:space="preserve">
+    <value>Enable the Feature</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolLasso" xml:space="preserve">
+    <value>Lasso</value>
+  </data>
+  <data name="CommandSelectHelperHighlightToolNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="CommandSelectMonitor" xml:space="preserve">
+    <value>Select Monitor(s)</value>
+  </data>
+  <data name="CommandSelectQualityHigh" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="CommandSelectQualityLow" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="CommandSelectQualityMedium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="CommandSelectSharePrinterModeAll" xml:space="preserve">
+    <value>All Printers</value>
+  </data>
+  <data name="CommandSelectSharePrinterModeDefaultOnly" xml:space="preserve">
+    <value>Default Printer</value>
+  </data>
+  <data name="CommandSelectSharePrinterModeNone" xml:space="preserve">
+    <value>No Printer</value>
+  </data>
+  <data name="CommandSelectSoundCaptureModeAllMicrophones" xml:space="preserve">
+    <value>All Mics</value>
+  </data>
+  <data name="CommandSelectSoundCaptureModeHostMicrophone" xml:space="preserve">
+    <value>Host Mic</value>
+  </data>
+  <data name="CommandSelectSoundCaptureModeSilent" xml:space="preserve">
+    <value>Silent</value>
+  </data>
+  <data name="CommandSelectSoundCaptureModeSpeakers" xml:space="preserve">
+    <value>Speakers</value>
+  </data>
+  <data name="CommandSendClipboardKeystrokes" xml:space="preserve">
+    <value>Send Clipboard Keystrokes</value>
+  </data>
+  <data name="CommandSendElevate" xml:space="preserve">
+    <value>Elevate Now</value>
+  </data>
+  <data name="CommandSendFiles" xml:space="preserve">
+    <value>Send Files</value>
+  </data>
+  <data name="CommandSendFolder" xml:space="preserve">
+    <value>Send Folder</value>
+  </data>
+  <data name="CommandSendMessage" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="CommandSendSystemKeyCode" xml:space="preserve">
+    <value>Send Ctrl-Alt-Del</value>
+  </data>
+  <data name="CommandShareMyDesktop" xml:space="preserve">
+    <value>Share My Desktop</value>
+  </data>
+  <data name="CommandShareMyDesktopGuest" xml:space="preserve">
+    <value>Start Sharing</value>
+  </data>
+  <data name="CommandShareMyDesktopHost" xml:space="preserve">
+    <value>Start Sharing</value>
+  </data>
+  <data name="CommandShortcutBlankGuestMonitor" xml:space="preserve">
+    <value>Blank Guest Monitor</value>
+  </data>
+  <data name="CommandShortcutSelectMonitorFormat" xml:space="preserve">
+    <value>Monitor {0}</value>
+  </data>
+  <data name="CommandShortcutTakeScreenshotToClipboard" xml:space="preserve">
+    <value>Screenshot to Clipboard</value>
+  </data>
+  <data name="CommandShortcutToggleHostDrawAnnotationMode" xml:space="preserve">
+    <value>Host Draw Mode</value>
+  </data>
+  <data name="CommandShortcutUnblankGuestMonitor" xml:space="preserve">
+    <value>Unblank Guest Monitor</value>
+  </data>
+  <data name="CommandShortcutZoomIn" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="CommandShortcutZoomOut" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="CommandShowChat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="CommandShowFeedbackForm" xml:space="preserve">
+    <value>Give Feedback</value>
+  </data>
+  <data name="CommandShowStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CommandSpecifyProxyServer" xml:space="preserve">
+    <value>Specify Proxy Server...</value>
+  </data>
+  <data name="CommandSplitMonitors" xml:space="preserve">
+    <value>Split Monitors</value>
+  </data>
+  <data name="CommandStopParticipantShare" xml:space="preserve">
+    <value>Stop Share Desktop</value>
+  </data>
+  <data name="CommandStoreLoginCredentials" xml:space="preserve">
+    <value>Store Login Credentials</value>
+  </data>
+  <data name="CommandSuspendMyInputFalse" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="CommandSuspendMyInputTrue" xml:space="preserve">
+    <value>Suspend</value>
+  </data>
+  <data name="CommandTakeScreenshotToClipboard" xml:space="preserve">
+    <value>To Clipboard</value>
+  </data>
+  <data name="CommandTakeScreenshotToFile" xml:space="preserve">
+    <value>To File</value>
+  </data>
+  <data name="CommandToggleAcquireWakeLock" xml:space="preserve">
+    <value>Acquire Wake Lock</value>
+  </data>
+  <data name="CommandToggleAlwaysOnTop" xml:space="preserve">
+    <value>Always On Top</value>
+  </data>
+  <data name="CommandToggleBeepOnConnect" xml:space="preserve">
+    <value>Beep On Connect</value>
+  </data>
+  <data name="CommandToggleBlankGuestMonitor" xml:space="preserve">
+    <value>Blank Guest Monitor</value>
+  </data>
+  <data name="CommandToggleBlockGuestInput" xml:space="preserve">
+    <value>Block Guest Input</value>
+  </data>
+  <data name="CommandToggleFullScreenWhenMaximized" xml:space="preserve">
+    <value>Fullscreen When Maximized</value>
+  </data>
+  <data name="CommandToggleReceiveSound" xml:space="preserve">
+    <value>Receive Sound</value>
+  </data>
+  <data name="CommandToggleRequireConsent" xml:space="preserve">
+    <value>Require My Consent</value>
+  </data>
+  <data name="CommandToggleSuspendMyInput" xml:space="preserve">
+    <value>Suspend My Input</value>
+  </data>
+  <data name="CommandUnshareMyDesktop" xml:space="preserve">
+    <value>Unshare</value>
+  </data>
+  <data name="CommandUnshareMyDesktopGuest" xml:space="preserve">
+    <value>Deny Share Request</value>
+  </data>
+  <data name="CommandUnshareMyDesktopHost" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CommandVideoPause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="CommandVideoRecord" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="CommandVideoStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="ConsentHostLabelFormat" xml:space="preserve">
+    <value>Your host '{0}' would like remote control of your computer. Your consent is required to proceed.</value>
+  </data>
+  <data name="ConsentHostTimeoutLabelFormat" xml:space="preserve">
+    <value>Your host '{0}' would like remote control of your computer. Your consent is required to proceed. (Automatically accepting in {1} seconds)</value>
+  </data>
+  <data name="ConsentHostTitleFormat" xml:space="preserve">
+    <value>{0} - Remote Control Consent</value>
+  </data>
+  <data name="ConsoleRequiredButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConsoleRequiredSystemKeyCodeMessage" xml:space="preserve">
+    <value>The console session is required to send the system key code.  Currently you are on a terminal services session.</value>
+  </data>
+  <data name="ConsoleRequiredSystemKeyCodeTitleFormat" xml:space="preserve">
+    <value>{0} - Console Session Required</value>
+  </data>
+  <data name="ControlPanelAcquireWakeLockDescription" xml:space="preserve">
+    <value>Prevent sleep, auto-locking, screen savers, and inactivity disconnection while you're idle.</value>
+  </data>
+  <data name="ControlPanelAcquireWakeLockTitle" xml:space="preserve">
+    <value>Acquire Wake Lock</value>
+  </data>
+  <data name="ControlPanelAnnotationTitle" xml:space="preserve">
+    <value>Annotation</value>
+  </data>
+  <data name="ControlPanelBlankGuestMonitorDescription" xml:space="preserve">
+    <value>Black out the remote monitor so they can't see what you're doing.</value>
+  </data>
+  <data name="ControlPanelBlankGuestMonitorTitle" xml:space="preserve">
+    <value>Blank Guest Monitor</value>
+  </data>
+  <data name="ControlPanelBlockGuestInputDescription" xml:space="preserve">
+    <value>Prevent the user at the remote machine from interfering with your work.</value>
+  </data>
+  <data name="ControlPanelBlockGuestInputTitle" xml:space="preserve">
+    <value>Block Guest Input</value>
+  </data>
+  <data name="ControlPanelChangeResolutionTitle" xml:space="preserve">
+    <value>Change Resolution</value>
+  </data>
+  <data name="ControlPanelChangeSharingTitle" xml:space="preserve">
+    <value>Change Sharing</value>
+  </data>
+  <data name="ControlPanelClearAnnotationsDescription" xml:space="preserve">
+    <value>Clear everyone's annotations on the screen.</value>
+  </data>
+  <data name="ControlPanelClearAnnotationsTitle" xml:space="preserve">
+    <value>Clear Annotations</value>
+  </data>
+  <data name="ControlPanelClipboardKeystrokesDescription" xml:space="preserve">
+    <value>Send your clipboard to the remote machine as keystrokes. Useful for login.</value>
+  </data>
+  <data name="ControlPanelClipboardKeystrokesTitle" xml:space="preserve">
+    <value>Send Clipboard Keystrokes</value>
+  </data>
+  <data name="ControlPanelControlSharingTitle" xml:space="preserve">
+    <value>Control Sharing</value>
+  </data>
+  <data name="ControlPanelEnableClipboardHelpDescription" xml:space="preserve">
+    <value>Enable clipboard help for the Helper to process all copied text.</value>
+  </data>
+  <data name="ControlPanelEnableClipboardHelpTitle" xml:space="preserve">
+    <value>Enable Clipboard Help</value>
+  </data>
+  <data name="ControlPanelEssentialsTitle" xml:space="preserve">
+    <value>Essentials</value>
+  </data>
+  <data name="ControlPanelFileTransferTitle" xml:space="preserve">
+    <value>File Transfer</value>
+  </data>
+  <data name="ControlPanelHelperTitle" xml:space="preserve">
+    <value>Helper</value>
+  </data>
+  <data name="ControlPanelManageCaptureFolderTitle" xml:space="preserve">
+    <value>Manage Capture Folder</value>
+  </data>
+  <data name="ControlPanelManageCredentialsDescription" xml:space="preserve">
+    <value>Store credentials to enter on the logon screen later.</value>
+  </data>
+  <data name="ControlPanelManageCredentialsTitle" xml:space="preserve">
+    <value>Manage Credentials</value>
+  </data>
+  <data name="ControlPanelManagePersonalToolboxTitle" xml:space="preserve">
+    <value>Manage Personal Toolbox</value>
+  </data>
+  <data name="ControlPanelManageReceiveFolderTitle" xml:space="preserve">
+    <value>Manage Receive Folder</value>
+  </data>
+  <data name="ControlPanelManageSharedToolboxDescription" xml:space="preserve">
+    <value>Manage the toolbox located on the central server.</value>
+  </data>
+  <data name="ControlPanelManageSharedToolboxTitle" xml:space="preserve">
+    <value>Manage Shared Toolbox</value>
+  </data>
+  <data name="ControlPanelMessagesTitle" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="ControlPanelMicrophoneDescription" xml:space="preserve">
+    <value>Select a microphone and view its level.</value>
+  </data>
+  <data name="ControlPanelMicrophoneTitle" xml:space="preserve">
+    <value>Microphone</value>
+  </data>
+  <data name="ControlPanelMuteMicrophoneTitle" xml:space="preserve">
+    <value>Mute Microphone</value>
+  </data>
+  <data name="ControlPanelMuteSpeakersTitle" xml:space="preserve">
+    <value>Mute Speakers</value>
+  </data>
+  <data name="ControlPanelParticipantsTitle" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="ControlPanelRebootDescription" xml:space="preserve">
+    <value>Send reboot command to remote machine and reconnect afterwards.</value>
+  </data>
+  <data name="ControlPanelRebootTitle" xml:space="preserve">
+    <value>Reboot and Reconnect</value>
+  </data>
+  <data name="ControlPanelReceiveFilesDescription" xml:space="preserve">
+    <value>Send files to your machine. Cut/Paste or Drag/Drop are easier.</value>
+  </data>
+  <data name="ControlPanelReceiveFilesTitle" xml:space="preserve">
+    <value>Receive Files</value>
+  </data>
+  <data name="ControlPanelReceiveSoundDescription" xml:space="preserve">
+    <value>Receive sound playing through the speakers of the remote machine.</value>
+  </data>
+  <data name="ControlPanelReceiveSoundTitle" xml:space="preserve">
+    <value>Receive Sound</value>
+  </data>
+  <data name="ControlPanelRecordVideoDescription" xml:space="preserve">
+    <value>Capture motion video to an AVI file on your machine.</value>
+  </data>
+  <data name="ControlPanelRecordVideoTitle" xml:space="preserve">
+    <value>Record Video</value>
+  </data>
+  <data name="ControlPanelScreenCaptureTitle" xml:space="preserve">
+    <value>Screen Capture</value>
+  </data>
+  <data name="ControlPanelSelectAnnotationModeDescription" xml:space="preserve">
+    <value>Choose the annotation mode for the session.</value>
+  </data>
+  <data name="ControlPanelSelectAnnotationModeTitle" xml:space="preserve">
+    <value>Select Mode</value>
+  </data>
+  <data name="ControlPanelSelectAnnotationStrokeThicknessDescription" xml:space="preserve">
+    <value>Choose the annotation stroke thickness used for you to draw on the screen.</value>
+  </data>
+  <data name="ControlPanelSelectAnnotationStrokeThicknessTitle" xml:space="preserve">
+    <value>Select Stroke Thickness</value>
+  </data>
+  <data name="ControlPanelSelectAnnotationToolDescription" xml:space="preserve">
+    <value>Choose the annotation tool used for you to draw on the screen.</value>
+  </data>
+  <data name="ControlPanelSelectAnnotationToolTitle" xml:space="preserve">
+    <value>Select Tool</value>
+  </data>
+  <data name="ControlPanelSelectHelperHighlightToolDescription" xml:space="preserve">
+    <value>Choose the tool used to select a region of the screen for optical character recognition (OCR).</value>
+  </data>
+  <data name="ControlPanelSelectHelperHighlightToolTitle" xml:space="preserve">
+    <value>Select Tool</value>
+  </data>
+  <data name="ControlPanelSelectHelpProviderDescription" xml:space="preserve">
+    <value>Choose the help provider to retrieve search results or other information.</value>
+  </data>
+  <data name="ControlPanelSelectHelpProviderTitle" xml:space="preserve">
+    <value>Select Provider</value>
+  </data>
+  <data name="ControlPanelSelectLogonSessionDescription" xml:space="preserve">
+    <value>Choose which logon session to control on the remote machine.</value>
+  </data>
+  <data name="ControlPanelSelectLogonSessionTitle" xml:space="preserve">
+    <value>Select Logon Session</value>
+  </data>
+  <data name="ControlPanelSelectMicrophoneTitle" xml:space="preserve">
+    <value>Select Microphone</value>
+  </data>
+  <data name="ControlPanelSelectMonitorsDescription" xml:space="preserve">
+    <value>Choose one or more remote monitors to view.</value>
+  </data>
+  <data name="ControlPanelSelectMonitorsTitle" xml:space="preserve">
+    <value>Select Monitors</value>
+  </data>
+  <data name="ControlPanelSelectQualityDescription" xml:space="preserve">
+    <value>Choose a lower quality if network conditions create a slow connection.</value>
+  </data>
+  <data name="ControlPanelSelectQualityTitle" xml:space="preserve">
+    <value>Select Quality</value>
+  </data>
+  <data name="ControlPanelSelectSoundCaptureModeDescription" xml:space="preserve">
+    <value>Choose the sound capture mode for the session.</value>
+  </data>
+  <data name="ControlPanelSelectSoundCaptureModeTitle" xml:space="preserve">
+    <value>Select Mode</value>
+  </data>
+  <data name="ControlPanelSelectSpeakersTitle" xml:space="preserve">
+    <value>Select Speakers</value>
+  </data>
+  <data name="ControlPanelSendFilesDescription" xml:space="preserve">
+    <value>Send files to the remote machine. Cut/Paste or Drag/Drop are easier.</value>
+  </data>
+  <data name="ControlPanelSendFilesTitle" xml:space="preserve">
+    <value>Send Files</value>
+  </data>
+  <data name="ControlPanelSetSpeakersVolumeTitle" xml:space="preserve">
+    <value>Set Speakers Volume</value>
+  </data>
+  <data name="ControlPanelShareClipboardDescription" xml:space="preserve">
+    <value>Share the clipboards of machines in this session.</value>
+  </data>
+  <data name="ControlPanelShareClipboardTitle" xml:space="preserve">
+    <value>Share Clipboard</value>
+  </data>
+  <data name="ControlPanelShareMyDesktopDescription" xml:space="preserve">
+    <value>Reverse the sharing and share all or part of your own desktop.</value>
+  </data>
+  <data name="ControlPanelShareMyDesktopTitle" xml:space="preserve">
+    <value>Share My Desktop</value>
+  </data>
+  <data name="ControlPanelSharePrintersDescription" xml:space="preserve">
+    <value>Print documents from guest machine. It may take several minutes for all printers to be available.</value>
+  </data>
+  <data name="ControlPanelSharePrintersTitle" xml:space="preserve">
+    <value>Share Printers</value>
+  </data>
+  <data name="ControlPanelShareTitle" xml:space="preserve">
+    <value>Sharing</value>
+  </data>
+  <data name="ControlPanelSoundTitle" xml:space="preserve">
+    <value>Sound</value>
+  </data>
+  <data name="ControlPanelSpeakersDescription" xml:space="preserve">
+    <value>Select a speaker and adjust the volume.</value>
+  </data>
+  <data name="ControlPanelSpeakersTitle" xml:space="preserve">
+    <value>Speakers</value>
+  </data>
+  <data name="ControlPanelStatusTitle" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ControlPanelSuspendMyInputDescription" xml:space="preserve">
+    <value>Prevent your keyboard and mouse from affecting the remote machine.</value>
+  </data>
+  <data name="ControlPanelSuspendMyInputTitle" xml:space="preserve">
+    <value>Suspend My Input</value>
+  </data>
+  <data name="ControlPanelSystemKeyCodeDescription" xml:space="preserve">
+    <value>Send Ctrl-Alt-Del to the remote machine. Ctrl-Alt-Home is a shortcut.</value>
+  </data>
+  <data name="ControlPanelSystemKeyCodeTitle" xml:space="preserve">
+    <value>Send Ctrl-Alt-Del</value>
+  </data>
+  <data name="ControlPanelTakeScreenshotDescription" xml:space="preserve">
+    <value>Grab a still image of the remote machine desktop.</value>
+  </data>
+  <data name="ControlPanelTakeScreenshotTitle" xml:space="preserve">
+    <value>Take Screenshot</value>
+  </data>
+  <data name="ControlPanelToolboxTitle" xml:space="preserve">
+    <value>Toolbox</value>
+  </data>
+  <data name="ControlPanelViewMicrophoneLevelTitle" xml:space="preserve">
+    <value>Microphone Level</value>
+  </data>
+  <data name="ControlPanelViewTitle" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ControlPanelWindowTitle" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="ControlPanelZoomDescription" xml:space="preserve">
+    <value>Zoom in or out to one of several preset levels.</value>
+  </data>
+  <data name="ControlPanelZoomTitle" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonApprovedText" xml:space="preserve">
+    <value>Your request has been APPROVED.
+
+Proceeding...</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonCanceledText" xml:space="preserve">
+    <value>Your request has been CANCELED.</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonCancelRequestText" xml:space="preserve">
+    <value>Cancel Request</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonDeniedText" xml:space="preserve">
+    <value>Your request has been DENIED.</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonInitiateRequestText" xml:space="preserve">
+    <value>Request Logon ➡</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonIntroductionText" xml:space="preserve">
+    <value>Request passwordless administrative logon from administration.</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonLabelText" xml:space="preserve">
+    <value>ScreenConnect Administrative Logon</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonPromptText" xml:space="preserve">
+    <value>Please click the arrow to submit the request.</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonReasonRequiredText" xml:space="preserve">
+    <value>Reason for administrative logon is required</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonRequestedText" xml:space="preserve">
+    <value>Administrative logon has been requested.
+
+Please standby to await approval.</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonRequestingText" xml:space="preserve">
+    <value>Submitting request for administrative logon...</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonRequestReasonPlaceholderText" xml:space="preserve">
+    <value>Reason for logon</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonResendRequestText" xml:space="preserve">
+    <value>Request Logon Again ➡</value>
+  </data>
+  <data name="CredentialProviderAdministrativeLogonUnavailableText" xml:space="preserve">
+    <value>The system has become unavailable. This could be due to a network connection failure.
+
+This view will automatically refresh if the system becomes available.</value>
+  </data>
+  <data name="CredentialProviderElevationApprovedText" xml:space="preserve">
+    <value>Your request has been APPROVED.
+
+Proceeding...</value>
+  </data>
+  <data name="CredentialProviderElevationCanceledText" xml:space="preserve">
+    <value>Your request has been CANCELED.</value>
+  </data>
+  <data name="CredentialProviderElevationCancelRequestText" xml:space="preserve">
+    <value>Cancel Request</value>
+  </data>
+  <data name="CredentialProviderElevationDeniedText" xml:space="preserve">
+    <value>Your request has been DENIED.</value>
+  </data>
+  <data name="CredentialProviderElevationInitiateRequestText" xml:space="preserve">
+    <value>Request Elevation ➡</value>
+  </data>
+  <data name="CredentialProviderElevationIntroductionText" xml:space="preserve">
+    <value>Request passwordless elevation from administration.</value>
+  </data>
+  <data name="CredentialProviderElevationLabelText" xml:space="preserve">
+    <value>ScreenConnect Elevation</value>
+  </data>
+  <data name="CredentialProviderElevationPromptText" xml:space="preserve">
+    <value>Clicking Request Elevation or Yes will initiate the request.</value>
+  </data>
+  <data name="CredentialProviderElevationReasonRequiredText" xml:space="preserve">
+    <value>Reason for elevation is required</value>
+  </data>
+  <data name="CredentialProviderElevationRequestedText" xml:space="preserve">
+    <value>Elevation has been requested.
+
+Please standby to await approval.</value>
+  </data>
+  <data name="CredentialProviderElevationRequestingText" xml:space="preserve">
+    <value>Submitting request for elevation...</value>
+  </data>
+  <data name="CredentialProviderElevationRequestReasonPlaceholderText" xml:space="preserve">
+    <value>Reason for elevation</value>
+  </data>
+  <data name="CredentialProviderElevationResendRequestText" xml:space="preserve">
+    <value>Request Elevation Again ➡</value>
+  </data>
+  <data name="CredentialProviderElevationUnavailableText" xml:space="preserve">
+    <value>The system has become unavailable. This could be due to a network connection failure.
+
+This view will automatically refresh if the system becomes available.</value>
+  </data>
+  <data name="CredentialProviderErrorResetText" xml:space="preserve">
+    <value>Reset ➡</value>
+  </data>
+  <data name="CredentialProviderErrorText" xml:space="preserve">
+    <value>The system has experienced an unexpected error.
+
+Please click Reset or Yes and try again.</value>
+  </data>
+  <data name="CredentialsCancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CredentialsFailureText" xml:space="preserve">
+    <value>Invalid user name and/or password</value>
+  </data>
+  <data name="CredentialsLifetimeLabelText" xml:space="preserve">
+    <value>Lifetime:</value>
+  </data>
+  <data name="CredentialsOKButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CredentialsPasswordLabelText" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="CredentialsRunServiceAuthenticatingMessage" xml:space="preserve">
+    <value>Authenticating...</value>
+  </data>
+  <data name="CredentialsRunServiceExceptionFormat" xml:space="preserve">
+    <value>Error running service; ensure that the requested user is an administrator. Error message: {0}</value>
+  </data>
+  <data name="CredentialsRunServiceInstructionText" xml:space="preserve">
+    <value>Service mode required for this operation. Please enter administrative credentials to elevate into service mode.</value>
+  </data>
+  <data name="CredentialsRunServiceTitleFormat" xml:space="preserve">
+    <value>{0} - Run Service</value>
+  </data>
+  <data name="CredentialsRunServiceWarningText" xml:space="preserve">
+    <value>WARNING: If Windows UAC is enabled, you will temporarily lose control while Guest  is prompted (Yes/No) for elevation.</value>
+  </data>
+  <data name="CredentialsStoreInstructionText" xml:space="preserve">
+    <value>Enter credentials to be encrypted and stored. Your host can send these credentials to the screen at any time.
+
+The user name is sent to normal text boxes. The password is sent to special password text boxes, so the password is kept secret.</value>
+  </data>
+  <data name="CredentialsStoreStoringMessage" xml:space="preserve">
+    <value>Storing...</value>
+  </data>
+  <data name="CredentialsStoreTitleFormat" xml:space="preserve">
+    <value>{0} - Store Credentials</value>
+  </data>
+  <data name="CredentialsSuccessText" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="CredentialsTestButtonText" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="CredentialsUserNameLabelText" xml:space="preserve">
+    <value>User Name:</value>
+  </data>
+  <data name="EndPointStatusConnectedTitle" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="EndPointStatusConnectingTitle" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="EndPointStatusNegotiatingTitle" xml:space="preserve">
+    <value>Negotiating...</value>
+  </data>
+  <data name="EndPointStatusRefusedConsentDescription" xml:space="preserve">
+    <value>The remote user refused consent. You can chat with the remote user to determine reasoning. You can relaunch this session to prompt the user again.</value>
+  </data>
+  <data name="EndPointStatusRefusedConsentTitle" xml:space="preserve">
+    <value>Consent Refused</value>
+  </data>
+  <data name="EndPointStatusSessionInaccessibleDescription" xml:space="preserve">
+    <value>The session is in an inaccessible state. There may be another host connected to a logon session you're not allowed to access.</value>
+  </data>
+  <data name="EndPointStatusSessionInaccessibleTitle" xml:space="preserve">
+    <value>Session Inaccessible</value>
+  </data>
+  <data name="EndPointStatusSleepingForFreeLicenseDescription" xml:space="preserve">
+    <value>Your installation has reached the limit of concurrent sessions it is allowed, or you've reached a licensing restriction. This will continue to try to reconnect until a license is available.</value>
+  </data>
+  <data name="EndPointStatusSleepingForFreeLicenseTitle" xml:space="preserve">
+    <value>Waiting for an available license...</value>
+  </data>
+  <data name="EndPointStatusSleepingForFreeSlotDescription" xml:space="preserve">
+    <value>Someone is already connected to the session with your session role. This will wait a few seconds and then try to reconnect.</value>
+  </data>
+  <data name="EndPointStatusSleepingForFreeSlotTitle" xml:space="preserve">
+    <value>Waiting for an available slot...</value>
+  </data>
+  <data name="EndPointStatusSleepingForRetryDescription" xml:space="preserve">
+    <value>An error occurred connecting to your session. This will wait a few seconds before trying again.
+
+Error: {0}</value>
+  </data>
+  <data name="EndPointStatusSleepingForRetryTitle" xml:space="preserve">
+    <value>Waiting to retry...</value>
+  </data>
+  <data name="EndPointStatusStoppedTitle" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="EndPointStatusWaitingForCaptureDescription" xml:space="preserve">
+    <value>You have successfully connected to the session, but screen sharing has not begun.</value>
+  </data>
+  <data name="EndPointStatusWaitingForCaptureTitle" xml:space="preserve">
+    <value>Waiting for your screen sharing...</value>
+  </data>
+  <data name="EndPointStatusWaitingForConsentDescription" xml:space="preserve">
+    <value>This session requires consent before you can take remote control. The remote user is being prompted for consent. You can chat with the user for guidance.</value>
+  </data>
+  <data name="EndPointStatusWaitingForConsentTitle" xml:space="preserve">
+    <value>Waiting for consent...</value>
+  </data>
+  <data name="EndPointStatusWaitingForGuestDescription" xml:space="preserve">
+    <value>You have successfully connected to the session, but your guest has not yet connected. Your session will start when they connect.</value>
+  </data>
+  <data name="EndPointStatusWaitingForGuestTitle" xml:space="preserve">
+    <value>Waiting for your guest...</value>
+  </data>
+  <data name="EndPointStatusWaitingForHostDescription" xml:space="preserve">
+    <value>You have successfully connected to the session, but your host has not yet connected. Your session will start when they connect.</value>
+  </data>
+  <data name="EndPointStatusWaitingForHostTitle" xml:space="preserve">
+    <value>Waiting for your host...</value>
+  </data>
+  <data name="FeedbackCommentsInstructions" xml:space="preserve">
+    <value>You can include your email in the box above if you'd like us to get back to you.</value>
+  </data>
+  <data name="FeedbackCommentsLabelText" xml:space="preserve">
+    <value>Additional Comments (optional):</value>
+  </data>
+  <data name="FeedbackDismissLinkText" xml:space="preserve">
+    <value>Not now</value>
+  </data>
+  <data name="FeedbackEmailPlaceholderText" xml:space="preserve">
+    <value>Contact email</value>
+  </data>
+  <data name="FeedbackHideLinkText" xml:space="preserve">
+    <value>Hide forever</value>
+  </data>
+  <data name="FeedbackHighButtonText" xml:space="preserve">
+    <value>Excellent</value>
+  </data>
+  <data name="FeedbackLowButtonText" xml:space="preserve">
+    <value>Bad</value>
+  </data>
+  <data name="FeedbackMediumButtonText" xml:space="preserve">
+    <value>Good</value>
+  </data>
+  <data name="FeedbackRatingInstructions" xml:space="preserve">
+    <value>Overall, how effective was our product during your session?</value>
+  </data>
+  <data name="FeedbackSubmitButtonText" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="FeedbackTitleText" xml:space="preserve">
+    <value>Feedback Survey</value>
+  </data>
+  <data name="GuestAnonymousName" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="HiddenAppBalloonTextTitleFormat" xml:space="preserve">
+    <value>{0} is running in the background</value>
+  </data>
+  <data name="HiddenAppBalloonTitle" xml:space="preserve">
+    <value>Still going...</value>
+  </data>
+  <data name="InfoPanelShareGuestTitle" xml:space="preserve">
+    <value>Share Desktop Request</value>
+  </data>
+  <data name="InfoPanelShareHostTitle" xml:space="preserve">
+    <value>Share My Desktop</value>
+  </data>
+  <data name="InfoPanelStatusTitleText" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="LifetimeHoursText" xml:space="preserve">
+    <value>{0} hour(s)</value>
+  </data>
+  <data name="LifetimeNeverExpiresText" xml:space="preserve">
+    <value>Never Expires</value>
+  </data>
+  <data name="MacBigSurReviewSystemAccessDialogScreenCapturingPermissionGrantInstructionsListFormatCannotTriggerPrompt" xml:space="preserve">
+    <value>&lt;li&gt;Click &lt;b&gt;Request Access...&lt;/b&gt; above to open the Screen Recording panel in the Security &amp; Privacy dialog.&lt;/li&gt;
+&lt;li&gt;Click the &lt;b&gt;lock icon&lt;/b&gt; in the bottom-left corner of the panel to unlock the Privacy settings and enter credentials as needed.&lt;/li&gt;
+&lt;li&gt;Select the &lt;b&gt;{0} client&lt;/b&gt; from the list, which should begin with &lt;b&gt;"connectwisecontrol".&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;When prompted, click &lt;b&gt;Quit &amp; Reopen&lt;/b&gt;. The client should restart automatically. Permission should now be granted.&lt;/li&gt;
+&lt;li&gt;Click the lock to prevent further changes to this panel.&lt;/li&gt;
+  </value>
+  </data>
+  <data name="MacBigSurReviewSystemAccessDialogScreenCapturingPermissionGrantInstructionsListFormatCanTriggerPrompt" xml:space="preserve">
+    <value>&lt;li&gt;Click &lt;b&gt;Request Access...&lt;/b&gt; above to show the macOS authorization dialog for screen recording access.&lt;/li&gt;
+&lt;li&gt;Click &lt;b&gt;Open System Preferences&lt;/b&gt; to open the Screen Recording panel in the Security &amp; Privacy dialog.&lt;/li&gt;
+&lt;li&gt;Click the &lt;b&gt;lock icon&lt;/b&gt; in the bottom-left corner of the panel to unlock the Privacy settings and enter credentials as needed.&lt;/li&gt;
+&lt;li&gt;Select the &lt;b&gt;{0} client&lt;/b&gt; from the list, which should begin with &lt;b&gt;"connectwisecontrol".&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;When prompted, click &lt;b&gt;Quit &amp; Reopen&lt;/b&gt;. The client should restart automatically. Permission should now be granted.&lt;/li&gt;
+&lt;li&gt;Click the lock to prevent further changes to this panel.&lt;/li&gt;
+</value>
+  </data>
+  <data name="MacCatalinaReviewSystemAccessDialogScreenCapturingPermissionGrantInstructionsListFormatCannotTriggerPrompt" xml:space="preserve">
+    <value>&lt;li&gt;Click &lt;b&gt;Request Access...&lt;/b&gt; above to open the Screen Recording panel in the Security &amp; Privacy dialog.&lt;/li&gt;
+&lt;li&gt;Select the &lt;b&gt;{0} client&lt;/b&gt; from the list, which should begin with &lt;b&gt;"connectwisecontrol".&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;When prompted, click &lt;b&gt;Quit Now&lt;/b&gt;. The client should restart automatically. Permission should now be granted.&lt;/li&gt;
+</value>
+  </data>
+  <data name="MacCatalinaReviewSystemAccessDialogScreenCapturingPermissionGrantInstructionsListFormatCanTriggerPrompt" xml:space="preserve">
+    <value>&lt;li&gt;Click &lt;b&gt;Request Access...&lt;/b&gt; above to show the macOS authorization dialog for screen recording access.&lt;/li&gt;
+&lt;li&gt;Click &lt;b&gt;Open System Preferences&lt;/b&gt; to open the Screen Recording panel in the Security &amp; Privacy dialog.&lt;/li&gt;
+&lt;li&gt;Select the &lt;b&gt;{0} client&lt;/b&gt; from the list, which should begin with &lt;b&gt;"connectwisecontrol".&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;When prompted, click &lt;b&gt;Quit Now&lt;/b&gt;. The client should restart automatically. Permission should now be granted.&lt;/li&gt;
+</value>
+  </data>
+  <data name="MacGrantAccessibilityPermissionsDialogConfigurePermissionButtonText" xml:space="preserve">
+    <value>Configure Permissions</value>
+  </data>
+  <data name="MacGrantAccessibilityPermissionsDialogTextContentFormat" xml:space="preserve">
+    <value>&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+  .normal-text {{font-size: 10px;}}
+  li {{margin-bottom: 10px;}}
+  body {{width: 320px;}}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div style="margin-bottom: 14px; font-size: 11px;"&gt;&lt;b&gt;To control this machine, {0} requires Accessibility permissions.&lt;/b&gt;&lt;/div&gt;
+  &lt;div class="normal-text"&gt;
+    &lt;span&gt;To grant Accessibility permissions:&lt;/span&gt;
+    &lt;ol style="margin-left: 14px; margin-top: 10px;"&gt;
+      &lt;li&gt;Click &lt;b&gt;Configure Permissions&lt;/b&gt; to open the &lt;b&gt;Accessibility&lt;/b&gt; panel within the &lt;b&gt;Security &amp; Privacy&lt;/b&gt; dialog.&lt;/li&gt;
+      &lt;li&gt;Click the &lt;b&gt;lock icon&lt;/b&gt; in the bottom-left corner of the panel.&lt;/li&gt;
+      &lt;li&gt;If you're not logged in as an administrator, enter credentials for an administrator account.&lt;/li&gt;
+      &lt;li&gt;Select the &lt;b&gt;{0} client&lt;/b&gt;, which should begin with &lt;b&gt;"connectwisecontrol".&lt;/b&gt;&lt;/li&gt;
+      &lt;li&gt;Click the lock to prevent further changes to this panel.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/div&gt;
+  &lt;div class="normal-text"&gt;See our documentation for more information.&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</value>
+  </data>
+  <data name="MacInstructionalDialogDismissButtonText" xml:space="preserve">
+    <value>Dismiss</value>
+  </data>
+  <data name="MacReinstallUninstallPromptFormat" xml:space="preserve">
+    <value>Please enter your password to allow the {0} client to reinstall or uninstall.</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogAccessibilityPermissionGrantInstructionsListFormat" xml:space="preserve">
+    <value>&lt;li&gt;Click &lt;b&gt;Request Access...&lt;/b&gt; above to open the Accessibility panel in the Security &amp; Privacy dialog.&lt;/li&gt;
+&lt;li&gt;Click the &lt;b&gt;lock icon&lt;/b&gt; in the bottom-left corner of the panel to unlock the Privacy settings and enter credentials as needed.&lt;/li&gt;
+&lt;li&gt;Select the &lt;b&gt;{0} client&lt;/b&gt; from the list, which should begin with &lt;b&gt;"connectwisecontrol".&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;Click the lock to prevent further changes to this panel.&lt;/li&gt;
+</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogAccessibilityPermissionName" xml:space="preserve">
+    <value>Accessibility</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogAccessibilityPermissionPurpose" xml:space="preserve">
+    <value>To allow remote users to control your machine</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogPermissionGrantInstructionsLabelTextFormat" xml:space="preserve">
+    <value>&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+  .normal-text {{font-size: 10px;}}
+  li {{margin-bottom: 10px;}}
+  body {{width: 420px;}}
+  p {{color:rgb(77, 77, 77);}}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p style="font-size: 12px;"&gt;To grant {0} permissions:&lt;/p&gt;
+  &lt;div class="normal-text"&gt;
+    &lt;ol style="margin-left: 14px; margin-top: 10px;"&gt;
+      {1}
+    &lt;/ol&gt;
+  &lt;/div&gt;
+  &lt;p class="normal-text"&gt;See our documentation for more information.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogPermissionNameAndPurposeLabelTextFormat" xml:space="preserve">
+    <value>&lt;html&gt;
+&lt;body&gt;
+  &lt;p style="font-size: 14px; margin-bottom: 6px;"&gt;&lt;b&gt;{0}&lt;/b&gt;&lt;/p&gt;
+  &lt;p style="color:rgb(125, 125, 125);"&gt;{1}&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogRequestAccessButtonText" xml:space="preserve">
+    <value>Request Access...</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogScreenCapturingPermissionName" xml:space="preserve">
+    <value>Screen Recording</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogScreenCapturingPermissionPurpose" xml:space="preserve">
+    <value>To allow remote users to see your screen</value>
+  </data>
+  <data name="MacReviewSystemAccessDialogTitleAndSubtitleLabelTextFormat" xml:space="preserve">
+    <value>&lt;html&gt;
+&lt;body&gt;
+  &lt;p style="font-size: 18px; margin-bottom: 8px;"&gt;&lt;b&gt;Review System Access&lt;/b&gt;&lt;/p&gt;
+  &lt;p style="font-size: 12px;"&gt;{0} requires a review of the following permissions:&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</value>
+  </data>
+  <data name="MessagesTypeHereText" xml:space="preserve">
+    <value>Type your message here</value>
+  </data>
+  <data name="MessagesTypingFormat" xml:space="preserve">
+    <value>{0} is typing...</value>
+  </data>
+  <data name="NotificationAdministrativeLogonRequestMessage" xml:space="preserve">
+    <value>Administrative Logon has been requested for this device</value>
+  </data>
+  <data name="NotificationBannerCapturingErrorMessage" xml:space="preserve">
+    <value>Screen transmission interrupted, likely due to a UAC prompt in an unelevated session</value>
+  </data>
+  <data name="NotificationBannerLogonCredentialsMessage" xml:space="preserve">
+    <value>You have stored credentials available for this device</value>
+  </data>
+  <data name="NotificationElevationRequestMessage" xml:space="preserve">
+    <value>Elevation has been requested for this device</value>
+  </data>
+  <data name="NotificationSendCrtlAltDeleteMessage" xml:space="preserve">
+    <value>Ctrl-Alt-Del is available to be sent to this device</value>
+  </data>
+  <data name="OperationNotSupportedMessageFormat" xml:space="preserve">
+    <value>Operation '{0}' not supported.</value>
+  </data>
+  <data name="OptionsButtonText" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="ProxyServerSpecifyInstructionText" xml:space="preserve">
+    <value>Specify your proxy server and optional credentials. These values will be preferred when connecting to your session. However, other methods such as direct connection and system-specified proxies may be used in connection attempts.</value>
+  </data>
+  <data name="ProxyServerSpecifyRealmLabelText" xml:space="preserve">
+    <value>Proxy Server:</value>
+  </data>
+  <data name="ProxyServerSpecifyStoringMessage" xml:space="preserve">
+    <value>Storing...</value>
+  </data>
+  <data name="ProxyServerSpecifyTitleFormat" xml:space="preserve">
+    <value>{0} - Specify Proxy Server</value>
+  </data>
+  <data name="RebootCancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RebootMessage" xml:space="preserve">
+    <value>This will send a reboot command to the remote machine. The application should reconnect after the remote machine boots.</value>
+  </data>
+  <data name="RebootRebootButtonText" xml:space="preserve">
+    <value>Reboot</value>
+  </data>
+  <data name="RebootReconnectCredentialsFormInstructionHtmlText" xml:space="preserve">
+    <value>Enter credentials to allow the application to reconnect after reboot.</value>
+  </data>
+  <data name="RebootReconnectCredentialsFormTitleFormat" xml:space="preserve">
+    <value>{0} - Credentials Required</value>
+  </data>
+  <data name="RebootTitleFormat" xml:space="preserve">
+    <value>{0} - Reboot and Reconnect</value>
+  </data>
+  <data name="RecordFileNameFormat" xml:space="preserve">
+    <value>{0}_{1}_{2:yyyy-MM-dd}_{3}.avi</value>
+  </data>
+  <data name="SaveScreenFileNameFormat" xml:space="preserve">
+    <value>{0}_{1}_{2:yyyy-MM-dd}_{3}.png</value>
+  </data>
+  <data name="SendClipboardKeystrokesLargeClipboardDataWarningDialogCancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SendClipboardKeystrokesLargeClipboardDataWarningDialogContinueButtonText" xml:space="preserve">
+    <value>Continue Anyway</value>
+  </data>
+  <data name="SendClipboardKeystrokesLargeClipboardDataWarningDialogDescription" xml:space="preserve">
+    <value>Your clipboard contains {0} characters and processing it might require some time. How would you like to proceed?</value>
+  </data>
+  <data name="SendClipboardKeystrokesLargeClipboardDataWarningDialogTitleFormat" xml:space="preserve">
+    <value>{0} - Send Clipboard Keystrokes</value>
+  </data>
+  <data name="SendFilesDialogTitleFormat" xml:space="preserve">
+    <value>{0} - Send Files</value>
+  </data>
+  <data name="SendFolderDialogDescription" xml:space="preserve">
+    <value>Please select the folder to send:</value>
+  </data>
+  <data name="SendFolderDialogTitleFormat" xml:space="preserve">
+    <value>{0} - Send Folder</value>
+  </data>
+  <data name="SessionHostsDisconnectedButton1Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="SessionHostsDisconnectedButton1Url" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedButton2Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedButton2Url" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedButton3Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedButton3Url" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedFrameUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedLaunchUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionHostsDisconnectedTitleFormat" xml:space="preserve">
+    <value>{0} - Exit Application</value>
+  </data>
+  <data name="SessionInvalidButton1Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="SessionInvalidSessionAccessTokenInvalidMessage" xml:space="preserve">
+    <value>Your session access token has expired or is invalid. Please relaunch this application to refresh the token.</value>
+  </data>
+  <data name="SessionInvalidSessionDeletedButton1Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedButton1Url" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedButton2Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedButton2Url" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedButton3Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedButton3Url" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedLaunchUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SessionInvalidSessionDeletedMessage" xml:space="preserve">
+    <value>Your host has ended the remote session. This application will now close.</value>
+  </data>
+  <data name="SessionInvalidSessionForceDisconnectedMessage" xml:space="preserve">
+    <value>You have been disconnected from the session.</value>
+  </data>
+  <data name="SessionInvalidTitleFormat" xml:space="preserve">
+    <value>{0} - Exit Application</value>
+  </data>
+  <data name="ShareAllMonitorsText" xml:space="preserve">
+    <value>All Monitors</value>
+  </data>
+  <data name="ShareAllowControlEverybodyText" xml:space="preserve">
+    <value>Allow control from everyone</value>
+  </data>
+  <data name="ShareAllowControlNobodyText" xml:space="preserve">
+    <value>Don't allow control from anyone</value>
+  </data>
+  <data name="ShareApplicationLabelText" xml:space="preserve">
+    <value>Application:</value>
+  </data>
+  <data name="ShareControlLabelText" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="SharedToolboxTitleFormat" xml:space="preserve">
+    <value>{0} - Shared Toolbox</value>
+  </data>
+  <data name="ShareMonitorLabelText" xml:space="preserve">
+    <value>Monitor:</value>
+  </data>
+  <data name="ShareMonitorTextFormat" xml:space="preserve">
+    <value>Monitor {0}</value>
+  </data>
+  <data name="ShareShareLabelText" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="StatusPanelConnectionStatusLabelText" xml:space="preserve">
+    <value>Connection Status</value>
+  </data>
+  <data name="StatusPanelEligibleForElevationText" xml:space="preserve">
+    <value>This session is not elevated</value>
+  </data>
+  <data name="StatusPanelLastErrorMessagesLabelText" xml:space="preserve">
+    <value>Last Error Message</value>
+  </data>
+  <data name="StatusPanelMessagesReceivedLabelText" xml:space="preserve">
+    <value>Messages Received</value>
+  </data>
+  <data name="StatusPanelMessagesSentLabelText" xml:space="preserve">
+    <value>Messages Sent</value>
+  </data>
+  <data name="StatusPanelRelayServerLabelText" xml:space="preserve">
+    <value>Relay Server</value>
+  </data>
+  <data name="StatusPanelSoftwareVersionLabelText" xml:space="preserve">
+    <value>Software Version</value>
+  </data>
+  <data name="StatusPanelTimeConnectedLabelText" xml:space="preserve">
+    <value>Time Connected</value>
+  </data>
+  <data name="StatusTitleFormat" xml:space="preserve">
+    <value>Status - {0}</value>
+  </data>
+  <data name="ToolboxEmptyMessage" xml:space="preserve">
+    <value>Your Toolbox is empty. Get started adding tools by using the options below. The Toolbox provides single click access to transfer a file to the remote machine and run it instantly.</value>
+  </data>
+  <data name="ToolboxFormDeleteText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ToolboxFormNewDirectoryText" xml:space="preserve">
+    <value>New Directory</value>
+  </data>
+  <data name="ToolboxFormRenameText" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ToolboxFormUploadDirectoryText" xml:space="preserve">
+    <value>Upload Directory</value>
+  </data>
+  <data name="ToolboxFormUploadFilesText" xml:space="preserve">
+    <value>Upload File(s)</value>
+  </data>
+  <data name="ToolboxLoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="UpgradeCancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="UpgradePrompt" xml:space="preserve">
+    <value>A new version of the {0} client is available ({1}). Upgrade now?</value>
+  </data>
+  <data name="UpgradeTitleFormat" xml:space="preserve">
+    <value>{0} - Upgrade Available</value>
+  </data>
+  <data name="UpgradeUpgradeButtonText" xml:space="preserve">
+    <value>Upgrade</value>
+  </data>
+  <data name="WindowsBackstageShellContextMenuCloseWindowButtonText" xml:space="preserve">
+    <value>Close Window</value>
+  </data>
+  <data name="WindowsBackstageShellContextMenuKillProcessTreeButtonText" xml:space="preserve">
+    <value>Kill Process Tree</value>
+  </data>
+  <data name="WindowsBackstageShellContextMenuLaunchAnotherInstanceButtonText" xml:space="preserve">
+    <value>Launch Another Instance</value>
+  </data>
+  <data name="WindowsBackstageShellSearchBoxEmptyResultPanelText" xml:space="preserve">
+    <value>No search results found</value>
+  </data>
+  <data name="WindowsBackstageShellSearchBoxInputLengthThresholdText" xml:space="preserve">
+    <value>Enter at least 3 characters to search</value>
+  </data>
+  <data name="WindowsBackstageShellSearchBoxInputPlaceHolderText" xml:space="preserve">
+    <value>Type here to search</value>
+  </data>
+  <data name="WindowsBackstageShellStartMenuEmptyDirectoryText" xml:space="preserve">
+    <value>(Empty)</value>
+  </data>
+</root>

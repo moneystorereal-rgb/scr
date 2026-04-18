@@ -1,0 +1,82 @@
+﻿/**/
+/*#region Variables*/
+/**/
+
+$navigationPanelBackgroundColor: #FFF;
+$masterPanelBackgroundColor: #F5F5F5;
+
+/*#endregion*/
+
+/**/
+/*#region Structure*/
+/**/
+
+.OuterPanel {
+	.NavigationPanel {
+		background-color: $navigationPanelBackgroundColor;
+		color: $mainTextColor;
+
+		img {
+			@include filter-brightness-low;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #CCC;
+		}
+
+		> div:not(.FlexSpacer):not(.TrayPanelContainer).Selected,
+		> div:not(.FlexSpacer):not(.TrayPanelContainer):hover{
+			background-color: #F0F0F0;
+		}
+	}
+
+	.MainPanel {
+		.MasterPanel {
+			color: $mainTextColor;
+			border-right-width: 1px;
+
+			p.Create a {
+				color: $darkBackgroundTextColor;
+			}
+
+			ul li > *:first-child,
+			p.Ambient a {
+				opacity: 0.75;
+			}
+
+			ul li.TouchActive > *:first-child,
+			.TouchDisabled & ul li > *:first-child:hover {
+				opacity: 1;
+			}
+
+			p.Ambient a.TouchActive,
+			.TouchDisabled & p.Ambient a:hover {
+				opacity: 1;
+			}
+
+			.MasterListContainer ul div > a {
+				@include filter-brightness-mid;
+				opacity: 0.6;
+
+				&:hover {
+					@include filter-brightness-low;
+					opacity: 1;
+				}
+			}
+
+			> ul::-webkit-scrollbar-thumb {
+				background-color: #cccccc;
+			}
+
+			ul li.HasChildren > div > p {
+				@include filter-brightness-low;
+			}
+		}
+
+		.AuthPanel .LogoContainer {
+			background-image: url(../Images/LoginPanelLogoLightTheme.svg);
+		}
+	}
+}
+
+/*#endregion*/

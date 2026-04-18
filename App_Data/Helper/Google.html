@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- we used to have base href in here but it seems with v2 of cse, it breaks the search button and results page navigation -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- polyfill.io/v3/polyfill.min.js -->
+	<script>
+		(function(self, undefined) {
+			// _ESAbstract.Type
+			// "Type(x)" is used as shorthand for "the type of x"...
+			function Type(x) { // eslint-disable-line no-unused-vars
+				switch (typeof x) {
+					case 'undefined':
+						return 'undefined';
+					case 'boolean':
+						return 'boolean';
+					case 'number':
+						return 'number';
+					case 'string':
+						return 'string';
+					case 'symbol':
+						return 'symbol';
+					default:
+						// typeof null is 'object'
+						if (x === null) return 'null';
+						// Polyfill.io - This is here because a Symbol polyfill will have a typeof `object`.
+						if ('Symbol' in self && (x instanceof self.Symbol || x.constructor === self.Symbol)) return 'symbol';
+
+						return 'object';
+				}
+			}
+
+			// _ESAbstract.CreateDataPropertyOrThrow
+			/* global CreateDataProperty */
+			// 7.3.6. CreateDataPropertyOrThrow ( O, P, V )
+			function CreateDataPropertyOrThrow(O, P, V) { // eslint-disable-line no-unused-vars
+				// 1. Assert: Type(O) is Object.
+				// 2. Assert: IsPropertyKey(P) is true.
+				// 3. Let success be ? CreateDataProperty(O, P, V).
+				var success = CreateDataProperty(O, P, V);
+				// 4. If success is false, throw a TypeError exception.
+				if (!success) {
+					throw new TypeError('Cannot assign value `' + Object.prototype.toString.call(V) + '` to property `' + Object.prototype.toString.call(P) + '` on object `' + Object.prototype.toString.call(O) + '`');
+				}
+				// 5. Return success.
+				return success;
+			}
+
+			// _ESAbstract.CreateMethodProperty
+			// 7.3.5. CreateMethodProperty ( O, P, V )
+			function CreateMethodProperty(O, P, V) { // eslint-disable-line no-unused-vars
+				// 1. Assert: Type(O) is Object.
+				// 2. Assert: IsPropertyKey(P) is true.
+				// 3. Let newDesc be the PropertyDescriptor{[[Value]]: V, [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}.
+				var newDesc = {
+					value: V,
+					writable: true,
+					enumerable: false,
+					configurable: true
+				};
+				// 4. Return ? O.[[DefineOwnProperty]](P, newDesc).
+				Object.defineProperty(O, P, newDesc);
+			}
+
+			function ToObject(argument) { // eslint-disable-line no-unused-vars
+				if (argument === null || argument === undefined) {
+					throw TypeError();
+				}
+				return Object(argument);
+			}
+
+			// _ESAbstract.ToLength
+			/* global ToInteger */
+			// 7.1.15. ToLength ( argument )
+			function ToLength(argument) { // eslint-disable-line no-unused-vars
+				// 1. Let len be ? ToInteger(argument).
+				var len = ToInteger(argument);
+				// 2. If len ≤ +0, return +0.
+				if (len <= 0) {
+					return 0;
+				}
+				// 3. Return min(len, 253-1).
+				return Math.min(len, Math.pow(2, 53) - 1);
+			}
+
+			// _ESAbstract.GetV
+			/* global ToObject */
+			// 7.3.2 GetV (V, P)
+			function GetV(v, p) { // eslint-disable-line no-unused-vars
+				// 1. Assert: IsPropertyKey(P) is true.
+				// 2. Let O be ? ToObject(V).
+				var o = ToObject(v);
+				// 3. Return ? O.[[Get]](P, V).
+				return o[p];
+			}
+
+			// _ESAbstract.GetMethod
+			/* global GetV, IsCallable */
+			// 7.3.9. GetMethod ( V, P )
+			function GetMethod(V, P) { // eslint-disable-line no-unused-vars
+				// 1. Assert: IsPropertyKey(P) is true.
+				// 2. Let func be ? GetV(V, P).
+				var func = GetV(V, P);
+				// 3. If func is either undefined or null, return undefined.
+				if (func === null || func === undefined) {
+					return undefined;
+				}
+				// 4. If IsCallable(func) is false, throw a TypeError exception.
+				if (IsCallable(func) === false) {
+					throw new TypeError('Method not callable: ' + P);
+				}
+				// 5. Return func.
+				return func;
+			}
+
+			// _ESAbstract.ToBoolean
+			// 7.1.2. ToBoolean ( argument )
+			// The abstract operation ToBoolean converts argument to a value of type Boolean according to Table 9:
+			function ToBoolean(argument) { // eslint-disable-line no-unused-vars
+				return Boolean(argument);
+			}
+
+			// _ESAbstract.ToObject
+			// 7.1.13 ToObject ( argument )
+			// The abstract operation ToObject converts argument to a value of type Object according to Table 12:
+			function ToObject(argument) { // eslint-disable-line no-unused-vars
+				if (argument === null || argument === undefined) {
+					throw TypeError();
+				}
+				return Object(argument);
+			}
+
+
+			// Symbol
+			// A modification of https://github.com/WebReflection/get-own-property-symbols
+			// (C) Andrea Giammarchi - MIT Licensed
+
+			/* global Type */
+			(function (Object, GOPS, global) {
+				'use strict'; //so that ({}).toString.call(null) returns the correct [object Null] rather than [object Window]
+
+				var supportsGetters = (function () {
+					// supports getters
+					try {
+						var a = {};
+						Object.defineProperty(a, "t", {
+							configurable: true,
+							enumerable: false,
+							get: function () {
+								return true;
+							},
+							set: undefined
+						});
+						return !!a.t;
+					} catch (e) {
+						return false;
+					}
+				}());
+
+				var setDescriptor;
+				var id = 0;
+				var random = '' + Math.random();
+				var prefix = '__\x01symbol:';
+				var prefixLength = prefix.length;
+				var internalSymbol = '__\x01symbol@@' + random;
+				var emptySymbolLookup = {};
+				var DP = 'defineProperty';
+				var DPies = 'defineProperties';
+				var GOPN = 'getOwnPropertyNames';
+				var GOPD = 'getOwnPropertyDescriptor';
+				var PIE = 'propertyIsEnumerable';
+				var ObjectProto = Object.prototype;
+				var hOP = ObjectProto.hasOwnProperty;
+				var pIE = ObjectProto[PIE];
+				var toString = ObjectProto.toString;
+				var concat = Array.prototype.concat;
+				var cachedWindowNames = Object.getOwnPropertyNames ? Object.getOwnPropertyNames(self) : [];
+				var nGOPN = Object[GOPN];
+				var gOPN = function getOwnPropertyNames(obj) {
+					if (toString.call(obj) === '[object Window]') {
+						try {
+							return nGOPN(obj);
+						} catch (e) {
+							// IE bug where layout engine calls userland gOPN for cross-domain `window` objects
+							return concat.call([], cachedWindowNames);
+						}
+					}
+					return nGOPN(obj);
+				};
+				var gOPD = Object[GOPD];
+				var objectCreate = Object.create;
+				var objectKeys = Object.keys;
+				var freeze = Object.freeze || Object;
+				var objectDefineProperty = Object[DP];
+				var $defineProperties = Object[DPies];
+				var descriptor = gOPD(Object, GOPN);
+				var addInternalIfNeeded = function (o, uid, enumerable) {
+					if (!hOP.call(o, internalSymbol)) {
+						try {
+							objectDefineProperty(o, internalSymbol, {
+								enumerable: false,
+								configurable: false,
+								writable: false,
+								value: {}
+							});
+						} catch (e) {
+							o[internalSymbol] = {};
+						}
+					}
+					o[internalSymbol]['@@' + uid] = enumerable;
+				};
+				var createWithSymbols = function (proto, descriptors) {
+					var self = objectCreate(proto);
+					gOPN(descriptors).forEach(function (key) {
+						if (propertyIsEnumerable.call(descriptors, key)) {
+							$defineProperty(self, key, descriptors[key]);
+						}
+					});
+					return self;
+				};
+				var copyAsNonEnumerable = function (descriptor) {
+					var newDescriptor = objectCreate(descriptor);
+					newDescriptor.enumerable = false;
+					return newDescriptor;
+				};
+				var get = function get() { };
+				var onlyNonSymbols = function (name) {
+					return name != internalSymbol &&
+						!hOP.call(source, name);
+				};
+				var onlySymbols = function (name) {
+					return name != internalSymbol &&
+						hOP.call(source, name);
+				};
+				var propertyIsEnumerable = function propertyIsEnumerable(key) {
+					var uid = '' + key;
+					return onlySymbols(uid) ? (
+						hOP.call(this, uid) &&
+						this[internalSymbol] && this[internalSymbol]['@@' + uid]
+					) : pIE.call(this, key);
+				};
+				var setAndGetSymbol = function (uid) {
+					var descriptor = {
+						enumerable: false,
+						configurable: true,
+						get: get,
+						set: function (value) {
+							setDescriptor(this, uid, {
+								enumerable: false,
+								configurable: true,
+								writable: true,
+								value: value
+							});
+							addInternalIfNeeded(this, uid, true);
+						}
+					};
+					try {
+						objectDefineProperty(ObjectProto, uid, descriptor);
+					} catch (e) {
+						ObjectProto[uid] = descriptor.value;
+					}
+					source[uid] = objectDefineProperty(
+						Object(uid),
+						'constructor',
+						sourceConstructor
+					);
+					var description = gOPD(Symbol.prototype, 'description');
+					if (description) {
+						objectDefineProperty(
+							source[uid],
+							'description',
+							description
+						);
+					}
+					return freeze(source[uid]);
+				};
+
+				var symbolDescription = function (s) {
+					var sym = thisSymbolValue(s);
+
+					// 3. Return sym.[[Description]].
+					if (supportsInferredNames) {
+						var name = getInferredName(sym);
+						if (name !== "") {
+							return name.slice(1, -1); // name.slice('['.length, -']'.length);
+						}
+					}
+
+					if (emptySymbolLookup[sym] !== undefined) {
+						return emptySymbolLookup[sym];
+					}
+
+					var string = sym.toString();
+					var randomStartIndex = string.lastIndexOf("0.");
+					string = string.slice(10, randomStartIndex);
+
+					if (string === "") {
+						return undefined;
+					}
+					return string;
+				};
+
+				var Symbol = function Symbol() {
+					var description = arguments[0];
+					if (this instanceof Symbol) {
+						throw new TypeError('Symbol is not a constructor');
+					}
+
+					var uid = prefix.concat(description || '', random, ++id);
+
+					if (description !== undefined && (description === null || isNaN(description) || String(description) === "")) {
+						emptySymbolLookup[uid] = String(description);
+					}
+
+					var that = setAndGetSymbol(uid);
+
+					if (!supportsGetters) {
+						Object.defineProperty(that, "description", {
+							configurable: true,
+							enumerable: false,
+							value: symbolDescription(that)
+						});
+					}
+
+					return that;
+				};
+
+				var source = objectCreate(null);
+				var sourceConstructor = {
+					value: Symbol
+				};
+				var sourceMap = function (uid) {
+					return source[uid];
+				};
+				var $defineProperty = function defineProperty(o, key, descriptor) {
+					var uid = '' + key;
+					if (onlySymbols(uid)) {
+						setDescriptor(o, uid, descriptor.enumerable ?
+							copyAsNonEnumerable(descriptor) : descriptor);
+						addInternalIfNeeded(o, uid, !!descriptor.enumerable);
+					} else {
+						objectDefineProperty(o, key, descriptor);
+					}
+					return o;
+				};
+
+				var onlyInternalSymbols = function (obj) {
+					return function (name) {
+						return hOP.call(obj, internalSymbol) && hOP.call(obj[internalSymbol], '@@' + name);
+					};
+				};
+				var $getOwnPropertySymbols = function getOwnPropertySymbols(o) {
+					return gOPN(o).filter(o === ObjectProto ? onlyInternalSymbols(o) : onlySymbols).map(sourceMap);
+				};
+
+				descriptor.value = $defineProperty;
+				objectDefineProperty(Object, DP, descriptor);
+
+				descriptor.value = $getOwnPropertySymbols;
+				objectDefineProperty(Object, GOPS, descriptor);
+
+				descriptor.value = function getOwnPropertyNames(o) {
+					return gOPN(o).filter(onlyNonSymbols);
+				};
+				objectDefineProperty(Object, GOPN, descriptor);
+
+				descriptor.value = function defineProperties(o, descriptors) {
+					var symbols = $getOwnPropertySymbols(descriptors);
+					if (symbols.length) {
+						objectKeys(descriptors).concat(symbols).forEach(function (uid) {
+							if (propertyIsEnumerable.call(descriptors, uid)) {
+						$defineProperty(o, uid, descriptors[uid]);
+							}
+						});
+					} else {
+						$defineProperties(o, descriptors);
+					}
+					return o;
+				};
+				objectDefineProperty(Object, DPies, descriptor);
+
+				descriptor.value = propertyIsEnumerable;
+				objectDefineProperty(ObjectProto, PIE, descriptor);
+
+				descriptor.value = Symbol;
+				objectDefineProperty(global, 'Symbol', descriptor);
+
+				// defining `Symbol.for(key)`
+				descriptor.value = function (key) {
+					var uid = prefix.concat(prefix, key, random);
+					return uid in ObjectProto ? source[uid] : setAndGetSymbol(uid);
+				};
+				objectDefineProperty(Symbol, 'for', descriptor);
+
+				// defining `Symbol.keyFor(symbol)`
+				descriptor.value = function (symbol) {
+					if (onlyNonSymbols(symbol))
+						throw new TypeError(symbol + ' is not a symbol');
+					return hOP.call(source, symbol) ?
+						symbol.slice(prefixLength * 2, -random.length) :
+						void 0;
+				};
+				objectDefineProperty(Symbol, 'keyFor', descriptor);
+
+				descriptor.value = function getOwnPropertyDescriptor(o, key) {
+					var descriptor = gOPD(o, key);
+					if (descriptor && onlySymbols(key)) {
+						descriptor.enumerable = propertyIsEnumerable.call(o, key);
+					}
+					return descriptor;
+				};
+				objectDefineProperty(Object, GOPD, descriptor);
+
+				descriptor.value = function create(proto, descriptors) {
+					return arguments.length === 1 || typeof descriptors === "undefined" ?
+						objectCreate(proto) :
+						createWithSymbols(proto, descriptors);
+				};
+
+				objectDefineProperty(Object, 'create', descriptor);
+
+				var strictModeSupported = (function () {
+					'use strict';
+					return this;
+				}).call(null) === null;
+				if (strictModeSupported) {
+					descriptor.value = function () {
+						var str = toString.call(this);
+						return (str === '[object String]' && onlySymbols(this)) ? '[object Symbol]' : str;
+					};
+				} else {
+					descriptor.value = function () {
+						if (this === window) {
+							return '[object Null]';
+						}
+
+						var str = toString.call(this);
+						return (str === '[object String]' && onlySymbols(this)) ? '[object Symbol]' : str;
+					};
+				}
+				objectDefineProperty(ObjectProto, 'toString', descriptor);
+
+				setDescriptor = function (o, key, descriptor) {
+					var protoDescriptor = gOPD(ObjectProto, key);
+					delete ObjectProto[key];
+					objectDefineProperty(o, key, descriptor);
+					if (o !== ObjectProto) {
+						objectDefineProperty(ObjectProto, key, protoDescriptor);
+					}
+				};
+
+				// The abstract operation thisSymbolValue(value) performs the following steps:
+				function thisSymbolValue(value) {
+					// 1. If Type(value) is Symbol, return value.
+					if (Type(value) === "symbol") {
+						return value;
+					}
+					// 2. If Type(value) is Object and value has a [[SymbolData]] internal slot, then
+					// a. Let s be value.[[SymbolData]].
+					// b. Assert: Type(s) is Symbol.
+					// c. Return s.
+					// 3. Throw a TypeError exception.
+					throw TypeError(value + " is not a symbol");
+				}
+
+				// Symbol.prototype.description
+				if (function () {
+					// supports getters
+					try {
+						var a = {};
+						Object.defineProperty(a, "t", {
+							configurable: true,
+							enumerable: false,
+							get: function () {
+								return true;
+							},
+							set: undefined
+						});
+						return !!a.t;
+					} catch (e) {
+						return false;
+					}
+				}()) {
+					var getInferredName;
+					try {
+						// eslint-disable-next-line no-new-func
+						getInferredName = Function("s", "var v = s.valueOf(); return { [v]() {} }[v].name;");
+						// eslint-disable-next-line no-empty
+					} catch (e) { }
+
+					var inferred = function () { };
+					var supportsInferredNames = getInferredName && inferred.name === "inferred" ? getInferredName : null;
+
+
+					// 19.4.3.2 get Symbol.prototype.description
+					Object.defineProperty(global.Symbol.prototype, "description", {
+						configurable: true,
+						enumerable: false,
+						get: function () {
+							// 1. Let s be the this value.
+							var s = this;
+							return symbolDescription(s);
+						}
+					});
+				}
+
+			}(Object, 'getOwnPropertySymbols', self));
+
+			// _ESAbstract.Call
+			/* global IsCallable */
+			// 7.3.12. Call ( F, V [ , argumentsList ] )
+			function Call(F, V /* [, argumentsList] */) { // eslint-disable-line no-unused-vars
+				// 1. If argumentsList is not present, set argumentsList to a new empty List.
+				var argumentsList = arguments.length > 2 ? arguments[2] : [];
+				// 2. If IsCallable(F) is false, throw a TypeError exception.
+				if (IsCallable(F) === false) {
+					throw new TypeError(Object.prototype.toString.call(F) + 'is not a function.');
+				}
+				// 3. Return ? F.[[Call]](V, argumentsList).
+				return F.apply(V, argumentsList);
+			}
+
+			// _ESAbstract.Get
+			// 7.3.1. Get ( O, P )
+			function Get(O, P) { // eslint-disable-line no-unused-vars
+				// 1. Assert: Type(O) is Object.
+				// 2. Assert: IsPropertyKey(P) is true.
+				// 3. Return ? O.[[Get]](P, O).
+				return O[P];
+			}
+
+			// _ESAbstract.IteratorComplete
+			/* global Type, ToBoolean, Get */
+			// 7.4.3 IteratorComplete ( iterResult )
+			function IteratorComplete(iterResult) { // eslint-disable-line no-unused-vars
+				// 1. Assert: Type(iterResult) is Object.
+				if (Type(iterResult) !== 'object') {
+					throw new Error(Object.prototype.toString.call(iterResult) + 'is not an Object.');
+				}
+				// 2. Return ToBoolean(? Get(iterResult, "done")).
+				return ToBoolean(Get(iterResult, "done"));
+			}
+
+			// _ESAbstract.IteratorNext
+			/* global Call, Type */
+			// 7.4.2. IteratorNext ( iteratorRecord [ , value ] )
+			function IteratorNext(iteratorRecord /* [, value] */) { // eslint-disable-line no-unused-vars
+				// 1. If value is not present, then
+				if (arguments.length < 2) {
+					// a. Let result be ? Call(iteratorRecord.[[NextMethod]], iteratorRecord.[[Iterator]], « »).
+					var result = Call(iteratorRecord['[[NextMethod]]'], iteratorRecord['[[Iterator]]']);
+					// 2. Else,
+				} else {
+					// a. Let result be ? Call(iteratorRecord.[[NextMethod]], iteratorRecord.[[Iterator]], « value »).
+					result = Call(iteratorRecord['[[NextMethod]]'], iteratorRecord['[[Iterator]]'], [arguments[1]]);
+				}
+				// 3. If Type(result) is not Object, throw a TypeError exception.
+				if (Type(result) !== 'object') {
+					throw new TypeError('bad iterator');
+				}
+				// 4. Return result.
+				return result;
+			}
+
+			// _ESAbstract.IteratorStep
+			/* global IteratorNext, IteratorComplete */
+			// 7.4.5. IteratorStep ( iteratorRecord )
+			function IteratorStep(iteratorRecord) { // eslint-disable-line no-unused-vars
+				// 1. Let result be ? IteratorNext(iteratorRecord).
+				var result = IteratorNext(iteratorRecord);
+				// 2. Let done be ? IteratorComplete(result).
+				var done = IteratorComplete(result);
+				// 3. If done is true, return false.
+				if (done === true) {
+					return false;
+				}
+				// 4. Return result.
+				return result;
+			}
+
+			// _ESAbstract.IteratorValue
+			/* global Type, Get */
+			// 7.4.4 IteratorValue ( iterResult )
+			function IteratorValue(iterResult) { // eslint-disable-line no-unused-vars
+				// Assert: Type(iterResult) is Object.
+				if (Type(iterResult) !== 'object') {
+					throw new Error(Object.prototype.toString.call(iterResult) + 'is not an Object.');
+				}
+				// Return ? Get(iterResult, "value").
+				return Get(iterResult, "value");
+			}
+
+			// _ESAbstract.ToInteger
+			/* global Type */
+			// 7.1.4. ToInteger ( argument )
+			function ToInteger(argument) { // eslint-disable-line no-unused-vars
+				if (Type(argument) === 'symbol') {
+					throw new TypeError('Cannot convert a Symbol value to a number');
+				}
+
+				// 1. Let number be ? ToNumber(argument).
+				var number = Number(argument);
+				// 2. If number is NaN, return +0.
+				if (isNaN(number)) {
+					return 0;
+				}
+				// 3. If number is +0, -0, +∞, or -∞, return number.
+				if (1 / number === Infinity || 1 / number === -Infinity || number === Infinity || number === -Infinity) {
+					return number;
+				}
+				// 4. Return the number value that is the same sign as number and whose magnitude is floor(abs(number)).
+				return ((number < 0) ? -1 : 1) * Math.floor(Math.abs(number));
+			}
+
+			// _ESAbstract.IsConstructor
+			/* global Type */
+			// 7.2.4. IsConstructor ( argument )
+			function IsConstructor(argument) { // eslint-disable-line no-unused-vars
+				// 1. If Type(argument) is not Object, return false.
+				if (Type(argument) !== 'object') {
+					return false;
+				}
+				// 2. If argument has a [[Construct]] internal method, return true.
+				// 3. Return false.
+
+				// Polyfill.io - `new argument` is the only way  to truly test if a function is a constructor.
+				// We choose to not use`new argument` because the argument could have side effects when called.
+				// Instead we check to see if the argument is a function and if it has a prototype.
+				// Arrow functions do not have a [[Construct]] internal method, nor do they have a prototype.
+				return typeof argument === 'function' && !!argument.prototype;
+			}
+
+			// _ESAbstract.Construct
+			/* global IsConstructor, OrdinaryCreateFromConstructor, Call */
+			// 7.3.13. Construct ( F [ , argumentsList [ , newTarget ]] )
+			function Construct(F /* [ , argumentsList [ , newTarget ]] */) { // eslint-disable-line no-unused-vars
+				// 1. If newTarget is not present, set newTarget to F.
+				var newTarget = arguments.length > 2 ? arguments[2] : F;
+
+				// 2. If argumentsList is not present, set argumentsList to a new empty List.
+				var argumentsList = arguments.length > 1 ? arguments[1] : [];
+
+				// 3. Assert: IsConstructor(F) is true.
+				if (!IsConstructor(F)) {
+					throw new TypeError('F must be a constructor.');
+				}
+
+				// 4. Assert: IsConstructor(newTarget) is true.
+				if (!IsConstructor(newTarget)) {
+					throw new TypeError('newTarget must be a constructor.');
+				}
+
+				// 5. Return ? F.[[Construct]](argumentsList, newTarget).
+				// Polyfill.io - If newTarget is the same as F, it is equivalent to new F(...argumentsList).
+				if (newTarget === F) {
+					return new (Function.prototype.bind.apply(F, [null].concat(argumentsList)))();
+				} else {
+					// Polyfill.io - This is mimicking section 9.2.2 step 5.a.
+					var obj = OrdinaryCreateFromConstructor(newTarget, Object.prototype);
+					return Call(F, obj, argumentsList);
+				}
+			}
+			// _ESAbstract.ToLength
+			/* global ToInteger */
+			// 7.1.15. ToLength ( argument )
+			function ToLength(argument) { // eslint-disable-line no-unused-vars
+				// 1. Let len be ? ToInteger(argument).
+				var len = ToInteger(argument);
+				// 2. If len ≤ +0, return +0.
+				if (len <= 0) {
+					return 0;
+				}
+				// 3. Return min(len, 253-1).
+				return Math.min(len, Math.pow(2, 53) - 1);
+			}
+
+			// _ESAbstract.CreateDataProperty
+			// 7.3.4. CreateDataProperty ( O, P, V )
+			// NOTE
+			// This abstract operation creates a property whose attributes are set to the same defaults used for properties created by the ECMAScript language assignment operator.
+			// Normally, the property will not already exist. If it does exist and is not configurable or if O is not extensible, [[DefineOwnProperty]] will return false.
+			function CreateDataProperty(O, P, V) { // eslint-disable-line no-unused-vars
+				var newDesc = {
+					value: V,
+					writable: true,
+					enumerable: true,
+					configurable: true
+				};
+				// 4. Return ? O.[[DefineOwnProperty]](P, newDesc).
+				try {
+					Object.defineProperty(O, P, newDesc);
+					return true;
+				} catch (e) {
+					return false;
+				}
+			}
+
+			// _ESAbstract.IsCallable
+			// 7.2.3. IsCallable ( argument )
+			function IsCallable(argument) { // eslint-disable-line no-unused-vars
+				return typeof argument === 'function';
+			}
+
+			// _ESAbstract.GetIterator
+			/* global GetMethod, Symbol, Call, Type, GetV */
+			// 7.4.1. GetIterator ( obj [ , method ] )
+			// The abstract operation GetIterator with argument obj and optional argument method performs the following steps:
+			function GetIterator(obj /*, method */) { // eslint-disable-line no-unused-vars
+				// 1. If method is not present, then
+				// a. Set method to ? GetMethod(obj, @@iterator).
+				var method = arguments.length > 1 ? arguments[1] : GetMethod(obj, Symbol.iterator);
+				// 2. Let iterator be ? Call(method, obj).
+				var iterator = Call(method, obj);
+				// 3. If Type(iterator) is not Object, throw a TypeError exception.
+				if (Type(iterator) !== 'object') {
+					throw new TypeError('bad iterator');
+				}
+				// 4. Let nextMethod be ? GetV(iterator, "next").
+				var nextMethod = GetV(iterator, "next");
+				// 5. Let iteratorRecord be Record {[[Iterator]]: iterator, [[NextMethod]]: nextMethod, [[Done]]: false}.
+				var iteratorRecord = Object.create(null);
+				iteratorRecord['[[Iterator]]'] = iterator;
+				iteratorRecord['[[NextMethod]]'] = nextMethod;
+				iteratorRecord['[[Done]]'] = false;
+				// 6. Return iteratorRecord.
+				return iteratorRecord;
+			}
+
+			// Array.from
+			/* globals
+				IsCallable, GetMethod, Symbol, IsConstructor, Construct, ArrayCreate, GetIterator, IteratorClose,
+				ToString, IteratorStep, IteratorValue, Call, CreateDataPropertyOrThrow, ToObject, ToLength, Get, CreateMethodProperty
+			*/
+			(function () {
+				var toString = Object.prototype.toString;
+				var stringMatch = String.prototype.match;
+				// A cross-realm friendly way to detect if a value is a String object or literal.
+				function isString(value) {
+					if (typeof value === 'string') {
+						return true;
+					}
+					if (typeof value !== 'object') {
+						return false;
+					}
+					return toString.call(value) === '[object String]';
+				}
+
+				// 22.1.2.1. Array.from ( items [ , mapfn [ , thisArg ] ] )
+				CreateMethodProperty(Array, 'from', function from(items /* [ , mapfn [ , thisArg ] ] */) { // eslint-disable-line no-undef
+					// 1. Let C be the this value.
+					var C = this;
+					// 2. If mapfn is undefined, let mapping be false.
+					var mapfn = arguments.length > 1 ? arguments[1] : undefined;
+					if (mapfn === undefined) {
+						var mapping = false;
+						// 3. Else,
+					} else {
+						// a. If IsCallable(mapfn) is false, throw a TypeError exception.
+						if (IsCallable(mapfn) === false) {
+							throw new TypeError(Object.prototype.toString.call(mapfn) + ' is not a function.');
+						}
+						// b. If thisArg is present, let T be thisArg; else let T be undefined.
+						var thisArg = arguments.length > 2 ? arguments[2] : undefined;
+						if (thisArg !== undefined) {
+							var T = thisArg;
+						} else {
+							T = undefined;
+						}
+						// c. Let mapping be true.
+						mapping = true;
+
+					}
+					// 4. Let usingIterator be ? GetMethod(items, @@iterator).
+					var usingIterator = GetMethod(items, Symbol.iterator);
+					// 5. If usingIterator is not undefined, then
+					if (usingIterator !== undefined) {
+						// a. If IsConstructor(C) is true, then
+						if (IsConstructor(C)) {
+							// i. Let A be ? Construct(C).
+							var A = Construct(C);
+							// b. Else,
+						} else {
+							// i. Let A be ! ArrayCreate(0).
+							A = ArrayCreate(0);
+						}
+						// c. Let iteratorRecord be ? GetIterator(items, usingIterator).
+						var iteratorRecord = GetIterator(items, usingIterator);
+						// d. Let k be 0.
+						var k = 0;
+						// e. Repeat,
+						// eslint-disable-next-line no-constant-condition
+						while (true) {
+							// i. If k ≥ 2^53-1, then
+							if (k >= (Math.pow(2, 53) - 1)) {
+								// 1. Let error be Completion{[[Type]]: throw, [[Value]]: a newly created TypeError object, [[Target]]: empty}.
+								var error = new TypeError('Iteration count can not be greater than or equal 9007199254740991.');
+								// 2. Return ? IteratorClose(iteratorRecord, error).
+								return IteratorClose(iteratorRecord, error);
+							}
+							// ii. Let Pk be ! ToString(k).
+							var Pk = ToString(k);
+							// iii. Let next be ? IteratorStep(iteratorRecord).
+							var next = IteratorStep(iteratorRecord);
+							// iv. If next is false, then
+							if (next === false) {
+								// 1. Perform ? Set(A, "length", k, true).
+								A.length = k;
+								// 2. Return A.
+								return A;
+							}
+							// v. Let nextValue be ? IteratorValue(next).
+							var nextValue = IteratorValue(next);
+							// vi. If mapping is true, then
+							if (mapping) {
+								try {
+									// Polyfill.io - The try catch accounts for step 2.
+									// 1. Let mappedValue be Call(mapfn, T, « nextValue, k »).
+									var mappedValue = Call(mapfn, T, [nextValue, k]);
+									// 2. If mappedValue is an abrupt completion, return ? IteratorClose(iteratorRecord, mappedValue).
+									// 3. Let mappedValue be mappedValue.[[Value]].
+								} catch (e) {
+									return IteratorClose(iteratorRecord, e);
+								}
+
+								// vii. Else, let mappedValue be nextValue.
+							} else {
+								mappedValue = nextValue;
+							}
+							try {
+								// Polyfill.io - The try catch accounts for step ix.
+								// viii. Let defineStatus be CreateDataPropertyOrThrow(A, Pk, mappedValue).
+								CreateDataPropertyOrThrow(A, Pk, mappedValue);
+								// ix. If defineStatus is an abrupt completion, return ? IteratorClose(iteratorRecord, defineStatus).
+							} catch (e) {
+								return IteratorClose(iteratorRecord, e);
+							}
+							// x. Increase k by 1.
+							k = k + 1;
+						}
+					}
+					// 6. NOTE: items is not an Iterable so assume it is an array-like object.
+					// 7. Let arrayLike be ! ToObject(items).
+					// Polyfill.io - For Strings we need to split astral symbols into surrogate pairs.
+					if (isString(items)) {
+						var arrayLike = stringMatch.call(items, /[\uD800-\uDBFF][\uDC00-\uDFFF]?|[^\uD800-\uDFFF]|./g) || [];
+					} else {
+						arrayLike = ToObject(items);
+					}
+					// 8. Let len be ? ToLength(? Get(arrayLike, "length")).
+					var len = ToLength(Get(arrayLike, "length"));
+					// 9. If IsConstructor(C) is true, then
+					if (IsConstructor(C)) {
+						// a. Let A be ? Construct(C, « len »).
+						A = Construct(C, [len]);
+						// 10. Else,
+					} else {
+						// a. Let A be ? ArrayCreate(len).
+						A = ArrayCreate(len);
+					}
+					// 11. Let k be 0.
+					k = 0;
+					// 12. Repeat, while k < len
+					while (k < len) {
+						// a. Let Pk be ! ToString(k).
+						Pk = ToString(k);
+						// b. Let kValue be ? Get(arrayLike, Pk).
+						var kValue = Get(arrayLike, Pk);
+						// c. If mapping is true, then
+						if (mapping === true) {
+							// i. Let mappedValue be ? Call(mapfn, T, « kValue, k »).
+							mappedValue = Call(mapfn, T, [kValue, k]);
+							// d. Else, let mappedValue be kValue.
+						} else {
+							mappedValue = kValue;
+						}
+						// e. Perform ? CreateDataPropertyOrThrow(A, Pk, mappedValue).
+						CreateDataPropertyOrThrow(A, Pk, mappedValue);
+						// f. Increase k by 1.
+						k = k + 1;
+					}
+					// 13. Perform ? Set(A, "length", len, true).
+					A.length = len;
+					// 14. Return A.
+					return A;
+				});
+			}());
+
+			// _ESAbstract.ToString
+			/* global Type, ToPrimitive */
+			// 7.1.12. ToString ( argument )
+			// The abstract operation ToString converts argument to a value of type String according to Table 11:
+			// Table 11: ToString Conversions
+
+			function ToString(argument) { // eslint-disable-line no-unused-vars
+				switch (Type(argument)) {
+					case 'symbol':
+						throw new TypeError('Cannot convert a Symbol value to a string');
+					case 'object':
+						var primValue = ToPrimitive(argument, String);
+						return ToString(primValue); // eslint-disable-line no-unused-vars
+					default:
+						return String(argument);
+				}
+			}
+
+			// URL
+			/* global Symbol */
+			// URL Polyfill
+			// Draft specification: https://url.spec.whatwg.org
+
+			// Notes:
+			// - Primarily useful for parsing URLs and modifying query parameters
+			// - Should work in IE8+ and everything more modern, with es5.js polyfills
+			(function (global) {
+				'use strict';
+
+				function isSequence(o) {
+					if (!o) return false;
+					if ('Symbol' in global && 'iterator' in global.Symbol &&
+						typeof o[Symbol.iterator] === 'function') return true;
+					if (Array.isArray(o)) return true;
+					return false;
+				}
+
+				;// eslint-disable-line no-extra-semi
+				(function () {
+					var origURL = global.URL;
+					var nativeURL;
+					try {
+						if (origURL) {
+							nativeURL = new global.URL('http://example.com');
+							if ('searchParams' in nativeURL) {
+								var url = new URL('http://example.com');
+								url.search = 'a=1&b=2';
+								if (url.href === 'http://example.com/?a=1&b=2') {
+									url.search = '';
+									if (url.href === 'http://example.com/') {
+										return;
+									}
+								}
+							}
+							if (!('href' in nativeURL)) {
+								nativeURL = undefined;
+							}
+							nativeURL = undefined;
+						}
+						// eslint-disable-next-line no-empty
+					} catch (_) { }
+
+					// NOTE: Doesn't do the encoding/decoding dance
+					function urlencoded_serialize(pairs) {
+				var output = '',
+					first = true;
+				pairs.forEach(function (pair) {
+					var name = encodeURIComponent(pair.name);
+					var value = encodeURIComponent(pair.value);
+					if (!first) output += '&';
+					output += name + '=' + value;
+					first = false;
+				});
+				return output.replace(/%20/g, '+');
+			}
+
+					function percent_decode(bytes) {
+						return bytes.replace(/((%[0-9A-Fa-f]{2})*)/g, function (_, m) {
+							return decodeURIComponent(m);
+						});
+					}
+
+					function urlencoded_parse(input, isindex) {
+						var sequences = input.split('&');
+						if (isindex && sequences[0].indexOf('=') === -1)
+							sequences[0] = '=' + sequences[0];
+						var pairs = [];
+						sequences.forEach(function (bytes) {
+							if (bytes.length === 0) return;
+							var index = bytes.indexOf('=');
+							if (index !== -1) {
+								var name = bytes.substring(0, index);
+								var value = bytes.substring(index + 1);
+							} else {
+								name = bytes;
+								value = '';
+							}
+							name = name.replace(/\+/g, ' ');
+							value = value.replace(/\+/g, ' ');
+					pairs.push({
+						name: name,
+						value: value
+					});
+				});
+				var output = [];
+				pairs.forEach(function (pair) {
+					output.push({
+						name: percent_decode(pair.name),
+						value: percent_decode(pair.value)
+					});
+				});
+				return output;
+			}
+
+					function URLUtils(url) {
+						if (nativeURL)
+							return new origURL(url);
+						var anchor = document.createElement('a');
+						anchor.href = url;
+						return anchor;
+					}
+
+					function URLSearchParams(init) {
+						var $this = this;
+						this._list = [];
+
+				if (init === undefined || init === null) {
+					// no-op
+				} else if (init instanceof URLSearchParams) {
+					// In ES6 init would be a sequence, but special case for ES5.
+					this._list = urlencoded_parse(String(init));
+				} else if (typeof init === 'object' && isSequence(init)) {
+					Array.from(init).forEach(function (e) {
+						if (!isSequence(e)) throw TypeError();
+						var nv = Array.from(e);
+						if (nv.length !== 2) throw TypeError();
+						$this._list.push({
+							name: String(nv[0]),
+							value: String(nv[1])
+						});
+					});
+				} else if (typeof init === 'object' && init) {
+					Object.keys(init).forEach(function (key) {
+						$this._list.push({
+							name: String(key),
+							value: String(init[key])
+						});
+					});
+				} else {
+					init = String(init);
+					if (init.substring(0, 1) === '?')
+						init = init.substring(1);
+					this._list = urlencoded_parse(init);
+				}
+
+				this._url_object = null;
+				this._setList = function (list) {
+					if (!updating) $this._list = list;
+				};
+
+				var updating = false;
+				this._update_steps = function () {
+					if (updating) return;
+					updating = true;
+
+					if (!$this._url_object) return;
+
+					// Partial workaround for IE issue with 'about:'
+					if ($this._url_object.protocol === 'about:' &&
+						$this._url_object.pathname.indexOf('?') !== -1) {
+						$this._url_object.pathname = $this._url_object.pathname.split('?')[0];
+					}
+
+					$this._url_object.search = urlencoded_serialize($this._list);
+
+					updating = false;
+				};
+			}
+
+
+					Object.defineProperties(URLSearchParams.prototype, {
+						append: {
+							value: function (name, value) {
+						this._list.push({
+							name: name,
+							value: value
+						});
+						this._update_steps();
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				'delete': {
+					value: function (name) {
+						for (var i = 0; i < this._list.length;) {
+							if (this._list[i].name === name)
+								this._list.splice(i, 1);
+							else
+
+								++i;
+						}
+						this._update_steps();
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				get: {
+					value: function (name) {
+						for (var i = 0; i < this._list.length; ++i) {
+							if (this._list[i].name === name)
+								return this._list[i].value;
+						}
+						return null;
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				getAll: {
+					value: function (name) {
+						var result = [];
+						for (var i = 0; i < this._list.length; ++i) {
+							if (this._list[i].name === name)
+								result.push(this._list[i].value);
+						}
+						return result;
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				has: {
+					value: function (name) {
+						for (var i = 0; i < this._list.length; ++i) {
+							if (this._list[i].name === name)
+								return true;
+						}
+						return false;
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				set: {
+					value: function (name, value) {
+						var found = false;
+						for (var i = 0; i < this._list.length;) {
+							if (this._list[i].name === name) {
+								if (!found) {
+									this._list[i].value = value;
+									found = true;
+									++i;
+								} else {
+									this._list.splice(i, 1);
+								}
+							} else {
+								++i;
+							}
+						}
+
+						if (!found)
+							this._list.push({
+								name: name,
+								value: value
+							});
+
+						this._update_steps();
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				entries: {
+					value: function () {
+						return new Iterator(this._list, 'key+value');
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				keys: {
+					value: function () {
+						return new Iterator(this._list, 'key');
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				values: {
+					value: function () {
+						return new Iterator(this._list, 'value');
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				forEach: {
+					value: function (callback) {
+						var thisArg = (arguments.length > 1) ? arguments[1] : undefined;
+						this._list.forEach(function (pair) {
+							callback.call(thisArg, pair.value, pair.name);
+						});
+
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				},
+
+				toString: {
+					value: function () {
+						return urlencoded_serialize(this._list);
+					},
+					writable: true,
+					enumerable: false,
+					configurable: true
+				},
+
+				sort: {
+					value: function sort() {
+						var entries = this.entries();
+						var entry = entries.next();
+						var keys = [];
+						var values = {};
+
+						while (!entry.done) {
+							var value = entry.value;
+							var key = value[0];
+							keys.push(key);
+							if (!(Object.prototype.hasOwnProperty.call(values, key))) {
+								values[key] = [];
+							}
+							values[key].push(value[1]);
+							entry = entries.next();
+						}
+
+						keys.sort();
+						for (var i = 0; i < keys.length; i++) {
+							this["delete"](keys[i]);
+						}
+						for (var j = 0; j < keys.length; j++) {
+							key = keys[j];
+							this.append(key, values[key].shift());
+						}
+					}
+				}
+			});
+
+					function Iterator(source, kind) {
+						var index = 0;
+				this.next = function () {
+					if (index >= source.length)
+						return {
+							done: true,
+							value: undefined
+						};
+					var pair = source[index++];
+					return {
+						done: false,
+						value: kind === 'key' ? pair.name : kind === 'value' ? pair.value : [pair.name, pair.value]
+					};
+				};
+			}
+
+					if ('Symbol' in global && 'iterator' in global.Symbol) {
+						Object.defineProperty(URLSearchParams.prototype, global.Symbol.iterator, {
+							value: URLSearchParams.prototype.entries,
+					writable: true,
+					enumerable: true,
+					configurable: true
+				});
+				Object.defineProperty(Iterator.prototype, global.Symbol.iterator, {
+					value: function () {
+						return this;
+					},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				});
+			}
+
+					function URL(url, base) {
+						if (!(this instanceof global.URL))
+							throw new TypeError("Failed to construct 'URL': Please use the 'new' operator.");
+
+				if (base) {
+					url = (function () {
+						if (nativeURL) return new origURL(url, base).href;
+						var iframe;
+						try {
+							var doc;
+							// Use another document/base tag/anchor for relative URL resolution, if possible
+							if (Object.prototype.toString.call(window.operamini) === "[object OperaMini]") {
+								iframe = document.createElement('iframe');
+								iframe.style.display = 'none';
+								document.documentElement.appendChild(iframe);
+								doc = iframe.contentWindow.document;
+							} else if (document.implementation && document.implementation.createHTMLDocument) {
+								doc = document.implementation.createHTMLDocument('');
+							} else if (document.implementation && document.implementation.createDocument) {
+								doc = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
+								doc.documentElement.appendChild(doc.createElement('head'));
+								doc.documentElement.appendChild(doc.createElement('body'));
+							} else if (window.ActiveXObject) {
+								doc = new window.ActiveXObject('htmlfile');
+								doc.write('');
+								doc.close();
+							}
+
+							if (!doc) throw Error('base not supported');
+
+							var baseTag = doc.createElement('base');
+							baseTag.href = base;
+							doc.getElementsByTagName('head')[0].appendChild(baseTag);
+							var anchor = doc.createElement('a');
+							anchor.href = url;
+							return anchor.href;
+						} finally {
+							if (iframe)
+								iframe.parentNode.removeChild(iframe);
+						}
+					}());
+				}
+
+				var instance = URLUtils(url || '');
+
+				// Detect for ES5 getter/setter support
+				// (an Object.defineProperties polyfill that doesn't support getters/setters may throw)
+				var ES5_GET_SET = (function () {
+					if (!('defineProperties' in Object)) return false;
+					try {
+						var obj = {};
+						Object.defineProperties(obj, {
+							prop: {
+								get: function () {
+									return true;
+								}
+							}
+						});
+						return obj.prop;
+					} catch (_) {
+						return false;
+					}
+				}());
+
+				var self = ES5_GET_SET ? this : document.createElement('a');
+
+
+
+				var query_object = new URLSearchParams(
+					instance.search ? instance.search.substring(1) : null);
+				query_object._url_object = self;
+
+				Object.defineProperties(self, {
+					href: {
+						get: function () {
+							return instance.href;
+						},
+						set: function (v) {
+							instance.href = v;
+							tidy_instance();
+							update_steps();
+						},
+						enumerable: true,
+						configurable: true
+					},
+					origin: {
+						get: function () {
+							if (this.protocol.toLowerCase() === "data:") {
+								return null
+							}
+
+							if ('origin' in instance) return instance.origin;
+							return this.protocol + '//' + this.host;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					protocol: {
+						get: function () {
+							return instance.protocol;
+						},
+						set: function (v) {
+							instance.protocol = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					username: {
+						get: function () {
+							return instance.username;
+						},
+						set: function (v) {
+							instance.username = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					password: {
+						get: function () {
+							return instance.password;
+						},
+						set: function (v) {
+							instance.password = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					host: {
+						get: function () {
+					// IE returns default port in |host|
+							var re = {
+								'http:': /:80$/,
+								'https:': /:443$/,
+								'ftp:': /:21$/
+							}[instance.protocol];
+							return re ? instance.host.replace(re, '') : instance.host;
+						},
+						set: function (v) {
+							instance.host = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					hostname: {
+						get: function () {
+							return instance.hostname;
+						},
+						set: function (v) {
+							instance.hostname = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					port: {
+						get: function () {
+							return instance.port;
+						},
+						set: function (v) {
+							instance.port = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					pathname: {
+						get: function () {
+							// IE does not include leading '/' in |pathname|
+							if (instance.pathname.charAt(0) !== '/') return '/' + instance.pathname;
+							return instance.pathname;
+						},
+						set: function (v) {
+							instance.pathname = v;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					search: {
+						get: function () {
+							return instance.search;
+						},
+						set: function (v) {
+							if (instance.search === v) return;
+							instance.search = v;
+							tidy_instance();
+							update_steps();
+						},
+						enumerable: true,
+						configurable: true
+					},
+					searchParams: {
+						get: function () {
+							return query_object;
+						},
+						enumerable: true,
+						configurable: true
+					},
+					hash: {
+						get: function () {
+							return instance.hash;
+						},
+						set: function (v) {
+							instance.hash = v;
+							tidy_instance();
+						},
+						enumerable: true,
+						configurable: true
+					},
+					toString: {
+						value: function () {
+							return instance.toString();
+						},
+						enumerable: false,
+						configurable: true
+					},
+					valueOf: {
+						value: function () {
+							return instance.valueOf();
+						},
+						enumerable: false,
+						configurable: true
+					}
+				});
+
+				function tidy_instance() {
+					var href = instance.href.replace(/#$|\?$|\?(?=#)/g, '');
+					if (instance.href !== href)
+						instance.href = href;
+				}
+
+				function update_steps() {
+					query_object._setList(instance.search ? urlencoded_parse(instance.search.substring(1)) : []);
+					query_object._update_steps();
+				}
+
+				return self;
+			}
+
+					if (origURL) {
+						for (var i in origURL) {
+							if (Object.prototype.hasOwnProperty.call(origURL, i) && typeof origURL[i] === 'function')
+								URL[i] = origURL[i];
+						}
+					}
+
+					global.URL = URL;
+					global.URLSearchParams = URLSearchParams;
+				})();
+
+				// Patch native URLSearchParams constructor to handle sequences/records
+				// if necessary.
+				(function () {
+					if (new global.URLSearchParams([
+						['a', 1]
+					]).get('a') === '1' &&
+						new global.URLSearchParams({
+							a: 1
+						}).get('a') === '1')
+						return;
+					var orig = global.URLSearchParams;
+					global.URLSearchParams = function (init) {
+						if (init && typeof init === 'object' && isSequence(init)) {
+							var o = new orig();
+							Array.from(init).forEach(function (e) {
+								if (!isSequence(e)) throw TypeError();
+								var nv = Array.from(e);
+								if (nv.length !== 2) throw TypeError();
+								o.append(nv[0], nv[1]);
+							});
+							return o;
+						} else if (init && typeof init === 'object') {
+							o = new orig();
+							Object.keys(init).forEach(function (key) {
+								o.set(key, init[key]);
+							});
+							return o;
+						} else {
+							return new orig(init);
+						}
+					};
+				})();
+
+			}(self));
+
+
+			// Event
+			(function () {
+				var unlistenableWindowEvents = {
+					click: 1,
+					dblclick: 1,
+					keyup: 1,
+					keypress: 1,
+					keydown: 1,
+					mousedown: 1,
+					mouseup: 1,
+					mousemove: 1,
+					mouseover: 1,
+					mouseenter: 1,
+					mouseleave: 1,
+					mouseout: 1,
+					storage: 1,
+					storagecommit: 1,
+					textinput: 1
+				};
+
+				// This polyfill depends on availability of `document` so will not run in a worker
+				// However, we asssume there are no browsers with worker support that lack proper
+				// support for `Event` within the worker
+				if (typeof document === 'undefined' || typeof window === 'undefined') return;
+
+				var existingProto = (window.Event && window.Event.prototype) || null;
+
+				function Event(type, eventInitDict) {
+					if (!type) {
+						throw new Error('Not enough arguments');
+					}
+
+					var event;
+					// Shortcut if browser supports createEvent
+					if ('createEvent' in document) {
+						event = document.createEvent('Event');
+						var bubbles = eventInitDict && eventInitDict.bubbles !== undefined ? eventInitDict.bubbles : false;
+						var cancelable = eventInitDict && eventInitDict.cancelable !== undefined ? eventInitDict.cancelable : false;
+
+				event.initEvent(type, bubbles, cancelable);
+
+				return event;
+			}
+
+					event = document.createEventObject();
+
+					event.type = type;
+					event.bubbles = eventInitDict && eventInitDict.bubbles !== undefined ? eventInitDict.bubbles : false;
+					event.cancelable = eventInitDict && eventInitDict.cancelable !== undefined ? eventInitDict.cancelable : false;
+
+					return event;
+				}
+				Event.NONE = 0;
+				Event.CAPTURING_PHASE = 1;
+				Event.AT_TARGET = 2;
+				Event.BUBBLING_PHASE = 3;
+				window.Event = Window.prototype.Event = Event;
+				if (existingProto) {
+					Object.defineProperty(window.Event, 'prototype', {
+						configurable: false,
+						enumerable: false,
+						writable: true,
+						value: existingProto
+					});
+				}
+
+				if (!('createEvent' in document)) {
+					window.addEventListener = Window.prototype.addEventListener = Document.prototype.addEventListener = Element.prototype.addEventListener = function addEventListener() {
+						var
+							element = this,
+							type = arguments[0],
+							listener = arguments[1];
+
+						if (element === window && type in unlistenableWindowEvents) {
+							throw new Error('In IE8 the event: ' + type + ' is not available on the window object. Please see https://github.com/Financial-Times/polyfill-service/issues/317 for more information.');
+						}
+
+						if (!element._events) {
+							element._events = {};
+						}
+
+						if (!element._events[type]) {
+							element._events[type] = function (event) {
+								var
+									list = element._events[event.type].list,
+									events = list.slice(),
+									index = -1,
+									length = events.length,
+									eventElement;
+
+						event.preventDefault = function preventDefault() {
+							if (event.cancelable !== false) {
+								event.returnValue = false;
+							}
+						};
+
+						event.stopPropagation = function stopPropagation() {
+							event.cancelBubble = true;
+						};
+
+						event.stopImmediatePropagation = function stopImmediatePropagation() {
+							event.cancelBubble = true;
+							event.cancelImmediate = true;
+						};
+
+						event.currentTarget = element;
+						event.relatedTarget = event.fromElement || null;
+						event.target = event.target || event.srcElement || element;
+						event.timeStamp = new Date().getTime();
+
+						if (event.clientX) {
+							event.pageX = event.clientX + document.documentElement.scrollLeft;
+							event.pageY = event.clientY + document.documentElement.scrollTop;
+						}
+
+						while (++index < length && !event.cancelImmediate) {
+							if (index in events) {
+								eventElement = events[index];
+
+								if (list.includes(eventElement) && typeof eventElement === 'function') {
+									eventElement.call(element, event);
+								}
+							}
+						}
+					};
+
+					element._events[type].list = [];
+
+					if (element.attachEvent) {
+						element.attachEvent('on' + type, element._events[type]);
+					}
+				}
+
+						element._events[type].list.push(listener);
+					};
+
+					window.removeEventListener = Window.prototype.removeEventListener = Document.prototype.removeEventListener = Element.prototype.removeEventListener = function removeEventListener() {
+						var
+							element = this,
+							type = arguments[0],
+							listener = arguments[1],
+							index;
+
+				if (element._events && element._events[type] && element._events[type].list) {
+					index = element._events[type].list.indexOf(listener);
+
+					if (index !== -1) {
+						element._events[type].list.splice(index, 1);
+
+						if (!element._events[type].list.length) {
+							if (element.detachEvent) {
+								element.detachEvent('on' + type, element._events[type]);
+							}
+							delete element._events[type];
+						}
+					}
+				}
+			};
+
+					window.dispatchEvent = Window.prototype.dispatchEvent = Document.prototype.dispatchEvent = Element.prototype.dispatchEvent = function dispatchEvent(event) {
+						if (!arguments.length) {
+							throw new Error('Not enough arguments');
+						}
+
+				if (!event || typeof event.type !== 'string') {
+					throw new Error('DOM Events Exception 0');
+				}
+
+				var element = this,
+					type = event.type;
+
+				try {
+					if (!event.bubbles) {
+						event.cancelBubble = true;
+
+						var cancelBubbleEvent = function (event) {
+							event.cancelBubble = true;
+
+							(element || window).detachEvent('on' + type, cancelBubbleEvent);
+						};
+
+						this.attachEvent('on' + type, cancelBubbleEvent);
+					}
+
+					this.fireEvent('on' + type, event);
+				} catch (error) {
+					event.target = element;
+
+					do {
+						event.currentTarget = element;
+
+						if ('_events' in element && typeof element._events[type] === 'function') {
+							element._events[type].call(element, event);
+						}
+
+						if (typeof element['on' + type] === 'function') {
+							element['on' + type].call(element, event);
+						}
+
+						element = element.nodeType === 9 ? element.parentWindow : element.parentNode;
+					} while (element && !event.cancelBubble);
+				}
+
+				return true;
+			};
+
+					// Add the DOMContentLoaded Event
+					document.attachEvent('onreadystatechange', function () {
+						if (document.readyState === 'complete') {
+							document.dispatchEvent(new Event('DOMContentLoaded', {
+								bubbles: true
+							}));
+						}
+					});
+				}
+			}());
+
+			// _ESAbstract.SameValueNonNumber
+			// 7.2.12. SameValueNonNumber ( x, y )
+			function SameValueNonNumber(x, y) { // eslint-disable-line no-unused-vars
+				return x === y;
+			}
+
+			// _ESAbstract.RequireObjectCoercible
+			// 7.2.1. RequireObjectCoercible ( argument )
+			// The abstract operation ToObject converts argument to a value of type Object according to Table 12:
+			// Table 12: ToObject Conversions
+			function RequireObjectCoercible(argument) { // eslint-disable-line no-unused-vars
+				if (argument === null || argument === undefined) {
+					throw TypeError(Object.prototype.toString.call(argument) + ' is not coercible to Object.');
+				}
+				return argument;
+			}
+			// _ESAbstract.IsRegExp
+			/* global Type, Get, ToBoolean */
+			// 7.2.8. IsRegExp ( argument )
+			function IsRegExp(argument) { // eslint-disable-line no-unused-vars
+				// 1. If Type(argument) is not Object, return false.
+				if (Type(argument) !== 'object') {
+					return false;
+				}
+				// 2. Let matcher be ? Get(argument, @@match).
+				var matcher = 'Symbol' in self && 'match' in self.Symbol ? Get(argument, self.Symbol.match) : undefined;
+				// 3. If matcher is not undefined, return ToBoolean(matcher).
+				if (matcher !== undefined) {
+					return ToBoolean(matcher);
+				}
+				// 4. If argument has a [[RegExpMatcher]] internal slot, return true.
+				try {
+					var lastIndex = argument.lastIndex;
+					argument.lastIndex = 0;
+					RegExp.prototype.exec.call(argument);
+					return true;
+					// eslint-disable-next-line no-empty
+				} catch (e) { } finally {
+					argument.lastIndex = lastIndex;
+				}
+				// 5. Return false.
+				return false;
+			}
+		})
+			('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
+			// polyfill for createTreeWalker (https://github.com/Krinkle/dom-TreeWalker-polyfill/blob/master/src/TreeWalker-polyfill.js)
+			/* License
+			Copyright 2013–2017 Timo Tijhof < https://github.com/Krinkle/dom-TreeWalker-polyfill>
+
+			Permission is hereby granted, free of charge, to any person obtaining a copy
+			of this software and associated documentation files(the "Software"), to deal
+			in the Software without restriction, including without limitation the rights
+			to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+			copies of the Software, and to permit persons to whom the Software is
+			furnished to do so, subject to the following conditions:
+
+			The above copyright notice and this permission notice shall be included in all
+			copies or substantial portions of the Software.
+
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+			IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+			FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+			AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+			LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+			OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+			SOFTWARE.
+			End of License */
+			/**
+			 * JavaScript implementation of W3 DOM4 TreeWalker interface.
+			 *
+			 * See also:
+			 * - https://dom.spec.whatwg.org/#interface-treewalker
+			 *
+			 * Attributes like "read-only" and "private" are ignored in this implementation
+			 * due to ECMAScript 3 (as opposed to ES5) not supporting creation of such properties.
+			 * There are workarounds, but under "keep it simple" and "don't do stupid things" they
+			 * are ignored in this implementation.
+			 */
+			(function (window, factory) {
+				var lazySizes = factory(window, window.document);
+				window.lazySizes = lazySizes;
+				if (typeof module == 'object' && module.exports) {
+					module.exports = lazySizes;
+				} else if (typeof define == 'function' && define.amd) {
+					define(lazySizes);
+				}
+			}(window, function l(win, doc) {
+				var TreeWalker, NodeFilter, create, toString, is, mapChild, mapSibling,
+					nodeFilter, traverseChildren, traverseSiblings, nextSkippingChildren;
+
+				// Cross-browser polyfill for these constants
+				NodeFilter = {
+					// Constants for acceptNode()
+					FILTER_ACCEPT: 1,
+					FILTER_REJECT: 2,
+					FILTER_SKIP: 3,
+
+					// Constants for whatToShow
+					SHOW_ALL: 0xFFFFFFFF,
+					SHOW_ELEMENT: 0x1,
+					SHOW_ATTRIBUTE: 0x2, // historical
+					SHOW_TEXT: 0x4,
+					SHOW_CDATA_SECTION: 0x8, // historical
+					SHOW_ENTITY_REFERENCE: 0x10, // historical
+					SHOW_ENTITY: 0x20, // historical
+					SHOW_PROCESSING_INSTRUCTION: 0x40,
+					SHOW_COMMENT: 0x80,
+					SHOW_DOCUMENT: 0x100,
+					SHOW_DOCUMENT_TYPE: 0x200,
+					SHOW_DOCUMENT_FRAGMENT: 0x400,
+					SHOW_NOTATION: 0x800 // historical
+				};
+
+				/* Local utilities */
+
+				create1 = function (proto) {
+					function Empty() { }
+					Empty.prototype = proto;
+					return new Empty();
+				};
+
+				mapChild = {
+					first: 'firstChild',
+					last: 'lastChild',
+					next: 'firstChild',
+					previous: 'lastChild'
+				};
+
+				mapSibling = {
+					next: 'nextSibling',
+					previous: 'previousSibling'
+				};
+
+				toString = mapChild.toString;
+
+				is = function (x, type) {
+					return toString.call(x).toLowerCase() === '[object ' + type.toLowerCase() + ']';
+				};
+
+				/* Private methods and helpers */
+
+				/**
+				 * See https://dom.spec.whatwg.org/#concept-node-filter
+				 *
+				 * @private
+				 * @method
+				 * @param {TreeWalker} tw
+				 * @param {Node} node
+				 */
+				nodeFilter = function (tw, node) {
+					// Maps nodeType to whatToShow
+					if (!(((1 << (node.nodeType - 1)) & tw.whatToShow))) {
+						return NodeFilter.FILTER_SKIP;
+					}
+
+					if (tw.filter === null) {
+						return NodeFilter.FILTER_ACCEPT;
+					}
+
+					return tw.filter.acceptNode(node);
+				};
+
+				/**
+				 * See https://dom.spec.whatwg.org/#concept-traverse-children
+				 *
+				 * @private
+				 * @method
+				 * @param {TreeWalker} tw
+				 * @param {string} type One of 'first' or 'last'.
+				 * @return {Node|null}
+				 */
+				traverseChildren = function (tw, type) {
+					var child, node, parent, result, sibling;
+					node = tw.currentNode[mapChild[type]];
+					while (node !== null) {
+						result = nodeFilter(tw, node);
+						if (result === NodeFilter.FILTER_ACCEPT) {
+							tw.currentNode = node;
+							return node;
+						}
+						if (result === NodeFilter.FILTER_SKIP) {
+							child = node[mapChild[type]];
+							if (child !== null) {
+								node = child;
+								continue;
+							}
+						}
+						while (node !== null) {
+							sibling = node[mapChild[type]];
+							if (sibling !== null) {
+								node = sibling;
+								break;
+							}
+							parent = node.parentNode;
+							if (parent === null || parent === tw.root || parent === tw.currentNode) {
+								return null;
+							} else {
+								node = parent;
+							}
+						}
+					}
+					return null;
+				};
+
+				/**
+				 * See https://dom.spec.whatwg.org/#concept-traverse-siblings
+				 *
+				 * @private
+				 * @method
+				 * @param {TreeWalker} tw
+				 * @param {TreeWalker} type One of 'next' or 'previous'.
+				 * @return {Node|null}
+				 */
+				traverseSiblings = function (tw, type) {
+					var node, result, sibling;
+					node = tw.currentNode;
+					if (node === tw.root) {
+						return null;
+					}
+					while (true) {
+						sibling = node[mapSibling[type]];
+						while (sibling !== null) {
+							node = sibling;
+							result = nodeFilter(tw, node);
+							if (result === NodeFilter.FILTER_ACCEPT) {
+								tw.currentNode = node;
+								return node;
+							}
+							sibling = node[mapChild[type]];
+							if (result === NodeFilter.FILTER_REJECT) {
+								sibling = node[mapSibling[type]];
+							}
+						}
+						node = node.parentNode;
+						if (node === null || node === tw.root) {
+							return null;
+						}
+						if (nodeFilter(tw, node) === NodeFilter.FILTER_ACCEPT) {
+							return null;
+						}
+					}
+				};
+
+				/**
+				 * Based on WebKit's NodeTraversal::nextSkippingChildren
+				 * https://trac.webkit.org/browser/trunk/Source/WebCore/dom/NodeTraversal.h?rev=137221#L103
+				 */
+				nextSkippingChildren = function (node, stayWithin) {
+					if (node === stayWithin) {
+						return null;
+					}
+					if (node.nextSibling !== null) {
+						return node.nextSibling;
+					}
+
+					/**
+					 * Based on WebKit's NodeTraversal::nextAncestorSibling
+					 * https://trac.webkit.org/browser/trunk/Source/WebCore/dom/NodeTraversal.cpp?rev=137221#L43
+					 */
+					while (node.parentNode !== null) {
+						node = node.parentNode;
+						if (node === stayWithin) {
+							return null;
+						}
+						if (node.nextSibling !== null) {
+							return node.nextSibling;
+						}
+					}
+					return null;
+				};
+
+				/**
+				 * See https://dom.spec.whatwg.org/#interface-treewalker
+				 *
+				 * @constructor
+				 * @param {Node} root
+				 * @param {number} [whatToShow]
+				 * @param {Function} [filter]
+				 * @throws Error
+				 */
+				TreeWalker = function (root, whatToShow, filter) {
+					var tw = this,
+						active = false;
+
+					if (!root || !root.nodeType) {
+						throw new Error('DOMException: NOT_SUPPORTED_ERR');
+					}
+
+					tw.root = root;
+					tw.whatToShow = Number(whatToShow) || 0;
+
+					tw.currentNode = root;
+
+					if (!is(filter, 'function')) {
+						tw.filter = null;
+					} else {
+						tw.filter = create1(win.NodeFilter.prototype);
+
+						/**
+						 * See https://dom.spec.whatwg.org/#dom-nodefilter-acceptnode
+						 *
+						 * @method
+						 * @member NodeFilter
+						 * @param {Node} node
+						 * @return {number} Constant NodeFilter.FILTER_ACCEPT,
+						 *  NodeFilter.FILTER_REJECT or NodeFilter.FILTER_SKIP.
+						 */
+						tw.filter.acceptNode = function (node) {
+							var result;
+							if (active) {
+								throw new Error('DOMException: INVALID_STATE_ERR');
+							}
+
+							active = true;
+							result = filter(node);
+							active = false;
+
+							return result;
+						};
+					}
+				};
+
+				TreeWalker.prototype = {
+
+					constructor: TreeWalker,
+
+					/**
+					 * See https://dom.spec.whatwg.org/#ddom-treewalker-parentnode
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					parentNode: function () {
+						var node = this.currentNode;
+						while (node !== null && node !== this.root) {
+							node = node.parentNode;
+							if (node !== null && nodeFilter(this, node) === NodeFilter.FILTER_ACCEPT) {
+								this.currentNode = node;
+								return node;
+							}
+						}
+						return null;
+					},
+
+					/**
+					 * See https://dom.spec.whatwg.org/#dom-treewalker-firstchild
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					firstChild: function () {
+						return traverseChildren(this, 'first');
+					},
+
+					/**
+					 * See https://dom.spec.whatwg.org/#dom-treewalker-lastchild
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					lastChild: function () {
+						return traverseChildren(this, 'last');
+					},
+
+					/**
+					 * See https://dom.spec.whatwg.org/#dom-treewalker-previoussibling
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					previousSibling: function () {
+						return traverseSiblings(this, 'previous');
+					},
+
+					/**
+					 * See https://dom.spec.whatwg.org/#dom-treewalker-nextsibling
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					nextSibling: function () {
+						return traverseSiblings(this, 'next');
+					},
+
+					/**
+					 * See https://dom.spec.whatwg.org/#dom-treewalker-previousnode
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					previousNode: function () {
+						var node, result, sibling;
+						node = this.currentNode;
+						while (node !== this.root) {
+							sibling = node.previousSibling;
+							while (sibling !== null) {
+								node = sibling;
+								result = nodeFilter(this, node);
+								while (result !== NodeFilter.FILTER_REJECT && node.lastChild !== null) {
+									node = node.lastChild;
+									result = nodeFilter(this, node);
+								}
+								if (result === NodeFilter.FILTER_ACCEPT) {
+									this.currentNode = node;
+									return node;
+								}
+							}
+							if (node === this.root || node.parentNode === null) {
+								return null;
+							}
+							node = node.parentNode;
+							if (nodeFilter(this, node) === NodeFilter.FILTER_ACCEPT) {
+								this.currentNode = node;
+								return node;
+							}
+						}
+						return null;
+					},
+
+					/**
+					 * See https://dom.spec.whatwg.org/#dom-treewalker-nextnode
+					 *
+					 * @method
+					 * @return {Node|null}
+					 */
+					nextNode: function () {
+						var node, result, following;
+						node = this.currentNode;
+						result = NodeFilter.FILTER_ACCEPT;
+
+						while (true) {
+							while (result !== NodeFilter.FILTER_REJECT && node.firstChild !== null) {
+								node = node.firstChild;
+								result = nodeFilter(this, node);
+								if (result === NodeFilter.FILTER_ACCEPT) {
+									this.currentNode = node;
+									return node;
+								}
+							}
+							following = nextSkippingChildren(node, this.root);
+							if (following !== null) {
+								node = following;
+							} else {
+								return null;
+							}
+							result = nodeFilter(this, node);
+							if (result === NodeFilter.FILTER_ACCEPT) {
+								this.currentNode = node;
+								return node;
+							}
+						}
+					}
+				};
+
+				/**
+				 * See http://www.w3.org/TR/dom/#dom-document-createtreewalker
+				 *
+				 * @param {Node} root
+				 * @param {number} [whatToShow=NodeFilter.SHOW_ALL]
+				 * @param {Function|Object} [filter=null]
+				 * @return {TreeWalker}
+				 */
+				doc.createTreeWalker = function (root, whatToShow, filter) {
+					whatToShow = whatToShow === undefined ? NodeFilter.SHOW_ALL : whatToShow;
+
+					if (filter && is(filter.acceptNode, 'function')) {
+						filter = filter.acceptNode;
+						// Support Gecko-ism of filter being a function.
+						// https://developer.mozilla.org/en-US/docs/DOM/document.createTreeWalker
+					} else if (!is(filter, 'function')) {
+						filter = null;
+					}
+
+					return new TreeWalker(root, whatToShow, filter);
+				};
+
+				if (!win.NodeFilter) {
+					win.NodeFilter = NodeFilter.constructor = NodeFilter.prototype = NodeFilter;
+				}
+
+				if (!win.TreeWalker) {
+					win.TreeWalker = TreeWalker;
+				}
+			}));
+	</script>
+	<script>
+		function handleExternalPropertyChange(propertyName, value) {
+			if (propertyName == 'helperText' && google.search.cse.element.getElement('placeholder'))
+				google.search.cse.element.getElement('placeholder').execute(value);
+		}
+
+		function drawControl() {
+			google.search.cse.element.render({
+				div: "placeholder",
+				tag: 'search',
+				gname: 'placeholder',
+			});
+
+			if (window.external.helperText)
+				google.search.cse.element.getElement('placeholder').execute(window.external.helperText);
+		}
+
+		function helperCallback() {
+			if (document.readyState == 'complete') {
+				drawControl();
+			} else {
+				google.setOnLoadCallback(function () {
+					drawControl();
+				});
+			}
+		};
+
+		window.__gcse = {
+			parsetags: 'explicit',
+			callback: helperCallback,
+		};
+
+		(function () {
+			var cx = '006934864527017429565:g5dx4aem0u8';
+			var gcse = document.createElement('script');
+			gcse.type = 'text/javascript';
+			gcse.async = true;
+			gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(gcse, s);
+		})();
+	</script>
+	<style>
+		body {
+			overflow: auto;
+		}
+
+		.gsc-result-info, .gsc-url-top {
+			font-size: 10px !important;
+		}
+
+		.gs-snippet {
+			font-size: 11px !important;
+		}
+
+		.gsc-control-cse div, .gsc-control-cse table {
+			padding-left: 0px !important;
+		}
+
+		.gcsc-branding *, .gsc-control-cse, .gsc-result-info {
+			padding: 0px !important;
+		}
+
+		.gsc-result {
+			padding-bottom: 3px !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="placeholder"></div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿<Project ToolsVersion="Current" DefaultTargets="Build">
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <ProjectGuid>{4FE63F0D-19E0-4DA0-BD17-BC8C47DF01F0}</ProjectGuid>
+    <ProjectTypeGuids>{9A19103F-16F7-4668-BE54-9A1E7A4F7556}</ProjectTypeGuids>
+    <AssemblyName>ScreenConnect.Site</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+    <OutputPath>Bin\</OutputPath>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <NoWarn>$(NoWarn);2008</NoWarn>
+    <LangVersion>10.0</LangVersion> <!-- latest version supported by the current CodeDom provider.. found by running `.\Site\Bin\roslyn\csc.exe /langversion:?` -->
+    <YarnBuildCommand>install --frozen-lockfile</YarnBuildCommand>
+    <YarnWorkingDir>$(MSBuildProjectDirectory)\Scripts</YarnWorkingDir>
+  </PropertyGroup>
+  <ItemGroup Label="Assemblies">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Nito.AsyncEx.Coordination">
+      <HintPath>..\Nito.AsyncEx.Coordination.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Tasks">
+      <HintPath>..\Nito.AsyncEx.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Collections.Deque">
+      <HintPath>..\Nito.Collections.Deque.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Disposables">
+      <HintPath>..\Nito.Disposables.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Label="NuGet">
+    <PackageReference Include="Azure.Core" Version="1.38.0" />
+    <PackageReference Include="Azure.Identity" Version="1.11.4" />
+    <PackageReference Include="Azure.Security.KeyVault.Certificates" Version="4.6.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.6.0" /> 
+    <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="4.1.0-preview1" /> <!-- when updating, check if we can move to higher LangVersion above -->
+    <PackageReference Include="Yarn.MSBuild" Version="1.22.19" />
+  </ItemGroup>
+  <ItemGroup Label="Projects">
+    <ProjectReference Include="..\ClickOnceRunner\ClickOnceRunner.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\ClientInstaller\ClientInstaller.wixproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\ClientInstallerRunner\ClientInstallerRunner.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\ClientService\ClientService.csproj" />
+    <ProjectReference Include="..\Client\Client.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\JavaAndroidClient\JavaAndroidClient.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\JavaBootstrapper\JavaBootstrapper.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\JavaClient\JavaClient.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Relay\Relay.csproj" />
+    <ProjectReference Include="..\Server\Server.csproj" />
+    <ProjectReference Include="..\Service\Service.csproj" />
+    <ProjectReference Include="..\Web\Web.csproj" />
+    <ProjectReference Include="..\Windows\Windows.csproj" />
+    <ProjectReference Include="..\WindowsClient\WindowsClient.csproj" />
+    <ProjectReference Include="..\WindowsInstaller\WindowsInstaller.csproj" />
+    <ProjectReference Include="..\WindowsServer\WindowsServer.csproj" />
+  </ItemGroup>
+  <ItemGroup Label="Files">
+    <None Include="**/*" Exclude="obj/**" />
+    <Content Include="*" />
+    <Content Include="App_ClientConfig/*" />
+    <Content Include="App_Data/*" />
+    <Content Include="App_Extensions/*" />
+    <Content Include="App_Themes/*" />
+    <Content Include="App_WebResources/*" />
+    <Content Include="Fonts/*" />
+    <Content Include="Images/*" />
+    <Content Include="Scripts/*" />
+    <Content Include="Services/*" />
+  </ItemGroup>
+  <ItemGroup Label="IDE" Condition="'$(BuildingInsideIde)' == 'true'">
+    <Compile Include="App_Extensions/*/*.cs" />
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="..\ScreenConnect.Override.targets" />
+  <!-- <Target Name="PrecompileSite" AfterTargets="Build"> -->
+  <!-- <AspNetCompiler VirtualPath="/SiteCompiled" PhysicalPath="." TargetPath="../SiteCompiled" Updateable="true" Force="true" FixedNames="false" Clean="true" Debug="true" /> -->
+  <!-- </Target> -->
+  <Target Name="AfterCompile">
+    <!-- additional stuff to bundle with Site -->
+    <!-- TODO refactor to use project reference outputs so we don't need this -->
+    <ItemGroup>
+      <AdditionalArtifacts Include="..\ClickOnceRunner\bin\$(Configuration)\ScreenConnect.Client.*" />
+      <AdditionalArtifacts Include="..\ClientInstaller\bin\$(Configuration)\ScreenConnect.ClientSetup.*" />
+      <AdditionalArtifacts Include="..\ClientInstallerRunner\bin\$(Configuration)\ScreenConnect.ClientSetup.*" />
+      <AdditionalArtifacts Include="..\Java*\build\libs\**\ScreenConnect.*" />
+      <AdditionalArtifacts Include="..\Java*\build\outputs\**\ScreenConnect.*" />
+      <AdditionalArtifacts Include="..\WindowsClient\bin\$(Configuration)\ScreenConnect.Client.application" />
+      <AdditionalArtifacts Include="..\WindowsClient\bin\$(Configuration)\ScreenConnect.Client.manifest" />
+      <AdditionalArtifacts Include="..\ClientService\bin\$(Configuration)\ScreenConnect.ClientService.exe" />
+      <AdditionalArtifacts Include="..\WindowsBackstageShell\bin\$(Configuration)\ScreenConnect.WindowsBackstageShell.*" />
+      <AdditionalArtifacts Include="..\WindowsFileManager\bin\$(Configuration)\ScreenConnect.WindowsFileManager.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AdditionalArtifacts)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <!-- windows clients need .NET 2.0 version of Core and Windows -->
+      <ServedArtifacts Include="..\Core\bin\$(Configuration)\net20\*" />
+      <ServedArtifacts Include="..\Windows\bin\$(Configuration)\net20\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ServedArtifacts)" DestinationFolder="$(OutputPath)\ServedArtifacts" SkipUnchangedFiles="true" />
+  </Target>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <OutputForSigning Include="$(OutputPath)\**\ScreenConnect.*" Exclude="$(OutputPath)\**\*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OutputForSigning)" DestinationFiles="@(OutputForSigning->'..\ScreenConnectUnSigned\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <ItemGroup>
+      <SignedArtifacts Include="..\ScreenConnectSigned\**" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SignedArtifacts)" DestinationFiles="@(SignedArtifacts->'$(OutputPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+</Project>

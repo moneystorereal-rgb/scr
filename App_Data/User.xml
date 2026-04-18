@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Users xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <User>
+    <CreationDate>2026-04-17T21:41:43.7285351Z</CreationDate>
+    <Email>Administrator@gm.com</Email>
+    <IsApproved>true</IsApproved>
+    <IsLockedOut>false</IsLockedOut>
+    <LastActivityDate>2026-04-18T03:59:48.3815385Z</LastActivityDate>
+    <LastLockoutDate>0001-01-01T00:00:00</LastLockoutDate>
+    <LastLoginDate>2026-04-18T03:59:48.3815385Z</LastLoginDate>
+    <LastPasswordChangedDate>2026-04-18T03:59:44.4538142Z</LastPasswordChangedDate>
+    <PasswordAttemptWindowStartTime>2026-04-18T04:35:25.8624998Z</PasswordAttemptWindowStartTime>
+    <InvalidPasswordWindowAttemptCount>1</InvalidPasswordWindowAttemptCount>
+    <InvalidPasswordAbsoluteAttemptCount>1</InvalidPasswordAbsoluteAttemptCount>
+    <Name>Administrator</Name>
+    <PasswordHashHistory>
+      <base64Binary>AEkMdIo2gSnPzaXXFLsgX2q3baMC0sXIf3hOJNip0rZpqy6J9ddSuJVATGfBBn7cwI2+9De0E0loBuLs5OOHbuT2OcEpORcm1tCYS3Oj1+ccmdO61w0YhGXo9xK6/FJ3FxQUHHbAldE34JbhvigmbVM5I90zTJoq4IhG3CI/HdA=</base64Binary>
+      <base64Binary>ABuVNolqvwDpZzg5kGU//Gc+uTS/SaDJJxyIP+dsTk8qIwVFHAuDZ73PVCuWCEsF1LEvj+m3fdiM+RuMfOYOLKsAGx7cc27AkNSgXLgNXiBZcTNjSncXToUQFSRPDIbeXqcq2XqrK1joUOq0TNjnrzWUsjiRfdnQgfjyRaWN7Hw=</base64Binary>
+    </PasswordHashHistory>
+    <Roles>
+      <string>Control Administrator</string>
+    </Roles>
+  </User>
+  <User>
+    <Comment />
+    <CreationDate>2026-04-18T04:00:53.2115414Z</CreationDate>
+    <Email>Administrator@g.om</Email>
+    <IsApproved>true</IsApproved>
+    <IsLockedOut>false</IsLockedOut>
+    <LastActivityDate>2026-04-18T04:40:02.5496544Z</LastActivityDate>
+    <LastLockoutDate>0001-01-01T00:00:00</LastLockoutDate>
+    <LastLoginDate>2026-04-18T04:40:02.5496544Z</LastLoginDate>
+    <LastPasswordChangedDate>2026-04-18T04:00:53.2115414Z</LastPasswordChangedDate>
+    <PasswordAttemptWindowStartTime>0001-01-01T00:00:00</PasswordAttemptWindowStartTime>
+    <InvalidPasswordWindowAttemptCount>0</InvalidPasswordWindowAttemptCount>
+    <InvalidPasswordAbsoluteAttemptCount>0</InvalidPasswordAbsoluteAttemptCount>
+    <PasswordQuestion />
+    <Name>AdministratorAdministrator</Name>
+    <DisplayName />
+    <PasswordHashHistory>
+      <base64Binary>AHFFTUwMXyKd92+izQ4ZAIkuLsDjcB9bvxkzPL6GGqEf4uLdH+D9pAwjjyUk7tPH851v9GbL2/gDAL/4GZZqzAYLoKfGGAAqybOD6pYJKMI30u9kZQyvskGByqW6juwdjbXGpilCsm4t2obvhKlS2LMX9Gw7q4DUxtdjTIejOig=</base64Binary>
+    </PasswordHashHistory>
+    <Roles>
+      <string>Control Administrator</string>
+      <string>Control Host</string>
+    </Roles>
+  </User>
+</Users>

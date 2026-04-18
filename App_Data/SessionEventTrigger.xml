@@ -1,0 +1,2699 @@
+<SessionEventTriggers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SessionEventTrigger Name="Notify when guest sends message to unconnected session" IsDisabled="false" EventFilter="Event.EventType = 'SentMessage' AND Connection.ProcessType = 'Guest' AND Session.HostConnectedCount = 0" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] Your guest to session '{Session.Name}' sent you a message">
+        <Body>{Event.Data}</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when guest connects to unconnected support or meeting session" IsDisabled="false" EventFilter="Event.EventType = 'Connected' AND Connection.ProcessType = 'Guest' AND (Session.SessionType = 'Support' OR Session.SessionType = 'Meeting') AND Session.HostConnectedCount = 0" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] Your guest to session '{Session.Name}' has connected (EOM)" />
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when an access agent disconnects" IsDisabled="true" EventFilter="Connection.ProcessType = 'Guest' AND Event.EventType = 'Disconnected' AND Session.SessionType = 'Access'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] Your access session '{Session.Name}' has disconnected">
+        <Body>The access session '{Session.Name}' has disconnected from your server.
+
+Last Activity Time (UTC): {Session.GuestLastActivityTime}</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when an access agent connects" IsDisabled="true" EventFilter="Connection.ProcessType = 'Guest' AND Event.EventType = 'Connected' AND Session.SessionType = 'Access'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] Your access session '{Session.Name}' has connected">
+        <Body>The access session '{Session.Name}' has connected to your server.
+
+Last Activity Time (UTC): {Session.GuestLastActivityTime}</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when a host connects to an access agent" IsDisabled="true" EventFilter="Connection.ProcessType = 'Host' AND Event.EventType = 'Connected' AND Session.SessionType = 'Access'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] A host has connected to access session '{Session.Name}'">
+        <Body>One of your hosts has connected to the access session '{Session.Name}'. Check your Audit page for more information.</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when a new access client is installed" IsDisabled="true" EventFilter="Event.EventType = 'CreatedSession' AND Session.SessionType = 'Access'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] New access session added">
+        <Body>A new access session has been added to your Access page. See your Access page for more information.</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when a server is online" IsDisabled="true" EventFilter="Event.EventType = 'Connected' AND Connection.ProcessType = 'Guest' AND Session.SessionType = 'Access' AND Session.GuestOperatingSystemName LIKE '*server*' AND Session.HostConnectedCount = 0" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] Server '{Session.Name}' is online">
+        <Body>The server '{Session.Name}' is online and available on the Access page.</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when a server is offline" IsDisabled="true" EventFilter="Event.EventType = 'Disconnected' AND Connection.ProcessType = 'Guest' AND Session.SessionType = 'Access' AND Session.GuestOperatingSystemName LIKE '*server*' AND Session.HostConnectedCount = 0" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="[SC] Server '{Session.Name}' is offline">
+        <Body>The server '{Session.Name}' is offline. Check your Access page or Audit page for more information.</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when an administrative logon request is sent" IsDisabled="false" EventFilter="Event.EventType = 'RequestedAdministrativeLogon'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" From="" To="" Subject="[SC] '{Session.Name}' has requested administrative logon" IsBodyHtml="true">
+        <Body>&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml"&gt;
+
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="Content-Type" /&gt;
+  &lt;meta content="width=device-width, initial-scale=1.0" name="viewport" /&gt;
+  &lt;!--[if mso
+      ]&gt;&lt;xml
+        &gt;&lt;o:OfficeDocumentSettings
+          &gt;&lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch
+          &gt;&lt;o:AllowPNG /&gt;&lt;/o:OfficeDocumentSettings&gt;&lt;/xml
+    &gt;&lt;![endif]--&gt;
+  &lt;style&gt;
+    * {{
+      box-sizing: border-box;
+    }}
+
+    body {{
+      margin: 0;
+      padding: 0;
+    }}
+
+    a[x-apple-data-detectors] {{
+      color: inherit !important;
+      text-decoration: inherit !important;
+    }}
+
+    #MessageViewBody a {{
+      color: inherit;
+      text-decoration: none;
+    }}
+
+    p {{
+      line-height: inherit;
+    }}
+
+    .desktop_hide,
+    .desktop_hide table {{
+      mso-hide: all;
+      display: none;
+      max-height: 0px;
+      overflow: hidden;
+    }}
+
+    @media (max-width: 620px) {{
+      .desktop_hide table.icons-inner {{
+        display: inline-block !important;
+      }}
+
+      .icons-inner {{
+        text-align: center;
+      }}
+
+      .icons-inner td {{
+        margin: 0 auto;
+      }}
+
+      .row-content {{
+        width: 100% !important;
+      }}
+
+      .column .border,
+      .mobile_hide {{
+        display: none;
+      }}
+
+      table {{
+        table-layout: fixed !important;
+      }}
+
+      .stack .column {{
+        width: 100%;
+        display: block;
+      }}
+
+      .mobile_hide {{
+        min-height: 0;
+        max-height: 0;
+        max-width: 0;
+        overflow: hidden;
+        font-size: 0px;
+      }}
+
+      .desktop_hide,
+      .desktop_hide table {{
+        display: table !important;
+        max-height: none !important;
+      }}
+    }}
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body style="
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
+    "&gt;
+  &lt;table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        background-color: #ffffff;
+      " width="100%"&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-title" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              padding-top: 5px;
+                              padding-bottom: 5px;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="heading_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="width: 100%; text-align: center"&gt;
+                                &lt;img style="width: 50%; float: left; margin: 15px 0;"
+                                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTM5IiBoZWlnaHQ9IjExNSIgdmlld0JveD0iMCAwIDUzOSAxMTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01MDMuODU4IDcyLjQ2MjJWNjguMTk1NUg0OTIuNjQ1VjYyLjM1MjJINTAwLjUyOFY1OC4zMzE5SDQ5Mi42NDVWNTMuNjUxNEg1MDMuNDg0VjQ5LjM2NUg0ODcuOTI1VjcyLjQ2MjJINTAzLjg1OFpNNDY1LjIxMiA3MS40NzY4QzQ2Ni44MDIgNzIuMzkzNCA0NjguNjEgNzIuODYzMiA0NzAuNDQ0IDcyLjgzNjZDNDcyLjU0NSA3Mi45MjMgNDc0LjYwNiA3Mi4yNDc2IDQ3Ni4yNDggNzAuOTM0OEM0NzYuOTg0IDcwLjMyNzQgNDc3LjU3MSA2OS41NTk1IDQ3Ny45NjMgNjguNjkwMUM0NzguMzU2IDY3LjgyMDcgNDc4LjU0NSA2Ni44NzI5IDQ3OC41MTUgNjUuOTE5M0M0NzguNTYgNjQuNTA3MSA0NzguMDc1IDYzLjEyOTEgNDc3LjE1NSA2Mi4wNTY2QzQ3NS45MjcgNjAuODAxNyA0NzQuNDUgNTkuODE4MSA0NzIuODE5IDU5LjE2OTVMNDcwLjE5OCA1OC4wMTY2QzQ2OS40MzMgNTcuNzExNyA0NjguNzE5IDU3LjI5MzEgNDY4LjA3OSA1Ni43NzVDNDY3Ljg4OCA1Ni41OTM2IDQ2Ny43MzcgNTYuMzcyOSA0NjcuNjM5IDU2LjEyOEM0NjcuNTQgNTUuODgzMSA0NjcuNDk1IDU1LjYxOTggNDY3LjUwOCA1NS4zNTYxQzQ2Ny41IDU1LjAzOTQgNDY3LjU2OCA1NC43MjUzIDQ2Ny43MDcgNTQuNDQwNkM0NjcuODQ2IDU0LjE1NTggNDY4LjA1MSA1My45MDg4IDQ2OC4zMDYgNTMuNzIwNEM0NjguOTEzIDUzLjMwMjkgNDY5LjYzOSA1My4wOTIxIDQ3MC4zNzUgNTMuMTE5M0M0NzEuMjc3IDUzLjE0MzggNDcyLjE1NyA1My40MDE4IDQ3Mi45MjkgNTMuODY4MUM0NzMuNzAxIDU0LjMzNDUgNDc0LjMzOSA1NC45OTMyIDQ3NC43OCA1NS43Nzk4TDQ3Ny45OTIgNTMuMzA2NUM0NzcuMjcyIDUxLjk4NjEgNDc2LjIxIDUwLjg4MzUgNDc0LjkxOCA1MC4xMTM5QzQ3My41NDEgNDkuMzEwNyA0NzEuOTY5IDQ4LjkwNDggNDcwLjM3NSA0OC45NDEzQzQ2OC4zOSA0OC44NjUzIDQ2Ni40NDQgNDkuNTAxNCA0NjQuODg3IDUwLjczNDdDNDY0LjE4NCA1MS4zMDM2IDQ2My42MjIgNTIuMDI3NiA0NjMuMjQ2IDUyLjg0OTlDNDYyLjg3IDUzLjY3MjIgNDYyLjY5IDU0LjU3MDUgNDYyLjcxOSA1NS40NzQzQzQ2Mi43MTkgNTguMjUzMSA0NjQuNTgxIDYwLjQ2NjkgNDY4LjMwNiA2Mi4xMTU3TDQ3MC43ODkgNjMuMjM5MUM0NzEuNjI4IDYzLjU3ODIgNDcyLjQxNiA2NC4wMjkgNDczLjEzNCA2NC41NzkyQzQ3My4zMzMgNjQuNzgwMiA0NzMuNDg1IDY1LjAyMTUgNDczLjU4MiA2NS4yODY3QzQ3My42NzkgNjUuNTUxOSA0NzMuNzE4IDY1LjgzNDkgNDczLjY5NiA2Ni4xMTY0QzQ3My43MTIgNjYuNDczNiA0NzMuNjQxIDY2LjgyOTMgNDczLjQ5IDY3LjE1MzVDNDczLjMzOSA2Ny40Nzc3IDQ3My4xMTIgNjcuNzYwNyA0NzIuODI5IDY3Ljk3ODdDNDcyLjEyNSA2OC40NzUzIDQ3MS4yNzQgNjguNzE4NCA0NzAuNDE1IDY4LjY2ODVDNDY4LjI2NyA2OC42Njg1IDQ2Ni4zODUgNjcuNTQ1MiA0NjQuNzQ5IDY1LjMwODRMNDYxLjQ5NyA2Ny43NTIxQzQ2Mi4zNzEgNjkuMzA1NSA0NjMuNjQzIDcwLjU5NzkgNDY1LjE4MiA3MS40OTY1TDQ2NS4yMTIgNzEuNDc2OFpNNDUyLjYwOSA3Mi40NjIyVjQ5LjM2NUg0NDcuODg5VjcyLjQ2MjJINDUyLjYwOVpNNDI4LjczMyA2Mi45NTMzTDQyMi42OTMgNDguOTcwOUg0MjEuMTE3TDQxNS4wNjYgNjMuMDIyM0w0MDkuOTMzIDQ5LjM2NUg0MDQuNzJMNDEzLjk1MyA3Mi44NTYzSDQxNS40OUw0MjEuOTY0IDU4LjM5MUw0MjguMzY5IDcyLjg3Nkg0MjkuOTA2TDQzOS4xMTkgNDkuMzY1SDQzMy44NzdMNDI4LjczMyA2Mi45MzM2VjYyLjk1MzNaTTM5MC42OTggNzIuNDYyMlY1My42NTE0SDM5OC4xMDhWNDkuMzY1SDM3OC42MDdWNTMuNjMxN0gzODUuOTk4VjcyLjQ2MjJIMzkwLjY5OFpNMzUyLjU3NCA2OS40MzcxQzM1My43MTUgNzAuNTc5NSAzNTUuMDc5IDcxLjQ3NDUgMzU2LjU4MSA3Mi4wNjYyQzM1OC4wODMgNzIuNjU3OSAzNTkuNjkxIDcyLjkzMzYgMzYxLjMwNCA3Mi44NzZDMzYzLjQwNiA3Mi45MDUzIDM2NS40NzkgNzIuMzgyIDM2Ny4zMTUgNzEuMzU4NUMzNjkuMDc5IDcwLjM3NDUgMzcwLjUzMyA2OC45MTcyIDM3MS41MTMgNjcuMTUxTDM2Ny45NDYgNjQuNjI4NEMzNjcuMjk0IDY1LjgwMzUgMzY2LjM0IDY2Ljc4MyAzNjUuMTgzIDY3LjQ2NTZDMzY0LjAyNiA2OC4xNDgyIDM2Mi43MDcgNjguNTA5IDM2MS4zNjMgNjguNTEwOEMzNjAuMzc2IDY4LjU0MDMgMzU5LjM5MiA2OC4zNjU2IDM1OC40NzUgNjcuOTk3N0MzNTcuNTU4IDY3LjYyOTggMzU2LjcyNiA2Ny4wNzY1IDM1Ni4wMzMgNjYuMzcyNkMzNTUuMzMyIDY1LjY2MTMgMzU0Ljc4NCA2NC44MTQ4IDM1NC40MjEgNjMuODg0N0MzNTQuMDU5IDYyLjk1NDcgMzUzLjg5IDYxLjk2MDUgMzUzLjkyNCA2MC45NjI5QzM1My44OTIgNTkuOTU4IDM1NC4wNjEgNTguOTU3IDM1NC40MjQgNTguMDE5MkMzNTQuNzg2IDU3LjA4MTQgMzU1LjMzMyA1Ni4yMjYgMzU2LjAzMyA1NS41MDM5QzM1Ni43MTkgNTQuNzg2OCAzNTcuNTQ4IDU0LjIyMSAzNTguNDY2IDUzLjg0MjZDMzU5LjM4NCA1My40NjQzIDM2MC4zNzEgNTMuMjgxNyAzNjEuMzYzIDUzLjMwNjVDMzYyLjcxMyA1My4zMTQxIDM2NC4wMzYgNTMuNjgzOSAzNjUuMTk0IDU0LjM3NzJDMzY2LjM1MSA1NS4wNzA1IDM2Ny4zMDIgNTYuMDYyIDM2Ny45NDYgNTcuMjQ4TDM3MS41MTMgNTQuNzM1M0MzNzAuNTE2IDUyLjk1OCAzNjkuMDUxIDUxLjQ4ODkgMzY3LjI3NiA1MC40ODgzQzM2NS40NzIgNDkuNDczOCAzNjMuNDMzIDQ4Ljk1MDUgMzYxLjM2MyA0OC45NzA5QzM1OS43NTUgNDguOTE2MiAzNTguMTUyIDQ5LjE5MzMgMzU2LjY1NSA0OS43ODVDMzU1LjE1OCA1MC4zNzY2IDM1My43OTkgNTEuMjcwMSAzNTIuNjYzIDUyLjQwOThDMzUxLjUyNyA1My41MTU5IDM1MC42MjMgNTQuODM3NSAzNTAuMDA0IDU2LjI5NzJDMzQ5LjM4NCA1Ny43NTY5IDM0OS4wNjMgNTkuMzI1NSAzNDkuMDU3IDYwLjkxMUMzNDkuMDUyIDYyLjQ5NjYgMzQ5LjM2MyA2NC4wNjczIDM0OS45NzEgNjUuNTMxM0MzNTAuNTggNjYuOTk1MyAzNTEuNDc1IDY4LjMyMzEgMzUyLjYwMyA2OS40MzcxSDM1Mi41NzRaTTM0MS41NDggNzIuNDYyMlY2OC4xOTU1SDMzMC4zMjRWNjIuMzUyMkgzMzguMjY2VjU4LjMzMTlIMzMwLjMyNFY1My42NTE0SDM0MS4xNjNWNDkuMzY1SDMyNS42MDRWNzIuNDYyMkgzNDEuNTQ4Wk0zMTAuMzYxIDYzLjE2MDJMMjk2Ljk3OSA0OC45NzA5SDI5NS40NDJWNzIuNDYyMkgzMDAuMTUyVjU4LjY2NjlMMzEzLjUxNCA3Mi45MjUzSDMxNS4wNTFWNDkuMzY1SDMxMC4zMzFWNjMuMTYwMkgzMTAuMzYxWk0yODAuMTk4IDYzLjE2MDJMMjY2Ljc2OCA0OC45NzA5SDI2NS4yM1Y3Mi40NjIySDI2OS45NVY1OC42NjY5TDI4My4zMDIgNzIuOTI1M0gyODQuODc5VjQ5LjM2NUgyODAuMTU5VjYzLjE2MDJIMjgwLjE5OFpNMjQ5LjAzMSA2Ni4zNzI2QzI0Ny42MDcgNjcuNzQ1MyAyNDUuNzA3IDY4LjUxMjQgMjQzLjczIDY4LjUxMjRDMjQxLjc1MiA2OC41MTI0IDIzOS44NTIgNjcuNzQ1MyAyMzguNDI4IDY2LjM3MjZDMjM3LjA3NyA2NC44Nzk1IDIzNi4zMjggNjIuOTM3NCAyMzYuMzI4IDYwLjkyMzRDMjM2LjMyOCA1OC45MDk1IDIzNy4wNzcgNTYuOTY3NCAyMzguNDI4IDU1LjQ3NDNDMjM5Ljg1IDU0LjA5OTMgMjQxLjc1MSA1My4zMzA2IDI0My43MyA1My4zMzA2QzI0NS43MDggNTMuMzMwNiAyNDcuNjA5IDU0LjA5OTMgMjQ5LjAzMSA1NS40NzQzQzI1MC4zOTQgNTYuOTU5NiAyNTEuMTUxIDU4LjkwMjMgMjUxLjE1MSA2MC45MTg1QzI1MS4xNTEgNjIuOTM0NyAyNTAuMzk0IDY0Ljg3NzUgMjQ5LjAzMSA2Ni4zNjI3VjY2LjM3MjZaTTIzNS4wNDggNjkuNDE3NEMyMzYuMTczIDcwLjU2MDIgMjM3LjUyMyA3MS40NTc2IDIzOS4wMTIgNzIuMDUyOEMyNDAuNTAxIDcyLjY0ODEgMjQyLjA5NyA3Mi45Mjg0IDI0My43IDcyLjg3NkMyNDUuMzA4IDcyLjkyNjcgMjQ2LjkxIDcyLjY0NTggMjQ4LjQwNSA3Mi4wNTA4QzI0OS45MDEgNzEuNDU1OCAyNTEuMjU3IDcwLjU1OTQgMjUyLjM5MSA2OS40MTc0QzI1My41MjkgNjguMzE0OSAyNTQuNDM0IDY2Ljk5NDkgMjU1LjA1MyA2NS41MzU4QzI1NS42NzEgNjQuMDc2NiAyNTUuOTg5IDYyLjUwODEgMjU1Ljk4OSA2MC45MjM0QzI1NS45ODkgNTkuMzM4OCAyNTUuNjcxIDU3Ljc3MDMgMjU1LjA1MyA1Ni4zMTExQzI1NC40MzQgNTQuODUyIDI1My41MjkgNTMuNTMyIDI1Mi4zOTEgNTIuNDI5NUMyNTEuMjU3IDUxLjI4NzUgMjQ5LjkwMSA1MC4zOTExIDI0OC40MDUgNDkuNzk2MUMyNDYuOTEgNDkuMjAxIDI0NS4zMDggNDguOTIwMSAyNDMuNyA0OC45NzA5QzI0Mi4wOTcgNDguOTE4NSAyNDAuNTAxIDQ5LjE5ODggMjM5LjAxMiA0OS43OTRDMjM3LjUyMyA1MC4zODkzIDIzNi4xNzMgNTEuMjg2NyAyMzUuMDQ4IDUyLjQyOTVDMjMzLjkxIDUzLjUzMiAyMzMuMDA1IDU0Ljg1MiAyMzIuMzg3IDU2LjMxMTFDMjMxLjc2OSA1Ny43NzAzIDIzMS40NSA1OS4zMzg4IDIzMS40NSA2MC45MjM0QzIzMS40NSA2Mi41MDgxIDIzMS43NjkgNjQuMDc2NiAyMzIuMzg3IDY1LjUzNThDMjMzLjAwNSA2Ni45OTQ5IDIzMy45MSA2OC4zMTQ5IDIzNS4wNDggNjkuNDE3NFpNMjA0Ljc3OCA2OS40MTc0QzIwNS45MjEgNzAuNTcxNSAyMDcuMjkyIDcxLjQ3NTEgMjA4LjgwNCA3Mi4wNzA1QzIxMC4zMTUgNzIuNjY2IDIxMS45MzQgNzIuOTQwMyAyMTMuNTU3IDcyLjg3NkMyMTUuNjYgNzIuOTA2NyAyMTcuNzMzIDcyLjM4MzMgMjE5LjU2OCA3MS4zNTg1QzIyMS4zMzIgNzAuMzc0NSAyMjIuNzg2IDY4LjkxNzIgMjIzLjc2NiA2Ny4xNTFMMjIwLjE5OSA2NC42Mjg0QzIxOS41NDYgNjUuODA3MSAyMTguNTkgNjYuNzg5MSAyMTcuNDI4IDY3LjQ3MTlDMjE2LjI2NyA2OC4xNTQ4IDIxNC45NDQgNjguNTEzNiAyMTMuNTk3IDY4LjUxMDhDMjEyLjYwOSA2OC41NDE1IDIxMS42MjUgNjguMzY3MyAyMTAuNzA4IDY3Ljk5OTRDMjA5Ljc5IDY3LjYzMTQgMjA4Ljk1OSA2Ny4wNzc1IDIwOC4yNjYgNjYuMzcyNkMyMDcuNTYyIDY1LjY2MzEgMjA3LjAxMSA2NC44MTcyIDIwNi42NDcgNjMuODg2OEMyMDYuMjgzIDYyLjk1NjUgMjA2LjExMyA2MS45NjE0IDIwNi4xNDcgNjAuOTYyOUMyMDYuMTE1IDU5Ljk1NzEgMjA2LjI4NSA1OC45NTUyIDIwNi42NDkgNTguMDE3MUMyMDcuMDE0IDU3LjA3OSAyMDcuNTYzIDU2LjIyNDIgMjA4LjI2NiA1NS41MDM5QzIwOC45NDcgNTQuNzkwOCAyMDkuNzcgNTQuMjI3MiAyMTAuNjgxIDUzLjg0OUMyMTEuNTkyIDUzLjQ3MDcgMjEyLjU3MSA1My4yODYgMjEzLjU1NyA1My4zMDY1QzIxNC45MDUgNTMuMzAzNyAyMTYuMjI4IDUzLjY2MjUgMjE3LjM4OSA1NC4zNDU0QzIxOC41NSA1NS4wMjgzIDIxOS41MDcgNTYuMDEwMiAyMjAuMTU5IDU3LjE4ODlMMjIzLjcyNiA1NC42NzYyQzIyMi43MzQgNTIuOTEwMyAyMjEuMjc1IDUxLjQ1MTMgMjE5LjUwOSA1MC40NTg4QzIxNy4xNjkgNDkuMjAyOCAyMTQuNDkxIDQ4LjcxNzEgMjExLjg1OSA0OS4wNzA5QzIwOS4yMjYgNDkuNDI0OCAyMDYuNzczIDUwLjYwMDEgMjA0Ljg0NyA1Mi40Mjk1QzIwMy43MTMgNTMuNTM3IDIwMi44MSA1NC44NTkzIDIwMi4xOTMgNTYuMzE5M0MyMDEuNTc1IDU3Ljc3OTMgMjAxLjI1NSA1OS4zNDc2IDIwMS4yNTEgNjAuOTMyOEMyMDEuMjQ2IDYyLjUxOCAyMDEuNTU3IDY0LjA4ODIgMjAyLjE2NiA2NS41NTE3QzIwMi43NzUgNjcuMDE1MyAyMDMuNjcgNjguMzQyOCAyMDQuNzk3IDY5LjQ1NjhMMjA0Ljc3OCA2OS40MTc0Wk0xMzMuODExIDQyLjI1MDZDMTI0LjU1OCAzNy4wNDk2IDExNC4xMjEgMzQuMzE3NyAxMDMuNTA2IDM0LjMxNzdDOTIuODkwOSAzNC4zMTc3IDgyLjQ1NDUgMzcuMDQ5NiA3My4yMDA4IDQyLjI1MDZDNzcuMDA3MSA0Ni4wNjE0IDgwLjQ5MDkgNTAuMTgxMiA4My42MTYyIDU0LjU2NzhDODguMTM1OSA2MC45MDc0IDkxLjk4MzEgNjcuNzAwNCA5NS4wOTU4IDc0LjgzNjlMMTAzLjUwMSA2MS4xMTA3TDExMS45MTYgNzQuODM2OUMxMTUuMDI5IDY3LjcwMDQgMTE4Ljg3NiA2MC45MDc0IDEyMy4zOTYgNTQuNTY3OEMxMjYuNTIxIDUwLjE4MTIgMTMwLjAwNSA0Ni4wNjE0IDEzMy44MTEgNDIuMjUwNlpNMTc2LjAzNCAyNy4zODEzQzE2NS4wNjEgMjkuNTExMiAxNTQuNzY4IDM0LjI3MjEgMTQ2LjA0IDQxLjI1NTRDMTQ0LjA2OSA0Mi44MzIgMTQyLjEzMSA0NC41MzAxIDE0MC4yMjYgNDYuMzQ5OEMxMzYuMzI5IDUwLjE1MjYgMTMyLjc3NyA1NC4yOTQzIDEyOS42MTMgNTguNzI2MUMxMjQuMDE2IDY2LjQ3MTMgMTE5LjU2IDc0Ljk3OTcgMTE2LjM4IDgzLjk5MUMxMTYuMTcgODQuNjYyNiAxMTUuNzc1IDg1LjI2MTMgMTE1LjI0IDg1LjcxOEMxMTQuNzA0IDg2LjE3NDggMTE0LjA1MSA4Ni40NzExIDExMy4zNTUgODYuNTcyN0MxMTMuMTc0IDg2LjU4NyAxMTIuOTkzIDg2LjU4NyAxMTIuODEzIDg2LjU3MjdDMTEyLjE5OSA4Ni41NzMgMTExLjU5NSA4Ni40MjIxIDExMS4wNTQgODYuMTMzNEMxMTAuNTEyIDg1Ljg0NDYgMTEwLjA1MSA4NS40MjcgMTA5LjcwOSA4NC45MTczTDEwMy41MDEgNzUuNjk0Mkw5Ny4yODM0IDg0Ljk1NjdDOTYuOTQxOCA4NS40NjY0IDk2LjQ3OTkgODUuODg0IDk1LjkzODUgODYuMTcyOEM5NS4zOTcxIDg2LjQ2MTUgOTQuNzkzIDg2LjYxMjQgOTQuMTc5NCA4Ni42MTIxQzkzLjk5OTEgODYuNjI2OCA5My44MTc4IDg2LjYyNjggOTMuNjM3NSA4Ni42MTIxQzkyLjkzODcgODYuNTEwMyA5Mi4yODMgODYuMjEyOSA5MS43NDYgODUuNzU0NEM5MS4yMDkgODUuMjk1OCA5MC44MTI2IDg0LjY5NDggOTAuNjAyNSA4NC4wMjA2Qzg3LjQzODcgNzQuOTk2OSA4Mi45ODgxIDY2LjQ3NzQgNzcuMzg4NyA1OC43MjYxQzc0LjIyMTkgNTQuMjYwOSA3MC42NTY3IDUwLjA5MjEgNjYuNzM2OCA0Ni4yNzA5QzY2LjMwMzIgNDUuODU3MSA2NS44Njk3IDQ1LjQ0MzIgNjUuNDI2MiA0NS4wMzkyQzY0LjAwMDcgNDMuNzI1NCA2Mi41NDI0IDQyLjQ4MDUgNjEuMDUxMiA0MS4zMDQ3QzUyLjMwNDggMzQuMjkyMyA0MS45ODMzIDI5LjUxMzcgMzAuOTc3NiAyNy4zODEzQzMwLjA0MjQgMjcuMTUyMyAyOS4yMzE0IDI2LjU3MTggMjguNzEzMSAyNS43NjA0QzI4LjE5NDcgMjQuOTQ5IDI4LjAwODggMjMuOTY5MiAyOC4xOTM5IDIzLjAyNDNDMjguMzc5MSAyMi4wNzk1IDI4LjkyMTEgMjEuMjQyMyAyOS43MDc0IDIwLjY4NjZDMzAuNDkzNyAyMC4xMzA5IDMxLjQ2MzggMTkuODk5NCAzMi40MTYyIDIwLjA0MDNDNDUuMzA4NyAyMi42MDg2IDU3LjMzNjEgMjguNDEzOCA2Ny4zNjc0IDM2LjkwOTlDNzguMjU1IDMwLjI3OCA5MC43NTc2IDI2Ljc3IDEwMy41MDYgMjYuNzdDMTE2LjI1NCAyNi43NyAxMjguNzU3IDMwLjI3OCAxMzkuNjQ1IDM2LjkwOTlDMTQ5LjY3NiAyOC40MTM4IDE2MS43MDMgMjIuNjA4NiAxNzQuNTk2IDIwLjA0MDNDMTc1LjU0OCAxOS44OTk0IDE3Ni41MTggMjAuMTMwOSAxNzcuMzA1IDIwLjY4NjZDMTc4LjA5MSAyMS4yNDIzIDE3OC42MzMgMjIuMDc5NSAxNzguODE4IDIzLjAyNDNDMTc5LjAwMyAyMy45NjkyIDE3OC44MTcgMjQuOTQ5IDE3OC4yOTkgMjUuNzYwNEMxNzcuNzgxIDI2LjU3MTggMTc2Ljk3IDI3LjE1MjMgMTc2LjAzNCAyNy4zODEzWk01Ni4yMjI5IDQ1LjIwNjdDNDMuMTg5MyA1Ny4xMTgxIDM0LjcxMjIgNzMuMTk3OCAzMi4yNDg3IDkwLjY4MTdDMzIuMTc5NSA5MS4xNzQ3IDMyLjIwOCA5MS42NzY2IDMyLjMzMjcgOTIuMTU4NUMzMi40NTc1IDkyLjY0MDUgMzIuNjc1OSA5My4wOTMyIDMyLjk3NTUgOTMuNDkwOEMzMy4yNzUyIDkzLjg4ODQgMzMuNjUwMiA5NC4yMjMgMzQuMDc5MiA5NC40NzU2QzM0LjUwODIgOTQuNzI4MyAzNC45ODI4IDk0Ljg5MzkgMzUuNDc1OCA5NC45NjMyQzM1Ljk2ODggOTUuMDMyNCAzNi40NzA3IDk1LjAwMzggMzYuOTUyNiA5NC44NzkxQzM3LjQzNDYgOTQuNzU0NCAzNy44ODczIDk0LjUzNiAzOC4yODQ5IDk0LjIzNjNDMzguNjgyNSA5My45MzY3IDM5LjAxNzEgOTMuNTYxNiAzOS4yNjk3IDkzLjEzMjZDMzkuNTIyNCA5Mi43MDM2IDM5LjY4OCA5Mi4yMjkxIDM5Ljc1NzMgOTEuNzM2MUM0MS45NjI4IDc2LjAwMDYgNDkuNTc5IDYxLjUyNDMgNjEuMjk3NSA1MC43OTM4QzYxLjk5NzEgNTAuMTUzMyA2Mi43MTY1IDQ5LjUzMjUgNjMuNDM1OCA0OC45MzE0QzYxLjU4NzIgNDcuMTkwNSA1OS42NSA0NS41NDYgNTcuNjMxOSA0NC4wMDQ2QzU3LjE1OSA0NC40MDg2IDU2LjY0NjYgNDQuODIyNCA1Ni4yMjI5IDQ1LjI0NjFWNDUuMjA2N1pNMTc0LjczNCA5MC42ODE3QzE3NC44NzQgOTEuNjcyMSAxNzQuNjE2IDkyLjY3NzggMTc0LjAxNiA5My40Nzc5QzE3My40MTUgOTQuMjc3OSAxNzIuNTIyIDk0LjgwNjggMTcxLjUzMSA5NC45NDg0QzE3MS4zNTEgOTQuOTYyNyAxNzEuMTcgOTQuOTYyNyAxNzAuOTg5IDk0Ljk0ODRDMTcwLjA4NCA5NC45NTE0IDE2OS4yMDcgOTQuNjI4NSAxNjguNTIgOTQuMDM4OEMxNjcuODMyIDkzLjQ0OSAxNjcuMzggOTIuNjMxNyAxNjcuMjQ1IDkxLjczNjFDMTY1LjAzOSA3Ni4wMDA2IDE1Ny40MjMgNjEuNTI0MyAxNDUuNzA1IDUwLjc5MzhDMTQ0Ljk5NSA1MC4xNTMzIDE0NC4yODYgNDkuNTMyNSAxNDMuNTU3IDQ4LjkzMTRDMTQ1LjQwNSA0Ny4xOTAxIDE0Ny4zNDIgNDUuNTQ1NiAxNDkuMzYgNDQuMDA0NkMxNDkuODQzIDQ0LjQwODYgMTUwLjM0NiA0NC44MjI0IDE1MC43NzkgNDUuMjQ2MUMxNjMuODAyIDU3LjE2MiAxNzIuMjY4IDczLjI0MTIgMTc0LjcyNCA5MC43MjExTDE3NC43MzQgOTAuNjgxN1oiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xODEuODY5IDIxLjc2NDhIMTgwLjcyNlYyMS4yNzIxSDE4My41NTRWMjEuNzY0OEgxODIuNDExVjI0LjY3MTZIMTgxLjg2OVYyMS43NjQ4WiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTE4Ny4yODYgMjEuMjEyOVYyNC42NzE1SDE4Ni43NDRWMjIuNTMzM0wxODUuNzY4IDIzLjgxNDNIMTg1LjU5MUwxODQuNjE1IDIyLjUzMzNWMjQuNjcxNUgxODQuMDYzVjIxLjIxMjlIMTg0LjI1MUwxODUuNjc5IDIzLjExNDdMMTg3LjEwOCAyMS4yMTI5SDE4Ny4yODZaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNNTA4LjY1NiA0NS42ODg4SDUwOS4wMUM1MDkuMDQ4IDQ1LjY5MTUgNTA5LjA4NiA0NS42ODY0IDUwOS4xMjIgNDUuNjczN0M1MDkuMTU4IDQ1LjY2MTEgNTA5LjE5MSA0NS42NDEyIDUwOS4yMTggNDUuNjE1M0M1MDkuMjQ2IDQ1LjU4OTQgNTA5LjI2OCA0NS41NTggNTA5LjI4MyA0NS41MjMyQzUwOS4yOTggNDUuNDg4NCA1MDkuMzA2IDQ1LjQ1MDggNTA5LjMwNiA0NS40MTI5QzUwOS4zMDcgNDUuMzczNyA1MDkuMzAxIDQ1LjMzNDYgNTA5LjI4NiA0NS4yOTgxQzUwOS4yNzIgNDUuMjYxNiA1MDkuMjUgNDUuMjI4NSA1MDkuMjIzIDQ1LjIwMDhDNTA5LjE5NSA0NS4xNzMgNTA5LjE2MiA0NS4xNTEzIDUwOS4xMjUgNDUuMTM3QzUwOS4wODkgNDUuMTIyNiA1MDkuMDUgNDUuMTE1OSA1MDkuMDEgNDUuMTE3M0g1MDguNjU2VjQ1LjY4ODhaTTUxMC4wNTUgNDYuODMxOEg1MDkuNTAzTDUwOC45NjEgNDYuMTEyNUg1MDguNjU2VjQ2LjgzMThINTA4LjE2M1Y0NC42ODM3SDUwOS4wMkM1MDkuMTIgNDQuNjc0IDUwOS4yMjEgNDQuNjg1NSA1MDkuMzE3IDQ0LjcxNzNDNTA5LjQxMiA0NC43NDkxIDUwOS41IDQ0LjgwMDYgNTA5LjU3NCA0NC44NjgzQzUwOS42NDggNDQuOTM2MSA1MDkuNzA4IDQ1LjAxODcgNTA5Ljc0OCA0NS4xMTA4QzUwOS43ODggNDUuMjAyOSA1MDkuODA5IDQ1LjMwMjUgNTA5LjgwOSA0NS40MDNDNTA5LjgxNSA0NS41MjU3IDUwOS43ODYgNDUuNjQ3NiA1MDkuNzI0IDQ1Ljc1NDJDNTA5LjY2MyA0NS44NjA4IDUwOS41NzMgNDUuOTQ3NSA1MDkuNDY0IDQ2LjAwNDFMNTEwLjA1NSA0Ni44MzE4VjQ2LjgzMThaTTUwOC45OTEgNDQuMDcyOEM1MDguNjU1IDQ0LjA2MjkgNTA4LjMyNCA0NC4xNTM2IDUwOC4wNDEgNDQuMzMzMUM1MDcuNzU3IDQ0LjUxMjcgNTA3LjUzMyA0NC43NzI5IDUwNy4zOTggNDUuMDgwM0M1MDcuMjY0IDQ1LjM4NzggNTA3LjIyNCA0NS43Mjg2IDUwNy4yODQgNDYuMDU4OUM1MDcuMzQ0IDQ2LjM4OTIgNTA3LjUwMSA0Ni42OTQgNTA3LjczNiA0Ni45MzQyQzUwNy45NzEgNDcuMTc0NCA1MDguMjcxIDQ3LjMzOTEgNTA4LjYgNDcuNDA3MUM1MDguOTI5IDQ3LjQ3NTEgNTA5LjI3MSA0Ny40NDMzIDUwOS41ODEgNDcuMzE1OEM1MDkuODkyIDQ3LjE4ODQgNTEwLjE1NyA0Ni45NzEgNTEwLjM0NCA0Ni42OTE2QzUxMC41MyA0Ni40MTIzIDUxMC42MjggNDYuMDgzNiA1MTAuNjI2IDQ1Ljc0NzlDNTEwLjYzMiA0NS41MzAxIDUxMC41OTQgNDUuMzEzNSA1MTAuNTE1IDQ1LjExMDZDNTEwLjQzNSA0NC45MDc3IDUxMC4zMTcgNDQuNzIyNSA1MTAuMTY2IDQ0LjU2NTdDNTEwLjAxNCA0NC40MDkgNTA5LjgzMyA0NC4yODM4IDUwOS42MzQgNDQuMTk3NUM1MDkuNDM0IDQ0LjExMTIgNTA5LjIxOCA0NC4wNjU1IDUwOS4wMDEgNDQuMDYyOUw1MDguOTkxIDQ0LjA3MjhaTTUwOC45OTEgNDcuODc2M0M1MDguNDU1IDQ3LjgzOTcgNTA3Ljk1MyA0Ny42MDExIDUwNy41ODcgNDcuMjA4OEM1MDcuMjIgNDYuODE2NCA1MDcuMDE3IDQ2LjI5OTYgNTA3LjAxNyA0NS43NjI3QzUwNy4wMTcgNDUuMjI1OCA1MDcuMjIgNDQuNzA4OSA1MDcuNTg3IDQ0LjMxNjZDNTA3Ljk1MyA0My45MjQyIDUwOC40NTUgNDMuNjg1NiA1MDguOTkxIDQzLjY0OUM1MDkuNTI2IDQzLjY4NTYgNTEwLjAyOCA0My45MjQyIDUxMC4zOTUgNDQuMzE2NkM1MTAuNzYxIDQ0LjcwODkgNTEwLjk2NSA0NS4yMjU4IDUxMC45NjUgNDUuNzYyN0M1MTAuOTY1IDQ2LjI5OTYgNTEwLjc2MSA0Ni44MTY0IDUxMC4zOTUgNDcuMjA4OEM1MTAuMDI4IDQ3LjYwMTEgNTA5LjUyNiA0Ny44Mzk3IDUwOC45OTEgNDcuODc2M1Y0Ny44NzYzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" /&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                          &lt;table border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;h1 style="
+                                      margin: 0;
+                                      color: #555555;
+                                      font-size: 23px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      line-height: 120%;
+                                      text-align: center;
+                                      direction: ltr;
+                                      font-weight: 700;
+                                      letter-spacing: normal;
+                                      margin-top: 0;
+                                      margin-bottom: 0;
+                                    "&gt;
+                              &lt;span class="tinyMce-placeholder"&gt;An administrative logon request has been initiated
+                                for {Session.Name}&lt;/span&gt;
+                            &lt;/h1&gt;
+                            &lt;tr&gt;
+                              &lt;td&gt;
+                                &lt;div align="center"&gt;
+                                  &lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="
+                                        mso-table-lspace: 0pt;
+                                        mso-table-rspace: 0pt;
+                                      " width="100%"&gt;
+                                    &lt;tr&gt;
+                                      &lt;td class="divider_inner" style="
+                                            font-size: 1px;
+                                            line-height: 1px;
+                                            border-top: 1px solid #bbbbbb;
+                                          "&gt;
+                                        &lt;span&gt; &lt;/span&gt;
+                                      &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                  &lt;/table&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-session-name" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Session:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.Name} ({Session.SessionID})
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-guest-logged-on-user" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    Guest Logged-on User:
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.GuestLoggedOnUserDomain}\{Session.GuestLoggedOnUserName}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-guest-machine" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Guest Machine:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.GuestMachineDomain}\{Session.GuestMachineName}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-connected-hosts" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Connected Host(s):&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.ConnectedParticipantNames}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-separator" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              padding-top: 5px;
+                              padding-bottom: 5px;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td&gt;
+                                &lt;div align="center"&gt;
+                                  &lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="
+                                        mso-table-lspace: 0pt;
+                                        mso-table-rspace: 0pt;
+                                      " width="100%"&gt;
+                                    &lt;tr&gt;
+                                      &lt;td class="divider_inner" style="
+                                            font-size: 1px;
+                                            line-height: 1px;
+                                            border-top: 1px solid #bbbbbb;
+                                          "&gt;
+                                        &lt;span&gt; &lt;/span&gt;
+                                      &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                  &lt;/table&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-reason" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Request Reason:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(Event.Data, 'Reason')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-button" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="button_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    text-align: right;
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div align="right"&gt;
+                                  &lt;!--[if mso]&gt;&lt;v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{$WEBSERVERADDRESSABLEURI}Host#Access///{Session.SessionID}/Select/AccessManagement" style="height:42px;width:280px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#026CCF"&gt;&lt;w:anchorlock/&gt;&lt;v:textbox inset="0px,0px,0px,0px"&gt;&lt;center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px"&gt;&lt;!
+                                    [endif]--&gt;&lt;a
+                                    href="{$WEBSERVERADDRESSABLEURI}Host#Access///{Session.SessionID}/Select/AccessManagement"
+                                    style="
+                                        text-decoration: none;
+                                        display: block;
+                                        color: #ffffff;
+                                        background-color: #026CCF;
+                                        border-radius: 4px;
+                                        width: 100%;
+                                        width: calc(100% - 2px);
+                                        border-top: 1px solid #026CCF;
+                                        font-weight: 400;
+                                        border-right: 1px solid #026CCF;
+                                        border-bottom: 1px solid #026CCF;
+                                        border-left: 1px solid #026CCF;
+                                        padding-top: 5px;
+                                        padding-bottom: 5px;
+                                        font-family: Arial, Helvetica Neue,
+                                          Helvetica, sans-serif;
+                                        text-align: center;
+                                        mso-border-alt: none;
+                                        word-break: keep-all;
+                                      " target="_blank"&gt;&lt;span style="
+                                          padding-left: 5px;
+                                          padding-right: 5px;
+                                          font-size: 16px;
+                                          display: inline-block;
+                                          letter-spacing: normal;
+                                        "&gt;&lt;span dir="ltr" style="
+                                            font-size: 16px;
+                                            line-height: 2;
+                                            word-break: break-word;
+                                            mso-line-height-alt: 32px;
+                                          "&gt;Review Request&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+                                  &lt;!--[if mso]&gt;&lt;/center&gt;&lt;/v:textbox&gt;&lt;/v:roundrect&gt;&lt;![endif]--&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-link" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              padding-top: 5px;
+                              padding-bottom: 5px;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="10" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0; margin-bottom: 16px"&gt;
+                                    Or view more details here:
+                                  &lt;/p&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {$WEBSERVERADDRESSABLEURI}Host#Access///{Session.SessionID}/Select/AccessManagement
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;!-- End --&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+  <SessionEventTrigger Name="Notify when an elevation request is sent" IsDisabled="false" EventFilter="Event.EventType = 'RequestedElevation'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" From="" To="" Subject="[SC] '{Session.Name}' has requested elevation" IsBodyHtml="true">
+        <Body>&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml"&gt;
+
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="Content-Type" /&gt;
+  &lt;meta content="width=device-width, initial-scale=1.0" name="viewport" /&gt;
+  &lt;!--[if mso
+      ]&gt;&lt;xml
+        &gt;&lt;o:OfficeDocumentSettings
+          &gt;&lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch
+          &gt;&lt;o:AllowPNG /&gt;&lt;/o:OfficeDocumentSettings&gt;&lt;/xml
+    &gt;&lt;![endif]--&gt;
+  &lt;style&gt;
+    * {{
+      box-sizing: border-box;
+    }}
+
+    body {{
+      margin: 0;
+      padding: 0;
+    }}
+
+    a[x-apple-data-detectors] {{
+      color: inherit !important;
+      text-decoration: inherit !important;
+    }}
+
+    #MessageViewBody a {{
+      color: inherit;
+      text-decoration: none;
+    }}
+
+    p {{
+      line-height: inherit;
+    }}
+
+    .desktop_hide,
+    .desktop_hide table {{
+      mso-hide: all;
+      display: none;
+      max-height: 0px;
+      overflow: hidden;
+    }}
+
+    @media (max-width: 620px) {{
+      .desktop_hide table.icons-inner {{
+        display: inline-block !important;
+      }}
+
+      .icons-inner {{
+        text-align: center;
+      }}
+
+      .icons-inner td {{
+        margin: 0 auto;
+      }}
+
+      .row-content {{
+        width: 100% !important;
+      }}
+
+      .column .border,
+      .mobile_hide {{
+        display: none;
+      }}
+
+      table {{
+        table-layout: fixed !important;
+      }}
+
+      .stack .column {{
+        width: 100%;
+        display: block;
+      }}
+
+      .mobile_hide {{
+        min-height: 0;
+        max-height: 0;
+        max-width: 0;
+        overflow: hidden;
+        font-size: 0px;
+      }}
+
+      .desktop_hide,
+      .desktop_hide table {{
+        display: table !important;
+        max-height: none !important;
+      }}
+    }}
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body style="
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
+    "&gt;
+  &lt;table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        background-color: #ffffff;
+      " width="100%"&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-title" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              padding-top: 5px;
+                              padding-bottom: 5px;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="heading_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="width: 100%; text-align: center"&gt;
+                                &lt;img style="width: 50%; float: left; margin: 15px 0;"
+                                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTM5IiBoZWlnaHQ9IjExNSIgdmlld0JveD0iMCAwIDUzOSAxMTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01MDMuODU4IDcyLjQ2MjJWNjguMTk1NUg0OTIuNjQ1VjYyLjM1MjJINTAwLjUyOFY1OC4zMzE5SDQ5Mi42NDVWNTMuNjUxNEg1MDMuNDg0VjQ5LjM2NUg0ODcuOTI1VjcyLjQ2MjJINTAzLjg1OFpNNDY1LjIxMiA3MS40NzY4QzQ2Ni44MDIgNzIuMzkzNCA0NjguNjEgNzIuODYzMiA0NzAuNDQ0IDcyLjgzNjZDNDcyLjU0NSA3Mi45MjMgNDc0LjYwNiA3Mi4yNDc2IDQ3Ni4yNDggNzAuOTM0OEM0NzYuOTg0IDcwLjMyNzQgNDc3LjU3MSA2OS41NTk1IDQ3Ny45NjMgNjguNjkwMUM0NzguMzU2IDY3LjgyMDcgNDc4LjU0NSA2Ni44NzI5IDQ3OC41MTUgNjUuOTE5M0M0NzguNTYgNjQuNTA3MSA0NzguMDc1IDYzLjEyOTEgNDc3LjE1NSA2Mi4wNTY2QzQ3NS45MjcgNjAuODAxNyA0NzQuNDUgNTkuODE4MSA0NzIuODE5IDU5LjE2OTVMNDcwLjE5OCA1OC4wMTY2QzQ2OS40MzMgNTcuNzExNyA0NjguNzE5IDU3LjI5MzEgNDY4LjA3OSA1Ni43NzVDNDY3Ljg4OCA1Ni41OTM2IDQ2Ny43MzcgNTYuMzcyOSA0NjcuNjM5IDU2LjEyOEM0NjcuNTQgNTUuODgzMSA0NjcuNDk1IDU1LjYxOTggNDY3LjUwOCA1NS4zNTYxQzQ2Ny41IDU1LjAzOTQgNDY3LjU2OCA1NC43MjUzIDQ2Ny43MDcgNTQuNDQwNkM0NjcuODQ2IDU0LjE1NTggNDY4LjA1MSA1My45MDg4IDQ2OC4zMDYgNTMuNzIwNEM0NjguOTEzIDUzLjMwMjkgNDY5LjYzOSA1My4wOTIxIDQ3MC4zNzUgNTMuMTE5M0M0NzEuMjc3IDUzLjE0MzggNDcyLjE1NyA1My40MDE4IDQ3Mi45MjkgNTMuODY4MUM0NzMuNzAxIDU0LjMzNDUgNDc0LjMzOSA1NC45OTMyIDQ3NC43OCA1NS43Nzk4TDQ3Ny45OTIgNTMuMzA2NUM0NzcuMjcyIDUxLjk4NjEgNDc2LjIxIDUwLjg4MzUgNDc0LjkxOCA1MC4xMTM5QzQ3My41NDEgNDkuMzEwNyA0NzEuOTY5IDQ4LjkwNDggNDcwLjM3NSA0OC45NDEzQzQ2OC4zOSA0OC44NjUzIDQ2Ni40NDQgNDkuNTAxNCA0NjQuODg3IDUwLjczNDdDNDY0LjE4NCA1MS4zMDM2IDQ2My42MjIgNTIuMDI3NiA0NjMuMjQ2IDUyLjg0OTlDNDYyLjg3IDUzLjY3MjIgNDYyLjY5IDU0LjU3MDUgNDYyLjcxOSA1NS40NzQzQzQ2Mi43MTkgNTguMjUzMSA0NjQuNTgxIDYwLjQ2NjkgNDY4LjMwNiA2Mi4xMTU3TDQ3MC43ODkgNjMuMjM5MUM0NzEuNjI4IDYzLjU3ODIgNDcyLjQxNiA2NC4wMjkgNDczLjEzNCA2NC41NzkyQzQ3My4zMzMgNjQuNzgwMiA0NzMuNDg1IDY1LjAyMTUgNDczLjU4MiA2NS4yODY3QzQ3My42NzkgNjUuNTUxOSA0NzMuNzE4IDY1LjgzNDkgNDczLjY5NiA2Ni4xMTY0QzQ3My43MTIgNjYuNDczNiA0NzMuNjQxIDY2LjgyOTMgNDczLjQ5IDY3LjE1MzVDNDczLjMzOSA2Ny40Nzc3IDQ3My4xMTIgNjcuNzYwNyA0NzIuODI5IDY3Ljk3ODdDNDcyLjEyNSA2OC40NzUzIDQ3MS4yNzQgNjguNzE4NCA0NzAuNDE1IDY4LjY2ODVDNDY4LjI2NyA2OC42Njg1IDQ2Ni4zODUgNjcuNTQ1MiA0NjQuNzQ5IDY1LjMwODRMNDYxLjQ5NyA2Ny43NTIxQzQ2Mi4zNzEgNjkuMzA1NSA0NjMuNjQzIDcwLjU5NzkgNDY1LjE4MiA3MS40OTY1TDQ2NS4yMTIgNzEuNDc2OFpNNDUyLjYwOSA3Mi40NjIyVjQ5LjM2NUg0NDcuODg5VjcyLjQ2MjJINDUyLjYwOVpNNDI4LjczMyA2Mi45NTMzTDQyMi42OTMgNDguOTcwOUg0MjEuMTE3TDQxNS4wNjYgNjMuMDIyM0w0MDkuOTMzIDQ5LjM2NUg0MDQuNzJMNDEzLjk1MyA3Mi44NTYzSDQxNS40OUw0MjEuOTY0IDU4LjM5MUw0MjguMzY5IDcyLjg3Nkg0MjkuOTA2TDQzOS4xMTkgNDkuMzY1SDQzMy44NzdMNDI4LjczMyA2Mi45MzM2VjYyLjk1MzNaTTM5MC42OTggNzIuNDYyMlY1My42NTE0SDM5OC4xMDhWNDkuMzY1SDM3OC42MDdWNTMuNjMxN0gzODUuOTk4VjcyLjQ2MjJIMzkwLjY5OFpNMzUyLjU3NCA2OS40MzcxQzM1My43MTUgNzAuNTc5NSAzNTUuMDc5IDcxLjQ3NDUgMzU2LjU4MSA3Mi4wNjYyQzM1OC4wODMgNzIuNjU3OSAzNTkuNjkxIDcyLjkzMzYgMzYxLjMwNCA3Mi44NzZDMzYzLjQwNiA3Mi45MDUzIDM2NS40NzkgNzIuMzgyIDM2Ny4zMTUgNzEuMzU4NUMzNjkuMDc5IDcwLjM3NDUgMzcwLjUzMyA2OC45MTcyIDM3MS41MTMgNjcuMTUxTDM2Ny45NDYgNjQuNjI4NEMzNjcuMjk0IDY1LjgwMzUgMzY2LjM0IDY2Ljc4MyAzNjUuMTgzIDY3LjQ2NTZDMzY0LjAyNiA2OC4xNDgyIDM2Mi43MDcgNjguNTA5IDM2MS4zNjMgNjguNTEwOEMzNjAuMzc2IDY4LjU0MDMgMzU5LjM5MiA2OC4zNjU2IDM1OC40NzUgNjcuOTk3N0MzNTcuNTU4IDY3LjYyOTggMzU2LjcyNiA2Ny4wNzY1IDM1Ni4wMzMgNjYuMzcyNkMzNTUuMzMyIDY1LjY2MTMgMzU0Ljc4NCA2NC44MTQ4IDM1NC40MjEgNjMuODg0N0MzNTQuMDU5IDYyLjk1NDcgMzUzLjg5IDYxLjk2MDUgMzUzLjkyNCA2MC45NjI5QzM1My44OTIgNTkuOTU4IDM1NC4wNjEgNTguOTU3IDM1NC40MjQgNTguMDE5MkMzNTQuNzg2IDU3LjA4MTQgMzU1LjMzMyA1Ni4yMjYgMzU2LjAzMyA1NS41MDM5QzM1Ni43MTkgNTQuNzg2OCAzNTcuNTQ4IDU0LjIyMSAzNTguNDY2IDUzLjg0MjZDMzU5LjM4NCA1My40NjQzIDM2MC4zNzEgNTMuMjgxNyAzNjEuMzYzIDUzLjMwNjVDMzYyLjcxMyA1My4zMTQxIDM2NC4wMzYgNTMuNjgzOSAzNjUuMTk0IDU0LjM3NzJDMzY2LjM1MSA1NS4wNzA1IDM2Ny4zMDIgNTYuMDYyIDM2Ny45NDYgNTcuMjQ4TDM3MS41MTMgNTQuNzM1M0MzNzAuNTE2IDUyLjk1OCAzNjkuMDUxIDUxLjQ4ODkgMzY3LjI3NiA1MC40ODgzQzM2NS40NzIgNDkuNDczOCAzNjMuNDMzIDQ4Ljk1MDUgMzYxLjM2MyA0OC45NzA5QzM1OS43NTUgNDguOTE2MiAzNTguMTUyIDQ5LjE5MzMgMzU2LjY1NSA0OS43ODVDMzU1LjE1OCA1MC4zNzY2IDM1My43OTkgNTEuMjcwMSAzNTIuNjYzIDUyLjQwOThDMzUxLjUyNyA1My41MTU5IDM1MC42MjMgNTQuODM3NSAzNTAuMDA0IDU2LjI5NzJDMzQ5LjM4NCA1Ny43NTY5IDM0OS4wNjMgNTkuMzI1NSAzNDkuMDU3IDYwLjkxMUMzNDkuMDUyIDYyLjQ5NjYgMzQ5LjM2MyA2NC4wNjczIDM0OS45NzEgNjUuNTMxM0MzNTAuNTggNjYuOTk1MyAzNTEuNDc1IDY4LjMyMzEgMzUyLjYwMyA2OS40MzcxSDM1Mi41NzRaTTM0MS41NDggNzIuNDYyMlY2OC4xOTU1SDMzMC4zMjRWNjIuMzUyMkgzMzguMjY2VjU4LjMzMTlIMzMwLjMyNFY1My42NTE0SDM0MS4xNjNWNDkuMzY1SDMyNS42MDRWNzIuNDYyMkgzNDEuNTQ4Wk0zMTAuMzYxIDYzLjE2MDJMMjk2Ljk3OSA0OC45NzA5SDI5NS40NDJWNzIuNDYyMkgzMDAuMTUyVjU4LjY2NjlMMzEzLjUxNCA3Mi45MjUzSDMxNS4wNTFWNDkuMzY1SDMxMC4zMzFWNjMuMTYwMkgzMTAuMzYxWk0yODAuMTk4IDYzLjE2MDJMMjY2Ljc2OCA0OC45NzA5SDI2NS4yM1Y3Mi40NjIySDI2OS45NVY1OC42NjY5TDI4My4zMDIgNzIuOTI1M0gyODQuODc5VjQ5LjM2NUgyODAuMTU5VjYzLjE2MDJIMjgwLjE5OFpNMjQ5LjAzMSA2Ni4zNzI2QzI0Ny42MDcgNjcuNzQ1MyAyNDUuNzA3IDY4LjUxMjQgMjQzLjczIDY4LjUxMjRDMjQxLjc1MiA2OC41MTI0IDIzOS44NTIgNjcuNzQ1MyAyMzguNDI4IDY2LjM3MjZDMjM3LjA3NyA2NC44Nzk1IDIzNi4zMjggNjIuOTM3NCAyMzYuMzI4IDYwLjkyMzRDMjM2LjMyOCA1OC45MDk1IDIzNy4wNzcgNTYuOTY3NCAyMzguNDI4IDU1LjQ3NDNDMjM5Ljg1IDU0LjA5OTMgMjQxLjc1MSA1My4zMzA2IDI0My43MyA1My4zMzA2QzI0NS43MDggNTMuMzMwNiAyNDcuNjA5IDU0LjA5OTMgMjQ5LjAzMSA1NS40NzQzQzI1MC4zOTQgNTYuOTU5NiAyNTEuMTUxIDU4LjkwMjMgMjUxLjE1MSA2MC45MTg1QzI1MS4xNTEgNjIuOTM0NyAyNTAuMzk0IDY0Ljg3NzUgMjQ5LjAzMSA2Ni4zNjI3VjY2LjM3MjZaTTIzNS4wNDggNjkuNDE3NEMyMzYuMTczIDcwLjU2MDIgMjM3LjUyMyA3MS40NTc2IDIzOS4wMTIgNzIuMDUyOEMyNDAuNTAxIDcyLjY0ODEgMjQyLjA5NyA3Mi45Mjg0IDI0My43IDcyLjg3NkMyNDUuMzA4IDcyLjkyNjcgMjQ2LjkxIDcyLjY0NTggMjQ4LjQwNSA3Mi4wNTA4QzI0OS45MDEgNzEuNDU1OCAyNTEuMjU3IDcwLjU1OTQgMjUyLjM5MSA2OS40MTc0QzI1My41MjkgNjguMzE0OSAyNTQuNDM0IDY2Ljk5NDkgMjU1LjA1MyA2NS41MzU4QzI1NS42NzEgNjQuMDc2NiAyNTUuOTg5IDYyLjUwODEgMjU1Ljk4OSA2MC45MjM0QzI1NS45ODkgNTkuMzM4OCAyNTUuNjcxIDU3Ljc3MDMgMjU1LjA1MyA1Ni4zMTExQzI1NC40MzQgNTQuODUyIDI1My41MjkgNTMuNTMyIDI1Mi4zOTEgNTIuNDI5NUMyNTEuMjU3IDUxLjI4NzUgMjQ5LjkwMSA1MC4zOTExIDI0OC40MDUgNDkuNzk2MUMyNDYuOTEgNDkuMjAxIDI0NS4zMDggNDguOTIwMSAyNDMuNyA0OC45NzA5QzI0Mi4wOTcgNDguOTE4NSAyNDAuNTAxIDQ5LjE5ODggMjM5LjAxMiA0OS43OTRDMjM3LjUyMyA1MC4zODkzIDIzNi4xNzMgNTEuMjg2NyAyMzUuMDQ4IDUyLjQyOTVDMjMzLjkxIDUzLjUzMiAyMzMuMDA1IDU0Ljg1MiAyMzIuMzg3IDU2LjMxMTFDMjMxLjc2OSA1Ny43NzAzIDIzMS40NSA1OS4zMzg4IDIzMS40NSA2MC45MjM0QzIzMS40NSA2Mi41MDgxIDIzMS43NjkgNjQuMDc2NiAyMzIuMzg3IDY1LjUzNThDMjMzLjAwNSA2Ni45OTQ5IDIzMy45MSA2OC4zMTQ5IDIzNS4wNDggNjkuNDE3NFpNMjA0Ljc3OCA2OS40MTc0QzIwNS45MjEgNzAuNTcxNSAyMDcuMjkyIDcxLjQ3NTEgMjA4LjgwNCA3Mi4wNzA1QzIxMC4zMTUgNzIuNjY2IDIxMS45MzQgNzIuOTQwMyAyMTMuNTU3IDcyLjg3NkMyMTUuNjYgNzIuOTA2NyAyMTcuNzMzIDcyLjM4MzMgMjE5LjU2OCA3MS4zNTg1QzIyMS4zMzIgNzAuMzc0NSAyMjIuNzg2IDY4LjkxNzIgMjIzLjc2NiA2Ny4xNTFMMjIwLjE5OSA2NC42Mjg0QzIxOS41NDYgNjUuODA3MSAyMTguNTkgNjYuNzg5MSAyMTcuNDI4IDY3LjQ3MTlDMjE2LjI2NyA2OC4xNTQ4IDIxNC45NDQgNjguNTEzNiAyMTMuNTk3IDY4LjUxMDhDMjEyLjYwOSA2OC41NDE1IDIxMS42MjUgNjguMzY3MyAyMTAuNzA4IDY3Ljk5OTRDMjA5Ljc5IDY3LjYzMTQgMjA4Ljk1OSA2Ny4wNzc1IDIwOC4yNjYgNjYuMzcyNkMyMDcuNTYyIDY1LjY2MzEgMjA3LjAxMSA2NC44MTcyIDIwNi42NDcgNjMuODg2OEMyMDYuMjgzIDYyLjk1NjUgMjA2LjExMyA2MS45NjE0IDIwNi4xNDcgNjAuOTYyOUMyMDYuMTE1IDU5Ljk1NzEgMjA2LjI4NSA1OC45NTUyIDIwNi42NDkgNTguMDE3MUMyMDcuMDE0IDU3LjA3OSAyMDcuNTYzIDU2LjIyNDIgMjA4LjI2NiA1NS41MDM5QzIwOC45NDcgNTQuNzkwOCAyMDkuNzcgNTQuMjI3MiAyMTAuNjgxIDUzLjg0OUMyMTEuNTkyIDUzLjQ3MDcgMjEyLjU3MSA1My4yODYgMjEzLjU1NyA1My4zMDY1QzIxNC45MDUgNTMuMzAzNyAyMTYuMjI4IDUzLjY2MjUgMjE3LjM4OSA1NC4zNDU0QzIxOC41NSA1NS4wMjgzIDIxOS41MDcgNTYuMDEwMiAyMjAuMTU5IDU3LjE4ODlMMjIzLjcyNiA1NC42NzYyQzIyMi43MzQgNTIuOTEwMyAyMjEuMjc1IDUxLjQ1MTMgMjE5LjUwOSA1MC40NTg4QzIxNy4xNjkgNDkuMjAyOCAyMTQuNDkxIDQ4LjcxNzEgMjExLjg1OSA0OS4wNzA5QzIwOS4yMjYgNDkuNDI0OCAyMDYuNzczIDUwLjYwMDEgMjA0Ljg0NyA1Mi40Mjk1QzIwMy43MTMgNTMuNTM3IDIwMi44MSA1NC44NTkzIDIwMi4xOTMgNTYuMzE5M0MyMDEuNTc1IDU3Ljc3OTMgMjAxLjI1NSA1OS4zNDc2IDIwMS4yNTEgNjAuOTMyOEMyMDEuMjQ2IDYyLjUxOCAyMDEuNTU3IDY0LjA4ODIgMjAyLjE2NiA2NS41NTE3QzIwMi43NzUgNjcuMDE1MyAyMDMuNjcgNjguMzQyOCAyMDQuNzk3IDY5LjQ1NjhMMjA0Ljc3OCA2OS40MTc0Wk0xMzMuODExIDQyLjI1MDZDMTI0LjU1OCAzNy4wNDk2IDExNC4xMjEgMzQuMzE3NyAxMDMuNTA2IDM0LjMxNzdDOTIuODkwOSAzNC4zMTc3IDgyLjQ1NDUgMzcuMDQ5NiA3My4yMDA4IDQyLjI1MDZDNzcuMDA3MSA0Ni4wNjE0IDgwLjQ5MDkgNTAuMTgxMiA4My42MTYyIDU0LjU2NzhDODguMTM1OSA2MC45MDc0IDkxLjk4MzEgNjcuNzAwNCA5NS4wOTU4IDc0LjgzNjlMMTAzLjUwMSA2MS4xMTA3TDExMS45MTYgNzQuODM2OUMxMTUuMDI5IDY3LjcwMDQgMTE4Ljg3NiA2MC45MDc0IDEyMy4zOTYgNTQuNTY3OEMxMjYuNTIxIDUwLjE4MTIgMTMwLjAwNSA0Ni4wNjE0IDEzMy44MTEgNDIuMjUwNlpNMTc2LjAzNCAyNy4zODEzQzE2NS4wNjEgMjkuNTExMiAxNTQuNzY4IDM0LjI3MjEgMTQ2LjA0IDQxLjI1NTRDMTQ0LjA2OSA0Mi44MzIgMTQyLjEzMSA0NC41MzAxIDE0MC4yMjYgNDYuMzQ5OEMxMzYuMzI5IDUwLjE1MjYgMTMyLjc3NyA1NC4yOTQzIDEyOS42MTMgNTguNzI2MUMxMjQuMDE2IDY2LjQ3MTMgMTE5LjU2IDc0Ljk3OTcgMTE2LjM4IDgzLjk5MUMxMTYuMTcgODQuNjYyNiAxMTUuNzc1IDg1LjI2MTMgMTE1LjI0IDg1LjcxOEMxMTQuNzA0IDg2LjE3NDggMTE0LjA1MSA4Ni40NzExIDExMy4zNTUgODYuNTcyN0MxMTMuMTc0IDg2LjU4NyAxMTIuOTkzIDg2LjU4NyAxMTIuODEzIDg2LjU3MjdDMTEyLjE5OSA4Ni41NzMgMTExLjU5NSA4Ni40MjIxIDExMS4wNTQgODYuMTMzNEMxMTAuNTEyIDg1Ljg0NDYgMTEwLjA1MSA4NS40MjcgMTA5LjcwOSA4NC45MTczTDEwMy41MDEgNzUuNjk0Mkw5Ny4yODM0IDg0Ljk1NjdDOTYuOTQxOCA4NS40NjY0IDk2LjQ3OTkgODUuODg0IDk1LjkzODUgODYuMTcyOEM5NS4zOTcxIDg2LjQ2MTUgOTQuNzkzIDg2LjYxMjQgOTQuMTc5NCA4Ni42MTIxQzkzLjk5OTEgODYuNjI2OCA5My44MTc4IDg2LjYyNjggOTMuNjM3NSA4Ni42MTIxQzkyLjkzODcgODYuNTEwMyA5Mi4yODMgODYuMjEyOSA5MS43NDYgODUuNzU0NEM5MS4yMDkgODUuMjk1OCA5MC44MTI2IDg0LjY5NDggOTAuNjAyNSA4NC4wMjA2Qzg3LjQzODcgNzQuOTk2OSA4Mi45ODgxIDY2LjQ3NzQgNzcuMzg4NyA1OC43MjYxQzc0LjIyMTkgNTQuMjYwOSA3MC42NTY3IDUwLjA5MjEgNjYuNzM2OCA0Ni4yNzA5QzY2LjMwMzIgNDUuODU3MSA2NS44Njk3IDQ1LjQ0MzIgNjUuNDI2MiA0NS4wMzkyQzY0LjAwMDcgNDMuNzI1NCA2Mi41NDI0IDQyLjQ4MDUgNjEuMDUxMiA0MS4zMDQ3QzUyLjMwNDggMzQuMjkyMyA0MS45ODMzIDI5LjUxMzcgMzAuOTc3NiAyNy4zODEzQzMwLjA0MjQgMjcuMTUyMyAyOS4yMzE0IDI2LjU3MTggMjguNzEzMSAyNS43NjA0QzI4LjE5NDcgMjQuOTQ5IDI4LjAwODggMjMuOTY5MiAyOC4xOTM5IDIzLjAyNDNDMjguMzc5MSAyMi4wNzk1IDI4LjkyMTEgMjEuMjQyMyAyOS43MDc0IDIwLjY4NjZDMzAuNDkzNyAyMC4xMzA5IDMxLjQ2MzggMTkuODk5NCAzMi40MTYyIDIwLjA0MDNDNDUuMzA4NyAyMi42MDg2IDU3LjMzNjEgMjguNDEzOCA2Ny4zNjc0IDM2LjkwOTlDNzguMjU1IDMwLjI3OCA5MC43NTc2IDI2Ljc3IDEwMy41MDYgMjYuNzdDMTE2LjI1NCAyNi43NyAxMjguNzU3IDMwLjI3OCAxMzkuNjQ1IDM2LjkwOTlDMTQ5LjY3NiAyOC40MTM4IDE2MS43MDMgMjIuNjA4NiAxNzQuNTk2IDIwLjA0MDNDMTc1LjU0OCAxOS44OTk0IDE3Ni41MTggMjAuMTMwOSAxNzcuMzA1IDIwLjY4NjZDMTc4LjA5MSAyMS4yNDIzIDE3OC42MzMgMjIuMDc5NSAxNzguODE4IDIzLjAyNDNDMTc5LjAwMyAyMy45NjkyIDE3OC44MTcgMjQuOTQ5IDE3OC4yOTkgMjUuNzYwNEMxNzcuNzgxIDI2LjU3MTggMTc2Ljk3IDI3LjE1MjMgMTc2LjAzNCAyNy4zODEzWk01Ni4yMjI5IDQ1LjIwNjdDNDMuMTg5MyA1Ny4xMTgxIDM0LjcxMjIgNzMuMTk3OCAzMi4yNDg3IDkwLjY4MTdDMzIuMTc5NSA5MS4xNzQ3IDMyLjIwOCA5MS42NzY2IDMyLjMzMjcgOTIuMTU4NUMzMi40NTc1IDkyLjY0MDUgMzIuNjc1OSA5My4wOTMyIDMyLjk3NTUgOTMuNDkwOEMzMy4yNzUyIDkzLjg4ODQgMzMuNjUwMiA5NC4yMjMgMzQuMDc5MiA5NC40NzU2QzM0LjUwODIgOTQuNzI4MyAzNC45ODI4IDk0Ljg5MzkgMzUuNDc1OCA5NC45NjMyQzM1Ljk2ODggOTUuMDMyNCAzNi40NzA3IDk1LjAwMzggMzYuOTUyNiA5NC44NzkxQzM3LjQzNDYgOTQuNzU0NCAzNy44ODczIDk0LjUzNiAzOC4yODQ5IDk0LjIzNjNDMzguNjgyNSA5My45MzY3IDM5LjAxNzEgOTMuNTYxNiAzOS4yNjk3IDkzLjEzMjZDMzkuNTIyNCA5Mi43MDM2IDM5LjY4OCA5Mi4yMjkxIDM5Ljc1NzMgOTEuNzM2MUM0MS45NjI4IDc2LjAwMDYgNDkuNTc5IDYxLjUyNDMgNjEuMjk3NSA1MC43OTM4QzYxLjk5NzEgNTAuMTUzMyA2Mi43MTY1IDQ5LjUzMjUgNjMuNDM1OCA0OC45MzE0QzYxLjU4NzIgNDcuMTkwNSA1OS42NSA0NS41NDYgNTcuNjMxOSA0NC4wMDQ2QzU3LjE1OSA0NC40MDg2IDU2LjY0NjYgNDQuODIyNCA1Ni4yMjI5IDQ1LjI0NjFWNDUuMjA2N1pNMTc0LjczNCA5MC42ODE3QzE3NC44NzQgOTEuNjcyMSAxNzQuNjE2IDkyLjY3NzggMTc0LjAxNiA5My40Nzc5QzE3My40MTUgOTQuMjc3OSAxNzIuNTIyIDk0LjgwNjggMTcxLjUzMSA5NC45NDg0QzE3MS4zNTEgOTQuOTYyNyAxNzEuMTcgOTQuOTYyNyAxNzAuOTg5IDk0Ljk0ODRDMTcwLjA4NCA5NC45NTE0IDE2OS4yMDcgOTQuNjI4NSAxNjguNTIgOTQuMDM4OEMxNjcuODMyIDkzLjQ0OSAxNjcuMzggOTIuNjMxNyAxNjcuMjQ1IDkxLjczNjFDMTY1LjAzOSA3Ni4wMDA2IDE1Ny40MjMgNjEuNTI0MyAxNDUuNzA1IDUwLjc5MzhDMTQ0Ljk5NSA1MC4xNTMzIDE0NC4yODYgNDkuNTMyNSAxNDMuNTU3IDQ4LjkzMTRDMTQ1LjQwNSA0Ny4xOTAxIDE0Ny4zNDIgNDUuNTQ1NiAxNDkuMzYgNDQuMDA0NkMxNDkuODQzIDQ0LjQwODYgMTUwLjM0NiA0NC44MjI0IDE1MC43NzkgNDUuMjQ2MUMxNjMuODAyIDU3LjE2MiAxNzIuMjY4IDczLjI0MTIgMTc0LjcyNCA5MC43MjExTDE3NC43MzQgOTAuNjgxN1oiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xODEuODY5IDIxLjc2NDhIMTgwLjcyNlYyMS4yNzIxSDE4My41NTRWMjEuNzY0OEgxODIuNDExVjI0LjY3MTZIMTgxLjg2OVYyMS43NjQ4WiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTE4Ny4yODYgMjEuMjEyOVYyNC42NzE1SDE4Ni43NDRWMjIuNTMzM0wxODUuNzY4IDIzLjgxNDNIMTg1LjU5MUwxODQuNjE1IDIyLjUzMzNWMjQuNjcxNUgxODQuMDYzVjIxLjIxMjlIMTg0LjI1MUwxODUuNjc5IDIzLjExNDdMMTg3LjEwOCAyMS4yMTI5SDE4Ny4yODZaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNNTA4LjY1NiA0NS42ODg4SDUwOS4wMUM1MDkuMDQ4IDQ1LjY5MTUgNTA5LjA4NiA0NS42ODY0IDUwOS4xMjIgNDUuNjczN0M1MDkuMTU4IDQ1LjY2MTEgNTA5LjE5MSA0NS42NDEyIDUwOS4yMTggNDUuNjE1M0M1MDkuMjQ2IDQ1LjU4OTQgNTA5LjI2OCA0NS41NTggNTA5LjI4MyA0NS41MjMyQzUwOS4yOTggNDUuNDg4NCA1MDkuMzA2IDQ1LjQ1MDggNTA5LjMwNiA0NS40MTI5QzUwOS4zMDcgNDUuMzczNyA1MDkuMzAxIDQ1LjMzNDYgNTA5LjI4NiA0NS4yOTgxQzUwOS4yNzIgNDUuMjYxNiA1MDkuMjUgNDUuMjI4NSA1MDkuMjIzIDQ1LjIwMDhDNTA5LjE5NSA0NS4xNzMgNTA5LjE2MiA0NS4xNTEzIDUwOS4xMjUgNDUuMTM3QzUwOS4wODkgNDUuMTIyNiA1MDkuMDUgNDUuMTE1OSA1MDkuMDEgNDUuMTE3M0g1MDguNjU2VjQ1LjY4ODhaTTUxMC4wNTUgNDYuODMxOEg1MDkuNTAzTDUwOC45NjEgNDYuMTEyNUg1MDguNjU2VjQ2LjgzMThINTA4LjE2M1Y0NC42ODM3SDUwOS4wMkM1MDkuMTIgNDQuNjc0IDUwOS4yMjEgNDQuNjg1NSA1MDkuMzE3IDQ0LjcxNzNDNTA5LjQxMiA0NC43NDkxIDUwOS41IDQ0LjgwMDYgNTA5LjU3NCA0NC44NjgzQzUwOS42NDggNDQuOTM2MSA1MDkuNzA4IDQ1LjAxODcgNTA5Ljc0OCA0NS4xMTA4QzUwOS43ODggNDUuMjAyOSA1MDkuODA5IDQ1LjMwMjUgNTA5LjgwOSA0NS40MDNDNTA5LjgxNSA0NS41MjU3IDUwOS43ODYgNDUuNjQ3NiA1MDkuNzI0IDQ1Ljc1NDJDNTA5LjY2MyA0NS44NjA4IDUwOS41NzMgNDUuOTQ3NSA1MDkuNDY0IDQ2LjAwNDFMNTEwLjA1NSA0Ni44MzE4VjQ2LjgzMThaTTUwOC45OTEgNDQuMDcyOEM1MDguNjU1IDQ0LjA2MjkgNTA4LjMyNCA0NC4xNTM2IDUwOC4wNDEgNDQuMzMzMUM1MDcuNzU3IDQ0LjUxMjcgNTA3LjUzMyA0NC43NzI5IDUwNy4zOTggNDUuMDgwM0M1MDcuMjY0IDQ1LjM4NzggNTA3LjIyNCA0NS43Mjg2IDUwNy4yODQgNDYuMDU4OUM1MDcuMzQ0IDQ2LjM4OTIgNTA3LjUwMSA0Ni42OTQgNTA3LjczNiA0Ni45MzQyQzUwNy45NzEgNDcuMTc0NCA1MDguMjcxIDQ3LjMzOTEgNTA4LjYgNDcuNDA3MUM1MDguOTI5IDQ3LjQ3NTEgNTA5LjI3MSA0Ny40NDMzIDUwOS41ODEgNDcuMzE1OEM1MDkuODkyIDQ3LjE4ODQgNTEwLjE1NyA0Ni45NzEgNTEwLjM0NCA0Ni42OTE2QzUxMC41MyA0Ni40MTIzIDUxMC42MjggNDYuMDgzNiA1MTAuNjI2IDQ1Ljc0NzlDNTEwLjYzMiA0NS41MzAxIDUxMC41OTQgNDUuMzEzNSA1MTAuNTE1IDQ1LjExMDZDNTEwLjQzNSA0NC45MDc3IDUxMC4zMTcgNDQuNzIyNSA1MTAuMTY2IDQ0LjU2NTdDNTEwLjAxNCA0NC40MDkgNTA5LjgzMyA0NC4yODM4IDUwOS42MzQgNDQuMTk3NUM1MDkuNDM0IDQ0LjExMTIgNTA5LjIxOCA0NC4wNjU1IDUwOS4wMDEgNDQuMDYyOUw1MDguOTkxIDQ0LjA3MjhaTTUwOC45OTEgNDcuODc2M0M1MDguNDU1IDQ3LjgzOTcgNTA3Ljk1MyA0Ny42MDExIDUwNy41ODcgNDcuMjA4OEM1MDcuMjIgNDYuODE2NCA1MDcuMDE3IDQ2LjI5OTYgNTA3LjAxNyA0NS43NjI3QzUwNy4wMTcgNDUuMjI1OCA1MDcuMjIgNDQuNzA4OSA1MDcuNTg3IDQ0LjMxNjZDNTA3Ljk1MyA0My45MjQyIDUwOC40NTUgNDMuNjg1NiA1MDguOTkxIDQzLjY0OUM1MDkuNTI2IDQzLjY4NTYgNTEwLjAyOCA0My45MjQyIDUxMC4zOTUgNDQuMzE2NkM1MTAuNzYxIDQ0LjcwODkgNTEwLjk2NSA0NS4yMjU4IDUxMC45NjUgNDUuNzYyN0M1MTAuOTY1IDQ2LjI5OTYgNTEwLjc2MSA0Ni44MTY0IDUxMC4zOTUgNDcuMjA4OEM1MTAuMDI4IDQ3LjYwMTEgNTA5LjUyNiA0Ny44Mzk3IDUwOC45OTEgNDcuODc2M1Y0Ny44NzYzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" /&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                          &lt;table border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;h1 style="
+                                      margin: 0;
+                                      color: #555555;
+                                      font-size: 23px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      line-height: 120%;
+                                      text-align: center;
+                                      direction: ltr;
+                                      font-weight: 700;
+                                      letter-spacing: normal;
+                                      margin-top: 0;
+                                      margin-bottom: 0;
+                                    "&gt;
+                              &lt;span class="tinyMce-placeholder"&gt;An elevation request has been initiated
+                                for {Session.Name}&lt;/span&gt;
+                            &lt;/h1&gt;
+                            &lt;tr&gt;
+                              &lt;td&gt;
+                                &lt;div align="center"&gt;
+                                  &lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="
+                                        mso-table-lspace: 0pt;
+                                        mso-table-rspace: 0pt;
+                                      " width="100%"&gt;
+                                    &lt;tr&gt;
+                                      &lt;td class="divider_inner" style="
+                                            font-size: 1px;
+                                            line-height: 1px;
+                                            border-top: 1px solid #bbbbbb;
+                                          "&gt;
+                                        &lt;span&gt; &lt;/span&gt;
+                                      &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                  &lt;/table&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-session-name" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Session:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.Name} ({Session.SessionID})
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-guest-logged-on-user" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    Guest Logged-on User:
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.GuestLoggedOnUserDomain}\{Session.GuestLoggedOnUserName}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-guest-machine" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Guest Machine:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.GuestMachineDomain}\{Session.GuestMachineName}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-connected-hosts" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Connected Host(s):&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {Session.ConnectedParticipantNames}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-separator" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              padding-top: 5px;
+                              padding-bottom: 5px;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td&gt;
+                                &lt;div align="center"&gt;
+                                  &lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="
+                                        mso-table-lspace: 0pt;
+                                        mso-table-rspace: 0pt;
+                                      " width="100%"&gt;
+                                    &lt;tr&gt;
+                                      &lt;td class="divider_inner" style="
+                                            font-size: 1px;
+                                            line-height: 1px;
+                                            border-top: 1px solid #bbbbbb;
+                                          "&gt;
+                                        &lt;span&gt; &lt;/span&gt;
+                                      &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                  &lt;/table&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-reason" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Request Reason:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(Event.Data, 'Reason')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-program-name" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Program Name:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'ProgramName')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-publisher-name" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Publisher Name:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'PublisherName')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-certificate-thumbprint" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Certificate Thumbprint:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'CertificateThumbprint')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-file-path" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;File Path:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'FilePath')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-file-sha-256" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;File SHA-256:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'FileSha256')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-user" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;User:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'User')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-groups" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="25%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;Groups:&lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                        &lt;td class="column column-2" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="75%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {GETDATAFIELD(CorrelationEvent.Data, 'Groups')}
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-button" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="0" cellspacing="0" class="button_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td style="
+                                    text-align: right;
+                                    padding-top: 15px;
+                                    padding-right: 10px;
+                                    padding-bottom: 15px;
+                                    padding-left: 10px;
+                                  "&gt;
+                                &lt;div align="right"&gt;
+                                  &lt;!--[if mso]&gt;&lt;v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{$WEBSERVERADDRESSABLEURI}Host#Access///{Session.SessionID}/Select/AccessManagement" style="height:42px;width:280px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#026CCF"&gt;&lt;w:anchorlock/&gt;&lt;v:textbox inset="0px,0px,0px,0px"&gt;&lt;center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px"&gt;&lt;!
+                                    [endif]--&gt;&lt;a
+                                    href="{$WEBSERVERADDRESSABLEURI}Host#Access///{Session.SessionID}/Select/AccessManagement"
+                                    style="
+                                        text-decoration: none;
+                                        display: block;
+                                        color: #ffffff;
+                                        background-color: #026CCF;
+                                        border-radius: 4px;
+                                        width: 100%;
+                                        width: calc(100% - 2px);
+                                        border-top: 1px solid #026CCF;
+                                        font-weight: 400;
+                                        border-right: 1px solid #026CCF;
+                                        border-bottom: 1px solid #026CCF;
+                                        border-left: 1px solid #026CCF;
+                                        padding-top: 5px;
+                                        padding-bottom: 5px;
+                                        font-family: Arial, Helvetica Neue,
+                                          Helvetica, sans-serif;
+                                        text-align: center;
+                                        mso-border-alt: none;
+                                        word-break: keep-all;
+                                      " target="_blank"&gt;&lt;span style="
+                                          padding-left: 5px;
+                                          padding-right: 5px;
+                                          font-size: 16px;
+                                          display: inline-block;
+                                          letter-spacing: normal;
+                                        "&gt;&lt;span dir="ltr" style="
+                                            font-size: 16px;
+                                            line-height: 2;
+                                            word-break: break-word;
+                                            mso-line-height-alt: 32px;
+                                          "&gt;Review Request&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+                                  &lt;!--[if mso]&gt;&lt;/center&gt;&lt;/v:textbox&gt;&lt;/v:roundrect&gt;&lt;![endif]--&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-link" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%"&gt;
+            &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td&gt;
+                  &lt;table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation" style="
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        color: #000000;
+                        width: 600px;
+                      " width="600"&gt;
+                    &lt;tbody&gt;
+                      &lt;tr&gt;
+                        &lt;td class="column column-1" style="
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              font-weight: 400;
+                              text-align: left;
+                              vertical-align: top;
+                              padding-top: 5px;
+                              padding-bottom: 5px;
+                              border-top: 0px;
+                              border-right: 0px;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            " width="100%"&gt;
+                          &lt;table border="0" cellpadding="10" cellspacing="0" class="paragraph_block" role="presentation"
+                            style="
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                word-break: break-word;
+                              " width="100%"&gt;
+                            &lt;tr&gt;
+                              &lt;td&gt;
+                                &lt;div style="
+                                      color: #000000;
+                                      font-size: 14px;
+                                      font-family: Arial, Helvetica Neue,
+                                        Helvetica, sans-serif;
+                                      font-weight: 400;
+                                      line-height: 120%;
+                                      text-align: left;
+                                      direction: ltr;
+                                      letter-spacing: 0px;
+                                    "&gt;
+                                  &lt;p style="margin: 0; margin-bottom: 16px"&gt;
+                                    Or view more details here:
+                                  &lt;/p&gt;
+                                  &lt;p style="margin: 0"&gt;
+                                    {$WEBSERVERADDRESSABLEURI}Host#Access///{Session.SessionID}/Select/AccessManagement
+                                  &lt;/p&gt;
+                                &lt;/div&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/table&gt;
+                        &lt;/td&gt;
+                      &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                  &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;!-- End --&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</Body>
+      </TriggerAction>
+    </Actions>
+  </SessionEventTrigger>
+</SessionEventTriggers>

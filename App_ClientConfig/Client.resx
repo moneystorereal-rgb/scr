@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BlankMonitorBackgroundColor" xml:space="preserve">
+    <value>#000</value>
+  </data>
+  <data name="BlankMonitorBackgroundImageVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="BlankMonitorTextColor" xml:space="preserve">
+    <value>#FFF</value>
+  </data>
+  <data name="DarkThemeBarBaseColor" xml:space="preserve">
+    <value>#464646</value>
+  </data>
+  <data name="DarkThemeDefaultHighlightColor" xml:space="preserve">
+    <value>#0063b1</value>
+  </data>
+  <data name="DarkThemeMainBaseColor" xml:space="preserve">
+    <value>#646464</value>
+  </data>
+  <data name="DarkThemeTextColor" xml:space="preserve">
+    <value>#FFF</value>
+  </data>
+  <data name="LightThemeBarBaseColor" xml:space="preserve">
+    <value>#E6E6E6</value>
+  </data>
+  <data name="LightThemeDefaultHighlightColor" xml:space="preserve">
+    <value>#67A6E2</value>
+  </data>
+  <data name="LightThemeMainBaseColor" xml:space="preserve">
+    <value>#CCCCCC</value>
+  </data>
+  <data name="LightThemeSecondaryHighlightColor" xml:space="preserve">
+    <value>#CCE1F5</value>
+  </data>
+  <data name="LightThemeTextColor" xml:space="preserve">
+    <value>#212121</value>
+  </data>
+</root>

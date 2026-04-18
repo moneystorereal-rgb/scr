@@ -1,0 +1,21 @@
+@import url("../Base.css");
+@import url("../Dark.css");
+@import url("../AccentGreen.css");
+
+body {
+	font-family: Lucida Console, Courier New;
+	color: #0D0;
+}
+
+* {
+	border-style: dashed;
+}
+
+.SubDetailPanel .DetailTabList a,
+.SubDetailPanel .DetailTabList a.Selected {
+	border-style: solid;
+}
+
+.InvitationTabList a.Selected {
+	border-style: solid;
+}

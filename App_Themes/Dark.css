@@ -1,0 +1,168 @@
+﻿/**/
+/*#region Variables*/
+/**/
+
+$shade0BackgroundColor: #1E1E1E;
+$shade1BackgroundColor: #2B2B2B;
+$shade2BackgroundColor: #383838;
+$shade3BackgroundColor: #616161;
+$shade4BackgroundColor: #7D7D7D;
+$shade5BackgroundColor: #999;
+$shade6BackgroundColor: #B0B0B0;
+$shade7BackgroundColor: #CCCCCC;
+$shade8BackgroundColor: #E6E6E6;
+$shade9BackgroundColor: #F5F5F5;
+$shade10BackgroundColor: #FFF;
+
+$darkBackgroundTextColor: #EEE;
+$lightBackgroundTextColor: #212121;
+$mainTextColor: #EEE;
+$borderColor: #666;
+$inputBorderColor: #777;
+
+$successColor: #6C6;
+$failureColor: #C66;
+$linkDisabledColor: #777;
+$buttonDisabledTextColor: #7D7D7D;
+$buttonDisabledBackgroundColor: #525252;
+$tooltipBackgroundColor: #181818;
+
+$navigationPanelBackgroundColor: #1E1E1E;
+$masterPanelBackgroundColor: #252525;
+$rowSeparatorColor: #555;
+$sessionDisconnectedBarColor: #888;
+$notificationBackgroundColor: #999;
+
+$expressionEditorNumberColor: #fff;
+$expressionEditorStringColor: #fff;
+$expressionEditorPropertyNameColor: #fff;
+$expressionEditorControlKeywordColor: #fff;
+$expressionEditorVariableNameColor: #fff;
+$expressionEditorLogicOperatorColor: #fff;
+$expressionEditorCompareOperatorColor: #fff;
+$expressionEditorCaretColor: #fff;
+
+/*#endregion*/
+
+
+/**/
+/*#region Unstructured Override*/
+/**/
+
+.DetailTabList img,
+.InfoIcon,
+.EntryHistoryPanel .HistoryPanel .EmptyPanel img,
+.OuterPanel .MainPanel .MainDetailHeaderPanel .CommandPanel a img,
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer ul div > a,
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer ul div > a:hover,
+.ModalDialog.ToolboxDialog .ContentPanel .ToolboxPanel .ToolboxButton a,
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Notes .EntryHistoryPanel .HistoryPanel .ListPanel > div > a,
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Commands .EntryHistoryPanel:not(.Empty) .HistoryPanel .ListPanel > div > a,
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .EntryHistoryPanel .HistoryPanel .ListPanel > div .Header .Command img,
+.DialogContainer .ModalDialog.EditTrigger .ContentPanel .DeleteTriggerActionButton,
+.OuterPanel .MainPanel .DetailPanel .AdministrationPanel .AdministrationContentPanel .TriggersPanel .TriggerPanel .TriggerCard .TriggerCardHeader img,
+.OuterPanel .MainPanel .MainDetailPanel .DetailSelectionPanel .DetailTableHeaderPanel .CheckBox img,
+.PopoutPanel .HasImage div img {
+	@include filter-brightness-high;
+}
+
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer ul li.HasChildren > div > p,
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer ul li.HasChildren.InPath:not(.Collapsed) > div > p {
+	@include filter-brightness-mid;
+}
+
+.DialogContainer .ModalDialog.EditRole .ScopedPermissionContainer ul li.HasChildren > span,
+.DialogContainer .ModalDialog.EditRole .ScopedPermissionContainer ul li.HasChildren.Expanded > span {
+	@include filter-brightness-mid;
+}
+
+.OuterPanel .MainPanel .SubDetailPanel .Timeline .TimeDivision line {
+	stroke: rgba(255, 255, 255, 0.2);
+}
+
+.PopoutPanel {
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.6);
+}
+
+.DialogContainer .ModalDialog.NoBackdrop {
+	box-shadow: 0 8px 17px rgba(0, 0, 0, 0.6);
+}
+
+.PopoutPanel h4,
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer ul div > a,
+.OuterPanel .NavigationPanel > div:not(.TrayPanelContainer) {
+	opacity: 0.6;
+}
+
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer ul div > a:hover {
+	opacity: 1;
+}
+
+.PopoutPanel a,
+.PopoutPanel a.TouchActive,
+.TouchDisabled .PopoutPanel a:not(.Disabled):hover {
+	color: $mainTextColor;
+}
+
+.OuterPanel .MainPanel .MasterPanel,
+.OuterPanel .MainPanel .SubDetailHeaderPanel,
+.OuterPanel .MainPanel .SubDetailPanel,
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabList,
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .EntryHistoryPanel .EntryPanel,
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Notes .EntryHistoryPanel .HistoryPanel .ListPanel > div {
+	border-width: 0;
+}
+
+::-webkit-scrollbar-thumb,
+.OuterPanel .MainPanel .MasterPanel .MasterListContainer::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Commands .EntryHistoryPanel:not(.Empty) .HistoryPanel {
+	border-width: 0 0 1px 0;
+}
+
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabList:after,
+.CommandPanel > a.TouchActive, .CommandPanel > a:hover {
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+.ShowMenu .OuterPanel .HeaderPanel .ShowMenuButton::after {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.OuterPanel .MainPanel .SubDetailPanel .Timeline .PositionedPanel .Guest + .Overlay {
+	fill: $shade4BackgroundColor;
+
+	&:hover {
+		fill: $shade5BackgroundColor;
+	}
+}
+
+.OuterPanel .MainPanel .MainDetailPanel .DetailSelectionPanel .DetailTableContainer .EmptyPanel img {
+	filter: invert(0.8);
+}
+
+.OuterPanel .MainPanel .DetailPanel .AdministrationPanel.Loading:after {
+	background-color: rgba(45, 45, 45, 0.5); /* Need to match $shade0BackgroundColor here to avoid flash */
+}
+
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.RequestedElevation .Body, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.EncounteredElevationPrompt .Body, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.RequestedAdministrativeLogon .Body, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.QueuedProceedElevation .Body {
+	background-color: $shade0BackgroundColor;
+}
+
+.OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.RequestedElevation .Body .Response .EventHistoryItemResponse .RespondToElevationRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.RequestedElevation .Body .Response .EventHistoryItemResponse .RespondToAdministrativeLogonRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.EncounteredElevationPrompt .Body .Response .EventHistoryItemResponse .RespondToElevationRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.EncounteredElevationPrompt .Body .Response .EventHistoryItemResponse .RespondToAdministrativeLogonRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.RequestedAdministrativeLogon .Body .Response .EventHistoryItemResponse .RespondToElevationRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.RequestedAdministrativeLogon .Body .Response .EventHistoryItemResponse .RespondToAdministrativeLogonRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.QueuedProceedElevation .Body .Response .EventHistoryItemResponse .RespondToElevationRequest.Disabled img, .OuterPanel .MainPanel .SubDetailPanel .DetailTabContent .Messages .EntryHistoryPanel .HistoryPanel .ListPanel > div.QueuedProceedElevation .Body .Response .EventHistoryItemResponse .RespondToAdministrativeLogonRequest.Disabled img {
+	@include filter-brightness-mid;
+}
+
+.ExpressionEditor {
+	.cm-panel {
+		color: $darkBackgroundTextColor;
+	}
+}
+
+.AuthPanel .LogoContainer {
+	background-image: url(../Images/LoginPanelLogoDarkTheme.svg) !important;
+}
+
+/*#endregion*/

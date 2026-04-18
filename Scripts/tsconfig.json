@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"lib": ["ESNext", "DOM"],
+
+		// strict options
+		"alwaysStrict": false, // TODO enable (currently breaks at least SC.util.copyProperties)
+		"noImplicitAny": false, // TODO enable (too many errors in existing codebase)
+		"noImplicitThis": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+		"useUnknownInCatchVariables": true,
+
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+
+		"noEmit": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"types": ["./types.d.ts"]
+	},
+	"include": ["**/*.ts", "**/*.js"]
+}

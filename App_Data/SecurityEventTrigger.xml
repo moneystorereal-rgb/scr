@@ -1,0 +1,62 @@
+<SecurityEventTriggers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SecurityEventTrigger Name="Notify when a user enters an invalid password" IsDisabled="true" EventFilter="Event.EventType = 'LoginAttempt' AND Event.OperationResult = 'PasswordInvalid'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="{Event.UserName} entered an invalid password for their ConnectWise Control account">
+        <Body>{Event.UserName} has entered an invalid password for their ConnectWise Control account.
+Details:
+User Name: {Event.UserName}
+User Source: {Event.UserSource}
+IP address: {Event.NetworkAddress}
+Time: {Event.Time}</Body>
+      </TriggerAction>
+    </Actions>
+  </SecurityEventTrigger>
+  <SecurityEventTrigger Name="Notify when a user enters an invalid one-time password" IsDisabled="true" EventFilter="Event.EventType = 'LoginAttempt' AND Event.OperationResult = 'OneTimePasswordInvalid'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="{Event.UserName} entered an invalid one-time password for their ConnectWise Control account">
+        <Body>{Event.UserName} has entered an invalid one-time password for their ConnectWise Control account.
+Details:
+User Name: {Event.UserName}
+User Source: {Event.UserSource}
+IP address: {Event.NetworkAddress}
+Time: {Event.Time}</Body>
+      </TriggerAction>
+    </Actions>
+  </SecurityEventTrigger>
+  <SecurityEventTrigger Name="Notify when a user successfully changed their password" IsDisabled="true" EventFilter="Event.EventType = 'ChangePasswordAttempt' AND Event.OperationResult = 'Success'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="{Event.UserName} changed their password for their ConnectWise Control account">
+        <Body>{Event.UserName} has successfully changed the password for their ConnectWise Control account.
+Details:
+User Name: {Event.UserName}
+User Source: {Event.UserSource}
+IP address: {Event.NetworkAddress}
+Time: {Event.Time}</Body>
+      </TriggerAction>
+    </Actions>
+  </SecurityEventTrigger>
+  <SecurityEventTrigger Name="Notify when a user successfully logs into this instance" IsDisabled="true" EventFilter="Event.EventType = 'LoginAttempt' AND Event.OperationResult = 'Success'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="{Event.UserName} successfully logged into their ConnectWise Control account">
+        <Body>{Event.UserName} has successfully logged into their ConnectWise Control account
+Details:
+User Name: {Event.UserName}
+User Source: {Event.UserSource}
+IP address: {Event.NetworkAddress}
+Time: {Event.Time}</Body>
+      </TriggerAction>
+    </Actions>
+  </SecurityEventTrigger>
+  <SecurityEventTrigger Name="Notify when a user account is locked" IsDisabled="false" EventFilter="Event.EventType = 'LoginAttempt' AND Event.OperationResult = 'LockedOut'" CreationDate="2026-04-17T21:41:14">
+    <Actions>
+      <TriggerAction xsi:type="SmtpTriggerAction" Subject="{Event.UserName} has been locked out of their ConnectWise Control account">
+        <Body>{Event.UserName} has been locked out of their account.
+Details:
+User Name: {Event.UserName}
+User Source: {Event.UserSource}
+IP address: {Event.NetworkAddress}
+Time: {Event.Time}</Body>
+      </TriggerAction>
+    </Actions>
+  </SecurityEventTrigger>
+</SecurityEventTriggers>

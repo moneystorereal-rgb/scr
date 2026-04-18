@@ -1,0 +1,5 @@
+@import url("../Base.css");
+@import url("../Light.css");
+
+$primaryColor: #1CB8B8;
+$secondaryColor: #2D9191;

@@ -1,0 +1,36 @@
+﻿<?user-agent Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<base target="_top" />
+	<style>
+		html, body, iframe {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+	</style>
+	<script>
+
+		function executeSearch(query) {
+			document.getElementById('frame').src = 'http://www.bing.com/?q=' + window.encodeURIComponent(query || '');
+		}
+
+		function handleExternalPropertyChange(propertyName, value) {
+			if (propertyName == 'helperText')
+				window.executeSearch(value);
+		}
+
+		window.onload = function () {
+			window.executeSearch(window.external.helperText);
+		}
+
+	</script>
+</head>
+<body>
+	<iframe id="frame"></iframe>
+</body>
+</html>

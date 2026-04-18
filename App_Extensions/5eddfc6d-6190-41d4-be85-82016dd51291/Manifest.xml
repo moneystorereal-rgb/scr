@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionManifest>
+	<Version>1.2.1</Version>
+	<Name>tawk.to Chat Integration</Name>
+	<Author>ConnectWise Labs</Author>
+	<ShortDescription>Adds the tawk.to Chat widget to the Guest Page (requires a tawk.to account)</ShortDescription>
+	<Components>
+		<ClientScriptInitializer SourceFile="Initializer.js" />
+	</Components>
+	<Settings>
+		<Setting Name="tawkEmbedUrl" IsServerOnly="false">
+			<Description>The unique identification for your organization's tawk.to Live Chat widget. It is the URL included in the Widget code (ex https://embed.tawk.to/568gkd8a1c9dbkh8110a47de/default).</Description>
+		</Setting>
+	</Settings>
+</ExtensionManifest>

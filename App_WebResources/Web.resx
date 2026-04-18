@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AutomationsPanel.HttpActionBodyPlaceHolder" xml:space="preserve">
+    <value>e.g. {*:json}, {*:xml}, {*:url}, {*:plain}, {Session:json}</value>
+  </data>
+  <data name="AutomationsPanel.HttpActionContentTypePlaceHolder" xml:space="preserve">
+    <value>e.g. application/json, application/xml, application/x-www-form-urlencoded, text/plain</value>
+  </data>
+  <data name="AutomationsPanel.HttpActionHttpMethodPlaceHolder" xml:space="preserve">
+    <value>e.g. POST, GET, PUT</value>
+  </data>
+  <data name="EmailAuthenticationProviderIsBodyHtml" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="ExtensionsPanel.BaseUrl" xml:space="preserve">
+    <value>https://extension.screenconnect.com/</value>
+  </data>
+  <data name="GuestWelcomePanel.Visible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="InvitationPanel.CalendarTabVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="InvitationPanel.CodeTabVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="InvitationPanel.ComposeEmailVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="InvitationPanel.EmailTabVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="InvitationPanel.LinkTabVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="JoinPanel.MeetingPromptParticipantNameVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="JoinPanel.MeetingPromptVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="JoinPanel.SupportPromptParticipantNameVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="JoinPanel.SupportPromptVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="LogoPanel.HeadingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="LogoPanel.IconVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="LogoPanel.ImageVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="Page.AnimationReduced" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="ResetPasswordPanel.EmailIsBodyHtml" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SecurityPanel.CommentVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SecurityPanel.DisplayNameVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SecurityPanel.PasswordQuestionVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionInfoPanel.GuestClientVersionVisibleIfOutOfDateAndReinstallable" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionInfoPanel.GuestClientVersionVisibleIfPresent" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionInfoPanel.GuestLoggedOnUserIdleThresholdSeconds" xml:space="preserve">
+    <value>600</value>
+  </data>
+  <data name="SessionInfoPanel.GuestLoggedOnUserVisibleIfPresent" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionInfoPanel.GuestOperatingSystemVisibleIfPresent" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionInfoPanel.MakeSessionPrivateVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionInfoPanel.MakeSessionPublicVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionInfoPanel.NotesVisibleIfPresent" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom1.AccessVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionProperty.Custom1.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom1.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom2.AccessVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionProperty.Custom2.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom2.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom3.AccessVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionProperty.Custom3.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom3.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom4.AccessVisible" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="SessionProperty.Custom4.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom4.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom5.AccessVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom5.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom5.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom6.AccessVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom6.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom6.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom7.AccessVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom7.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom7.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom8.AccessVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom8.MeetingVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="SessionProperty.Custom8.SupportVisible" xml:space="preserve">
+    <value>false</value>
+  </data>
+</root>
